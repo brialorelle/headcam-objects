@@ -93,10 +93,10 @@ def evaluateModel(cfg, trainer, validationDataset, testingThreshold):
     val_loader = build_detection_test_loader(cfg, validationDataset)
     return inference_on_dataset(trainer.model, val_loader, evaluator)
 
-"""" Main function that takes cocojson files and trains a detectron2 model based 
-    on the config file and outputs evaluation metrics
-"""""
-    def loadModel(trainingDataFile, validationDataFile, modelConfigFile="COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml"):
+"""Main function that takes cocojson files and trains a detectron2 model based 
+    on the config file and outputs evaluation metrics"""
+
+def loadModel(trainingDataFile, validationDataFile, modelConfigFile="COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml"):
     
     # register datasets
     register_coco_instances("dataset_train", {}, trainingDataFile, "")
