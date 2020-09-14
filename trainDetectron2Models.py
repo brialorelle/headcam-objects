@@ -46,7 +46,7 @@ def visualizeData(datasetToSee):
         visualizer = Visualizer(im[:, :, ::-1], metadata=MetadataCatalog.get(datasetToSee))
         visualizer._default_font_size = 25
         out = visualizer.draw_dataset_dict(d)
-        cv2_imshow(out.get_image()[:, :, ::-1])
+        cv2_imshow(out.get_image()[:, :, ::-1]) # need to replace this for something else, only compatible with google colab
 
 
 """ Train!
@@ -81,7 +81,7 @@ def trainModel(modelConfigFile, trainDataset, numCats=354):
 
     return cfg, trainer
 
-
+"""Function using COCO Evaluator and evaluation metrics to get inferences on dataset"""
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
 def evaluateModel(cfg, trainer, validationDataset, testingThreshold):
@@ -93,30 +93,15 @@ def evaluateModel(cfg, trainer, validationDataset, testingThreshold):
     val_loader = build_detection_test_loader(cfg, validationDataset)
     return inference_on_dataset(trainer.model, val_loader, evaluator)
 
-"""" Main function that takes 
-
-
-
+"""" Main function that takes cocojson files and trains a detectron2 model based 
+    on the config file and outputs evaluation metrics
 """""
-    def loadModel(modelConfigFile, numCats = 354, trainDataset, testDataset):
+    def loadModel(trainingDataFile, validationDataFile, modelConfigFile="COCO-Detection/faster_rcnn_R_101_FPN_3x.yaml"):
     
-    CUDA_LAUNCH_BLOCKING=1  # avoid getting a runtime error
+    # register datasets
+    register_coco_instances("dataset_train", {}, trainingDataFile, "")
+    register_coco_instances("dataset_val", {},  validationDataFile, "")
 
-    cfg = get_cfg()
-    cfg.merge_from_file(model_zoo.get_config_file(modelConfigFile))
-    cfg.DATASETS.TRAIN = (trainDataset,)
-    cfg.DATASETS.TEST = ()
-    cfg.DATALOADER.NUM_WORKERS = 2
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(modelConfigFile)  # Let training initialize from model zoo
-    cfg.SOLVER.IMS_PER_BATCH = 2
-    cfg.SOLVER.BASE_LR = 0.0025  # pick a good LR
-    cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough for this toy dataset; you may need to train longer for a practical dataset
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset (default: 512)
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = numCats  # number of categories
+    cfg, trainer = trainModel("dataset_train", modelConfigFile)
 
-    os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
-    trainer = DefaultTrainer(cfg) 
-    trainer.resume_or_load(resume=True)
-    trainer.train()
-
-    return cfg""""
+    return evaluateModel(cfg, trainer, "dataset_val", 0.7)
