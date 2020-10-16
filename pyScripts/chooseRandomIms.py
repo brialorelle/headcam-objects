@@ -51,7 +51,7 @@ def exportImListToCSVLoL(imList, exportCSVFilename):
 
 """ Main function, takes interesting image list file and exports list of 150 (default) images in CSV file
 """
-def chooseRandomIms(interestingImageListTxtFile, numberOfIms = 1000, imsPerHIT = 1, root = 'http://langcog.stanford.edu/expts/saycam/frames/', exportCSVFilename):
+def chooseRandomIms(interestingImageListTxtFile, exportCSVFilename, numberOfIms = 1000, imsPerHIT = 1, root = 'http://langcog.stanford.edu/expts/saycam/frames/'):
     # multiple images per HIT!
     if imsPerHIT>1:
         # make 10 lists of 15 random images from interesting image list
