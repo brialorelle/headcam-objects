@@ -103,7 +103,7 @@ animacy_size <- d_by_image %>%
   group_by(age_day_bin) %>%
   dplyr::summarize(count_anim = sum(animal_all, na.rm=TRUE), count_big = sum(big_obj, na.rm=TRUE), count_small = sum(small_obj, na.rm=TRUE), count_frames = n(), count_people = sum(Person>0, na.rm=TRUE)) %>%
   mutate(Animals = count_anim / count_frames, BigObj = count_big / count_frames, People = count_people / count_frames, SmallObj = count_small / count_frames) %>%
-  gather(key = anim_size, value = freq, BigObj, People, SmallObj, Animals) %>%
+  gather(key = anim_size, value = freq, BigObj, SmallObj, Animals) %>%
   select(-count_anim, -count_big, -count_small)
 
 ```
