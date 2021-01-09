@@ -1,0 +1,105 @@
+---
+title: "SAYCAM-objects"
+author: "Bria Long"
+date: "12/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rjson)
+library(here)
+library(lubridate)
+library(magick)
+library(ggthemes)
+```
+
+# Import data
+## Filename to import data from sagemaker
+```{r}
+filename = here::here('data/saycam_goldset_annotations/24k/output.manifest')
+```
+
+## Use this awk construction to read the nested json
+```{r}
+json = fromJSON(paste("[",paste(readLines(filename),collapse=","),"]"))
+```
+
+## Create readable class list -- double checked via turk interface and data structure
+```{r}
+class_list = c('Animal-toy','Animal-real', 'Vehicle-toy','Vehicle-real','Toy','Utensil-Dish','Food','Furniture','Book','Person','Clothing','Plant', 'SmallObj','BigObj','Other','Nothing')
+
+d <- tibble() 
+```
+
+## Go through each row and extract data we want; ignoring conf
+```{r}
+for (i in 1:24000){
+  this_image = json[[i]]
+  source_url = this_image$`source-ref`
+  classes_in_image = this_image$`SAYCAM-classification-goldset-24k`
+  classes_in_image = classes_in_image + 1
+  these_confs =unlist(this_image$`SAYCAM-classification-goldset-24k-metadata`$`confidence-map`)
+  categories_in_image = class_list[classes_in_image]
+  new_rows = tibble(img = source_url, class = classes_in_image, category = categories_in_image, conf = these_confs)
+  
+  d <- d %>% 
+    bind_rows(new_rows)
+    
+}
+
+```
+
+
+# Add age data
+## Birthdays
+```{r}
+bday_s_approx = lubridate::ymd(20121017)
+bday_a_approx = lubridate::ymd(20120913)
+bday_y_approx = lubridate::ymd(20180214)
+
+bday = c(bday_s_approx,bday_a_approx, bday_y_approx)
+child_id  = c('S','A','Y')
+age_info = tibble(bday,child_id)
+
+```
+
+## get public url
+```{r}
+prefix = 'https://langcog.stanford.edu/expts/saycam/frames/'
+d <- d %>%
+  mutate(img_name = str_split_fixed(img,'/',5)[,5]) %>%
+  mutate(public_url = paste0(prefix,img_name))
+```
+
+## break out vid name / date filmed / age days
+```{r} 
+d <- d %>%
+  mutate(vid_name_temp = str_split_fixed(img_name,'-',2)[,2]) %>%
+  mutate(vid_name = str_split_fixed(vid_name_temp, '.mp4',2)[,1])  %>%
+  mutate(child_id = str_split_fixed(vid_name, '_',2)[,1]) %>%
+  mutate(date_filmed =  lubridate::ymd(str_split_fixed(vid_name, '_',4)[,2])) %>%
+  left_join(age_info) %>%
+  mutate(age_days = as.numeric(difftime(date_filmed,bday)) ) %>%
+  select(-bday, -date_filmed)
+```
+
+## construct age bins for every month 
+```{r}
+bin_size = 30 # days
+min_age = min(d$age_days, na.rm=TRUE)
+max_age = max(d$age_days, na.rm=TRUE)
+bin_starts = seq(min_age-1, max_age+1,bin_size)
+bins = c(bin_starts, max_age)
+
+d <- d %>%
+  mutate(age_day_bin = cut(age_days, bins, labels=round(bin_starts/30,1))) %>%
+  mutate(age_day_bin = as.numeric(as.character(age_day_bin))) 
+```
+
+# save out datafile
+```{r}
+dir.create(here::here('data/preprocessed_data/'))
+save(file = here::here('data/preprocessed_data/goldset_category_annotations.RData'), d)
+```
+
