@@ -1,0 +1,281 @@
+---
+title: "descriptive_analyses."
+author: "Bria Long"
+date: "1/7/2021"
+output: html_document
+---
+
+# Set up libraries
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rjson)
+library(here)
+library(lubridate)
+library(magick)
+library(ggthemes)
+```
+
+
+# Load preprocessed data
+```{r}
+load(file = here::here('data/preprocessed_data/goldset_category_annotations.RData'))
+```
+
+# Graph basic descriptives
+
+## Frequency of each category
+```{r}
+freq_by_category <- d %>%
+  group_by(category) %>%
+  dplyr::summarize(count = n()) %>%
+  mutate(freq_category = count / sum(count)) %>%
+  arrange(desc(freq_category)) %>%
+  mutate(category = fct_reorder(category, freq_category, .desc=TRUE)) %>%
+  select(-count)
+```
+
+```{r}
+ggplot(data=freq_by_category, aes(x=category, y=freq_category)) +
+  geom_point() +
+  theme_few() +
+  ylab('Proportion frames detected') +
+  xlab('Category') + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+## Frequency of each category by age
+```{r}
+freq_by_categories_by_age <- d %>%
+  group_by(age_day_bin) %>%
+  mutate(count_frames = n())  %>%
+  ungroup() %>%
+  group_by(category, age_day_bin, child_id) %>%
+  dplyr::summarize(count_categories = n(), count_frames = count_frames[1]) %>%
+  mutate(freq = count_categories / count_frames) %>%
+  left_join(freq_by_category) %>%
+  ungroup() %>%
+  mutate(category = forcats::fct_reorder(category, freq_category, .desc=TRUE)) 
+
+```
+
+```{r}
+ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=freq, size=count_frames, col=child_id)) +
+  theme_few() + 
+  geom_point(alpha=.3) +
+  geom_smooth(span=20, aes(weight=count_frames), alpha=.5) +
+  facet_wrap(~category) +
+  xlab('Age (months)') +
+  ylab('Proportion frames detected') +
+  theme(aspect.ratio = 1)
+
+```
+
+## How many annotations per frame did we have for frames that weren't "nothing"? 
+```{r}
+frames_with_things <- d %>%
+  filter(!category %in% c('Nothing')) %>%
+  group_by(img) %>%
+  summarize(count_dets = n())
+
+hist(frames_with_things$count_dets)
+```
+
+
+# Get long form data to look at conjunctions
+```{r}
+d_by_image <-  d %>%
+  select(public_url, age_days, age_day_bin, child_id, category, conf) %>%
+  spread(key = category, value=conf) 
+
+d_by_image <- d_by_image %>%
+  mutate(storytime = (Book>0) & (Person>0)) %>%
+  mutate(playtime = is.na(Book) & (Person>0) & (Toy>0 | `Vehicle-toy`>0 | `Animal-toy`>0)) %>%
+  mutate(mealtime = (Food>0) & (`Utensil-Dish`>0)) %>%
+  mutate(kid_things = (`Animal-toy`)>0  | (`Vehicle-toy`)>0 | (`Toy`)>0  | (`Book`)>0 ) %>%
+  mutate(animal_all = (`Animal-real`>0) | (`Animal-toy`>0)) %>%
+  mutate(big_obj = (BigObj>0) | (Furniture>0) | (`Vehicle-real`>0)) %>%
+  mutate(small_obj = (SmallObj>0) | (Toy>0) | (`Utensil-Dish`>0) | (Food>0))
+```
+
+```{r}
+animacy_size <- d_by_image %>%
+  group_by(age_day_bin) %>%
+  dplyr::summarize(count_anim = sum(animal_all, na.rm=TRUE), count_big = sum(big_obj, na.rm=TRUE), count_small = sum(small_obj, na.rm=TRUE), count_frames = n(), count_people = sum(Person>0, na.rm=TRUE)) %>%
+  mutate(Animals = count_anim / count_frames, BigObj = count_big / count_frames, People = count_people / count_frames, SmallObj = count_small / count_frames) %>%
+  gather(key = anim_size, value = freq, BigObj, People, SmallObj, Animals) %>%
+  select(-count_anim, -count_big, -count_small)
+
+```
+
+## Animacy/size frequency across age
+```{r}
+ggplot(data=animacy_size, aes(x=age_day_bin, y=freq, size=count_frames, col=anim_size)) +
+  geom_point(alpha=.5) +
+  theme_few() +
+  geom_smooth(span=10) + 
+  xlab('Age (in months)') +
+  ylab('Proportion detected') 
+
+```
+
+## Frequency of activites
+```{r}
+activities <- d_by_image %>%
+  group_by(age_day_bin, child_id) %>%
+  dplyr::summarize(count_storytime = sum(storytime, na.rm=TRUE), count_playtime = sum(playtime, na.rm=TRUE), count_mealtime = sum(mealtime, na.rm=TRUE), count_frames = n()) %>%
+  mutate(Storytime = count_storytime / count_frames, Playtime = count_playtime / count_frames, Mealtime = count_mealtime / count_frames) %>%
+  gather(key = Activity, value = freq, Storytime, Playtime, Mealtime) %>%
+  select(-count_storytime, -count_playtime, -count_mealtime)
+
+```
+
+```{r}
+ggplot(data=activities, aes(x=age_day_bin, y=freq, col=child_id, size=count_frames)) +
+  geom_point(alpha=.5) +
+  theme_few() +
+  geom_smooth(span=10) + 
+  xlab('Age (in months)') +
+  ylab('Proportion detected') +
+  facet_wrap(~Activity) +
+  ylim(0,.5)
+
+```
+
+## Prop "kid things"
+
+```{r}
+
+kid_things_by_age <- d_by_image %>%
+  group_by(age_day_bin, child_id) %>%
+  dplyr::summarize(count_kid= sum(kid_things, na.rm=TRUE), count_frames = n()) %>%
+  mutate(Kid_Relevant = count_kid / count_frames)
+
+
+ggplot(data=kid_things_by_age, aes(x=age_day_bin, y=Kid_Relevant, col=child_id, size=count_frames)) +
+  geom_point(alpha=.5) +
+  theme_few() +
+  geom_smooth(span=10) + 
+  xlab('Age (in months)') +
+  ylab('Proportion detected') +
+  ylim(0,1)
+
+```
+
+
+
+
+#  Make montages for visualizations
+# Each category
+```{r}
+dir.create(here::here('data/example-montages/'))
+class_list  = unique(d$category)
+
+for (c in class_list) {
+  this_class <- d %>%
+    filter(category == c) %>%
+    filter(conf>.8) %>% # get best examples
+    dplyr::sample_n(10)
+
+  image_read(this_class$public_url) %>%
+    image_append(stack = FALSE) %>%
+    image_write(paste0(here::here("data/example-montages/"), c,".png"))
+}
+```
+
+## Activities montages
+```{r}
+activity_list = c('storytime','mealtime','playtime')
+for (a in activity_list) {
+  this_class <- d_by_image %>%
+    filter(!!(sym(a)) == TRUE) %>%
+    dplyr::sample_n(20)
+
+  image_read(this_class$public_url) %>%
+    image_append(stack = FALSE) %>%
+    image_write(paste0(here::here("data/example-montages/"), a,".png"))
+}
+```
+
+## Co-occurance statistics
+```{r}
+# limit <- d %>% select(img, category)
+# out = table(limit)
+
+# I wish I could figure out how to make this work in tidyverse....
+```
+
+## First get some sort of table (img x category) that makes sense?
+```{r}
+temp <- d %>%
+  group_by(img, category) %>%
+  tally() %>%
+  spread(key = category, value = n) %>%
+  ungroup() %>%
+  replace(is.na(.), 0) %>%
+  select(-img)
+```
+
+### Wanted this to work in tidyverse.....sorrrry
+The truth if I wrote this ugly for loop in baser because I couldn't quite figure it out. Ugh.
+```{r}
+
+col_names = colnames(temp)
+
+for (c1 in 1:12) {
+  for (c2 in 1:12) {
+  both_present= sum(temp[c1]==1 & temp[c2]==1)
+  this_data = tibble(col_names[c1], col_names[c2], both_present)
+  colnames(this_data) = c('Category1','Category2','Count')
+  if (c1==1 & c2==1){
+    coocc_data = this_data
+  }
+  else {
+  coocc_data <- coocc_data %>%
+    full_join(this_data)
+  }
+  }
+}
+
+```
+
+```{r}
+num_images = length(unique(d$img))
+ordered_coocc  <- coocc_data %>%
+  left_join(freq_by_category, by = c('Category1' = 'category')) %>%
+  ungroup() %>%
+  mutate(Category1 = forcats::fct_reorder(Category1, freq_category, .desc=TRUE)) %>%
+  mutate(Frequency = Count / num_images)
+
+ordered_coocc$Category2 = factor(ordered_coocc$Category2, levels = levels(ordered_coocc$Category1))
+```
+
+```{r}
+library(viridis)
+ggplot(ordered_coocc, aes(x=Category1, y=Category2, fill=Frequency)) + 
+  geom_tile() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  scale_fill_viridis(option='D', begin=.1, end=.9)
+  
+```
+
+# ```{r}
+# what <- d  %>%
+#   select(img, category) %>%
+#   spread(category, -img)
+# ```
+# 
+# ```{r}
+# temp <- d %>%
+#   group_by(img, category) %>%
+#   tally() %>%
+#   spread(key = category, value = n) %>%
+#   ungroup() %>%
+#   select(-img)%>%
+#   expand(.)
+# 
+# 
+#   
+# 
+# 
+# ```

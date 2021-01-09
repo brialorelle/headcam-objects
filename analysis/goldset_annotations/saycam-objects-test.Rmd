@@ -46,6 +46,7 @@ for (i in 1:24000){
     bind_rows(new_rows)
     
 }
+
 ```
 
 
@@ -92,6 +93,10 @@ bins = c(bin_starts, max_age)
 d <- d %>%
   mutate(age_day_bin = cut(age_days, bins, labels=round(bin_starts/30,1))) %>%
   mutate(age_day_bin = as.numeric(as.character(age_day_bin))) 
+```
+
+```{r}
+save(here::here('data/preprocessed_data/goldset_category_annotations.RData'), d)
 ```
 
 
