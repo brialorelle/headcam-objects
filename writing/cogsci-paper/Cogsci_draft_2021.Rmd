@@ -38,13 +38,13 @@ knitr::opts_chunk$set(fig.width=3, fig.height=3, fig.crop = F,
 # Introduction
 What do children tend to see in their everyday lives? While an understanding of children's visual environment is central to both theories of language acquisition and visual development, we know remarkably little about the categories and objects that tend to be in the infant view, or how they are experienced. For example, how often do infants tend to see animals in real-life vs. in storybooks or as toys? How consistent are the broad characteristics of children's visual environment across individuals and across developmental time?
 
-Over the past decade, researchers have begun to answer these questions by documenting the infant egocentric perspective using head-mounted cameras [@yoshida2008;@franchak2011],quantifying the degree to which there are substantial shifts in infants viewpoints that may have downstream developmental consequences.  
-Indeed, as adults it is hard to intuit how strange this viewpoint can be, and how much it varies across development, transitioning over the first two years of life from close-up views of faces to restricted views of hands manipulating objects [@fausey2016; @long2020]  and children's postural developments shaping what they see [@sanchez2018].
+Over the past decade, researchers have begun to answer these questions by documenting the infant egocentric perspective using head-mounted cameras [@yoshida2008;@franchak2011],quantifying the degree to which there are substantial shifts in infants viewpoints that may have downstream developmental consequences.  Indeed, as adults it is hard to intuit how strange this viewpoint can be, and how much it varies across development, transitioning over the first two years of life from close-up views of faces to restricted views of hands manipulating objects [@fausey2016; @long2020]  and children's postural developments shaping what they see [@sanchez2018].
 Most work, however, has focused on documenting the social information that infants and children have access to across early development  [@yoshida2008; @sanchez2018; @fausey2016]. 
 
 More recent research has made progress towards understanding what objects tend to be the infant view, starting with annotating the basic-level categories (e.g., spoons, cups) in the view of 8-month-olds during mealtime. This research suggests that a small number of objects are both pervasively present and among infants' first-learned words [@clerkin2017], pointing towards a link between visual experience and early word learning.  These findings suggest that a more complete understanding of the visual environment of infants and young children could yield insights about the inputs to both category learning and word learning.
 
-Here, we take a step towards characterizing the visual environment of young children by analyzing the categories of objects (e.g., animals, vehicles, toys, people) present in the infant view in a longitudinal corpus of head-mounted camera data [@sullivan2020]. We choose to annotate these broad categories -- rather than the basic-level identities of objects -- for three reasons. First, as our corpus is sampled densely from only a few children, an understanding of the particular objects in their viewpoints may not be particularly generalizable. Second, the basic-level identities of many objects --  especially certain toys or objects viewed from odd angles -- are sometimes ambiguous (and therefore would be inconsistent across annotators). Finally, these less detailed annotations allow us to collect annotations for more frames from the dataset and therefore license broader coverage.  We thus collected human annotations of a randomly sampled set of 24,000 frames from two children in the longitudinal dataset, allowing the analysis of the proportion of broad categories in the infant view from 6-32 months of age.
+Here, we take a step towards characterizing the visual environment of young children by analyzing the categories of objects (e.g., animals, vehicles, toys, people) present in the infant view in a longitudinal corpus of head-mounted camera data [@sullivan2020]. To start, we choose to annotate these broad categories -- rather than the basic-level identities of all objects that were present -- as these less detailed annotations allow us to collect data about many more frames from the dataset. We thus collected human annotations of a randomly sampled set of 24,000 frames from two children in the longitudinal dataset, allowing the analysis of the proportion of broad categories in the infant view from 6-32 months of age.
+<!-- First, as our corpus is sampled densely from only a few children, an understanding of the particular objects in their viewpoints may not be particularly generalizable. Second, the basic-level identities of many objects --  especially certain toys or objects viewed from odd angles -- are sometimes ambiguous (and therefore would be inconsistent across annotators).  -->
 
 Using these annotations, we conducted three sets of analyses.  First, we examined whether the proportion of animals vs. inanimate objects would be relatively equal in the infant view. A long literature has documented that even newborns have a tendency to attend to animate agents [@farroni2005], and visual cortex dedicates a remarkable amount of space to making fine-grained distinctions among different animals [@konkle2013]. Furthermore,  animal words tend to be among children's first-learned words (CITES). However, at present, it is unknown whether (non-human) animates (e.g., cats, dogs, other animals) are prevalent in the infant viewpoint, and whether they tend to be exemplars of real-life animals (e.g., ducks at a park, pet dogs) or mostly illustrations in storybooks or as toy stuffed animals. 
 
@@ -56,11 +56,18 @@ Finally, prior work documenting the proportion of faces/hands in view has sugges
 
 # Method
 ## Dataset
+The dataset is described in detail in @SAYcam. Children wore Veho Muvi miniature cameras mounted on a custom camping headlamp harness ("headcams") at least twice weekly, for approximately one hour per recording session. One weekly session was on the same day each week at a roughly constant time of day, while the other(s) were chosen arbitrarily at the participating family’s discretion. At the time of the recording, all three children were in single-child households.  Videos captured by the headcam were 640x480 pixels, and a fisheye lens was attached to the camera to increase the field of view to approximately 109 degrees horizontal x 70 degrees vertical. 
+
 ## Annotation procedure
+Annotations of the dataset were obtained using AWS Sagemaker annotations  using credits from [blinded]. Participants were instructed to select all of the categories that could be applied to an image; two workers annotated each image, and each category that was annotated for an image was assigned a confidence score (possible range: 0-1, range in dataset: .5-1). Participants selected whether the following categories were present in the shown image: Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, Other, or Nothing visible. Additional instructions were provided to specify that 'other big object" refers to an object that is bigger than a chai, and that 'other small object' refers to an object that is small enough to be held with one or two hands [@konkle2011]. Annotators were required to select at least one category before proceeding.
+
+
 ## Preprocessing
+All annotations were retained for the following analysis. Children's age was calculated relative to the date that the video was filmed.
 
 # Results
 ## Part 1: Category prevalence
+
 
 Lots of people generally speaking (and partial views of furniture)
 Equal proportion of toys vs. real for animals/vehicle
@@ -80,7 +87,7 @@ Is there a dip for toys? (less play as learning locomotion?)
 
 
 ```{r setup, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
 library(tidyverse)
 library(here)
 library(ggthemes)
@@ -97,8 +104,7 @@ freq_by_category <- d %>%
   dplyr::summarize(count = n()) %>%
   mutate(freq_category = count / sum(count)) %>%
   arrange(desc(freq_category)) %>%
-  mutate(category = fct_reorder(category, freq_category, .desc=TRUE)) %>%
-  select(-count)
+  mutate(category = fct_reorder(category, freq_category, .desc=TRUE)) 
 
 freq_by_categories_by_age <- d %>%
   group_by(age_day_bin) %>%
@@ -113,17 +119,17 @@ freq_by_categories_by_age <- d %>%
 ```
 
 
-```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h", fig.width=8, fig.height=6, num.cols.cap=2, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months)."}
+```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h", fig.width=8, num.cols.cap=2, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months)."}
 ## Figure 2
 # MAKE DOTS SMALLER
 ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=freq, size=count_frames, col=child_id)) +
-  theme_few() + 
+  theme_few(base_size=10) + 
   geom_point(alpha=.3) +
-  geom_smooth(span=20, aes(weight=count_frames), alpha=.5) +
+  geom_smooth(span=20, aes(weight=count_frames), alpha=.1) +
   facet_wrap(~category) +
   xlab('Age (months)') +
   ylab('Proportion frames detected') +
-  theme(aspect.ratio = 1)
+  theme(aspect.ratio = 1, legend.position='none')
 
 ```
 
@@ -172,9 +178,12 @@ activities <- d_by_image %>%
   group_by(age_day_bin, child_id) %>%
   dplyr::summarize(count_storytime = sum(storytime, na.rm=TRUE), count_playtime = sum(playtime, na.rm=TRUE), count_mealtime = sum(mealtime, na.rm=TRUE), count_frames = n()) %>%
   mutate(Storytime = count_storytime / count_frames, Playtime = count_playtime / count_frames, Mealtime = count_mealtime / count_frames) %>%
-  gather(key = Activity, value = freq, Storytime, Playtime, Mealtime) %>%
+  gather(key = Activity, value = freq, Storytime, Playtime)%>%
   select(-count_storytime, -count_playtime, -count_mealtime)
-
+# 
+# activities_complete <- activities %>%
+#   left_join(freq_by_categories_by_age) %>%
+#   select(age_day_bin, child_id, count_storytime, )
 ```
 
 
@@ -186,6 +195,9 @@ Storytime (book + person) or book on own
 Joint playtime (not book + yes toy + person)
 Data-driven: Correlogram of different categories (and hierarchical clustering to identify similar/dissimilar contexts)
 Might identify the candidate contexts that we can think of, and maybe others that we can’t (e.g., perhaps playtime outside)
+
+
+
 
 
 ```{r activities, echo=F, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', fig.width=8,  num.cols.cap=2, fig.align = "center", fig.cap = "Frequency of mealtime (food = utensils), storytime (book + person), and playtime (e.g., toy + people) activities for each child across age in the randomly sampled frames. "}
@@ -220,11 +232,15 @@ temp <- d %>%
 # The truth if I wrote this ugly for loop in baser because I couldn't quite figure it out. Ugh.
 col_names = colnames(temp)
 
-for (c1 in 1:12) {
-  for (c2 in 1:12) {
+for (c1 in 1:length(col_names)) {
+  for (c2 in 1:length(col_names)) {
   both_present= sum(temp[c1]==1 & temp[c2]==1)
+  #  if (c1==c2){
+  #   both_present=NA
+  # }
   this_data = tibble(col_names[c1], col_names[c2], both_present)
   colnames(this_data) = c('Category1','Category2','Count')
+ 
   if (c1==1 & c2==1){
     coocc_data = this_data
   }
@@ -236,24 +252,50 @@ for (c1 in 1:12) {
 }
 
 ## Reorder data for plot
-num_images = length(unique(d$img))
-ordered_coocc  <- coocc_data %>%
-  left_join(freq_by_category, by = c('Category1' = 'category')) %>%
+# num_images = length(unique(d$img))
+# ordered_coocc  <- coocc_data %>%
+#   left_join(freq_by_category, by = c('Category1' = 'category')) %>%
+#   ungroup() %>%
+#   mutate(Category1 = forcats::fct_reorder(Category1, freq_category, .desc=TRUE)) %>%
+#   mutate(Frequency = Count / num_images)
+# 
+# ordered_coocc$Category2 = factor(ordered_coocc$Category2, levels = levels(ordered_coocc$Category1))
+
+```
+
+```{r}
+
+freq_by_category_to_join <- freq_by_category %>%
+  rename(Category1 = category, Category1_Count = count)
+
+ordered_prob  <- coocc_data %>%
+  left_join(freq_by_category_to_join) %>%
+  group_by(Category1, Category2) %>%
+  mutate(prob = Count / Category1_Count) %>%
   ungroup() %>%
   mutate(Category1 = forcats::fct_reorder(Category1, freq_category, .desc=TRUE)) %>%
-  mutate(Frequency = Count / num_images)
+  filter(!prob==1)
 
-ordered_coocc$Category2 = factor(ordered_coocc$Category2, levels = levels(ordered_coocc$Category1))
+
+ordered_prob$Category2 = factor(ordered_prob$Category2, levels = levels(ordered_prob$Category1))
+```
+
+```{r}
+check <- ordered_prob %>%
+ filter(Category1 %in% c('Person','Clothing')) %>%
+ filter(Category2 %in% c('Person','Clothing'))
 ```
 
 ```{r coocc_stats, echo=F, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3, fig.height=3, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Co-ccurance between different categories detected in the dataset across all frames. "}
 # Plot co-occurance stats
-ggplot(ordered_coocc, aes(x=Category1, y=Category2, fill=Frequency)) + 
+ggplot(ordered_prob, aes(x=Category1, y=Category2, fill=prob)) + 
   geom_tile() + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   scale_fill_viridis(option='D', begin=.1, end=.9) +
-  xlab("") +
-  ylab("")
+  xlab('Frequency of occurance') +
+  ylab('Relative to') 
+
+ 
 ```
 
 # General Discussion

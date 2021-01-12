@@ -97,6 +97,12 @@ d <- d %>%
   mutate(age_day_bin = as.numeric(as.character(age_day_bin))) 
 ```
 
+
+```{r}
+d <- d %>%
+  filter(conf > quantile(conf,.25))
+```
+
 # save out datafile
 ```{r}
 dir.create(here::here('data/preprocessed_data/'))

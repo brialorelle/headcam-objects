@@ -183,6 +183,43 @@ for (c in class_list) {
 }
 ```
 
+## Render out indiivduals
+```{r}
+class_list  = unique(d$category)
+
+for (c in class_list) {
+  examples <- d %>%
+    filter(category == c) %>%
+    dplyr::sample_n(200)
+
+  public_urls = unique(examples$public_url)
+  img_names_short = unique(examples$img_name)
+
+  dir.create(here::here("data/annotation_examples/",c),recursive = TRUE)
+
+  for (i in 1:length(public_urls)){
+    this_image = image_read(public_urls[i])
+    image_write(this_image,here::here("data/annotation_examples/", c, img_names_short[i]))
+  }
+}
+```
+
+
+
+# 
+# small_obj %>%
+#   rowwise() %>%
+#   mutate(this_image = image_read(public_url)) %>%
+#   image_write(this_image,here::here("data/annotation_examples/small_obj",image_name))
+
+# image_read(t
+#            his_class$public_url) %>%
+#   image_append(stack = FALSE) %>%
+#   image_write(paste0(here::here("data/example-montages/"), c,".png"))
+
+```
+
+
 ## Activities montages
 ```{r}
 activity_list = c('storytime','mealtime','playtime')
