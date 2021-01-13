@@ -296,23 +296,9 @@ ggplot(ordered_coocc, aes(x=Category1, y=Category2, fill=Frequency)) +
   
 ```
 
-# ```{r}
-# what <- d  %>%
-#   select(img, category) %>%
-#   spread(category, -img)
-# ```
-# 
-# ```{r}
-# temp <- d %>%
-#   group_by(img, category) %>%
-#   tally() %>%
-#   spread(key = category, value = n) %>%
-#   ungroup() %>%
-#   select(-img)%>%
-#   expand(.)
-# 
-# 
-#   
-# 
-# 
-# ```
+
+
+## Read in hand annotations
+```{r}
+
+```

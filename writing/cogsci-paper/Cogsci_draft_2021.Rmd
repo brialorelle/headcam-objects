@@ -5,8 +5,7 @@ csl: apa6.csl
 document-params: "10pt, letterpaper"
 
 author-information: > 
-    \author{{\large \bf Morton Ann Gernsbacher (MAG@Macc.Wisc.Edu)} \\ Department of Psychology, 1202 W. Johnson Street \\ Madison, WI 53706 USA
-    \AND {\large \bf Sharon J.~Derry (SDJ@Macc.Wisc.Edu)} \\ Department of Educational Psychology, 1025 W. Johnson Street \\ Madison, WI 53706 USA}
+    \author{}
 
 abstract: >
     Include no author information in the initial submission, to facilitate
@@ -20,7 +19,7 @@ abstract: >
     shown below.
     
 keywords: >
-    Add your choice of indexing terms or keywords; kindly use a semi-colon; between each term.
+    Object categorization; infant visual experience; head-mounted cameras; longitudinal data.
     
 output: cogsci2016::cogsci_paper
 #final-submission: \cogscifinalcopy
@@ -52,36 +51,40 @@ Second, we examined the co-occurrence between these broad object categories acro
 
 Finally, prior work documenting the proportion of faces/hands in view has suggested some developmental changes in how children experience their visual across this same age range--including in this same dataset [@long2020]. Thus, one possibility is that as children learn to crawl and walk on their own [@sanchez2020; @long2020; @franchak2011], some categories that children are likely to interact with (i.e., toys, small objects) could become more prevalent in the child's view across age, whereas other, more stable categories (i.e., furniture) might show relative consistency. On the other hand, the broad characteristics children's visual environments may be relatively stable and determined mostly by the activities that they tend to engage in. We thus examined this hypothesis by exploring the prevalence of each of the broad categories that were annotated across developmental time and across both children. 
 
-
-
 # Method
 ## Dataset
-The dataset is described in detail in @SAYcam. Children wore Veho Muvi miniature cameras mounted on a custom camping headlamp harness ("headcams") at least twice weekly, for approximately one hour per recording session. One weekly session was on the same day each week at a roughly constant time of day, while the other(s) were chosen arbitrarily at the participating family’s discretion. At the time of the recording, all three children were in single-child households.  Videos captured by the headcam were 640x480 pixels, and a fisheye lens was attached to the camera to increase the field of view to approximately 109 degrees horizontal x 70 degrees vertical. 
+The dataset is described in detail in @SAYcam. Children wore Veho Muvi miniature cameras mounted on a custom camping headlamp harness ("headcams") at least twice weekly, for approximately one hour per recording session. One weekly session was on the same day each week at a roughly constant time of day, while the other(s) were chosen arbitrarily at the participating family’s discretion. At the time of the recording, all three children were in single-child households.  Videos captured by the headcam were 640x480 pixels, and a fisheye lens was attached to the camera to increase the field of view to approximately 109 degrees horizontal x 70 degrees vertical. We randomly sampled 24000 frames from videos of the children in the dataset (S, A) over the entire age range. 
 
-## Annotation procedure
-Annotations of the dataset were obtained using AWS Sagemaker annotations  using credits from [blinded]. Participants were instructed to select all of the categories that could be applied to an image; two workers annotated each image, and each category that was annotated for an image was assigned a confidence score (possible range: 0-1, range in dataset: .5-1). Participants selected whether the following categories were present in the shown image: Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, Other, or Nothing visible. Additional instructions were provided to specify that 'other big object" refers to an object that is bigger than a chai, and that 'other small object' refers to an object that is small enough to be held with one or two hands [@konkle2011]. Annotators were required to select at least one category before proceeding.
+## Annotation procedures
+### Broad categories in view
+Annotations of the broad categories in the dataset were obtained using AWS Sagemaker annotations  using credits from [blinded]. Participants were instructed to select all of the categories that could be applied to an image; two workers annotated each image, and each category that was annotated for an image was assigned a confidence score (possible range: 0-1, range in dataset: .5-1). Participants selected whether the following categories were present in the shown image: Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, Other, or Nothing visible.  We included "other small objects" and "other big objects" as categories that participants could use to indicate objects that fell outside of these traditional superordinate categories (i.e. furniture, plant, toy). Additional instructions were provided to specify that 'other big object" refers to an object that is bigger than a chai, and that 'other small object' refers to an object that is small enough to be held with one or two hands [@konkle2011]. Annotators were required to select at least one category before proceeding. Individual annotations had confidence scores below the 25\%th percentile were excluded from analyses (although all conclusions hold with and without these low-confidence annotaitons). Each child's age was calculated in days relative to the date that the videos were filmed and converted to months for plotting purposes.
 
+### Objects in the child's reach
+We further annotated the objects that children were interacting with in a subset of these frames. Specifically, we selected the frames in which a previous set of participants ecruited via Amazon Mechanical Turk annotated whether the hands present in a given image belong to an adult or a child and drew bounding boxes around those hands; hese frames a subset of frames that were previously annotated by another set of XX participants who indicated that a hand was present. This resulted in a set of 3050 images that were shown to a new set of participants again via AWS Sagemaker annotations interface; annotators were asked to "Select the objects that the child is holding or are asily within their reach." Annotators were asked to choose from a set of 50 labels that were constructed by the authors; these labels included the high frequency, manipulable objects from Clerkin et al., 2017, an additional set of high-frequency words from CHILDES, and additional labels added after manually inspecting a few of the frames; annotators were also provided with select "other object", "cannot tell", "no child hand present", and "nothing in reach".
 
 ## Preprocessing
-All annotations were retained for the following analysis. Children's age was calculated relative to the date that the video was filmed.
 
 # Results
-## Part 1: Category prevalence
+First, we found that people were by far the most prevalent of these categories in the infant view. Over 20%\ of the frames that were annotated contained people, far more than any categories (including all kinds of toys combined). However, there were relatively few instances of animals in the infant view overal--either as toys or their real life counterparts.  Indeed, there were less than 5%\ of these random frames that contained any kind of depicted or real animal. Furthermore, manual inspection of the frames containing animals revealed that the "real" animals had relatively little variety -- they were overwhelmingly frames containing images of household pets (i.e., cats, dogs, and chickens, in the case of A), whereas the animals that were "toys/drawings" depicted a much larger variety of animals, as one might expect. More broadly, we found relatively equal proportion of toys vs. real animals/vehicle in the infant view, suggesting that -- at least for these children -- that toys and drawings provide frequent input to their representations of these categories.
+
+Far more prevalent than animals, instead, were objects. Partial views of furniture were the next most common category after "people". However, generally speaking, "big objects" -- including furniture, vehicles, and other big objects -- tended to be less frequently in the view of infants than "small" objects -- including toys (of all kinds), food, utensils, books, and other small objects (see Figure X).   Finally, a few thousand frames were categorizing as having "no objects" in them--perhaps attesting to the fact that children's goals may be quite different than examining objects--for example, learning to crawl or climb a couch. 
 
 
-Lots of people generally speaking (and partial views of furniture)
-Equal proportion of toys vs. real for animals/vehicle
-Not that much variance in exemplars for reals -- mostly dog/cats for animals 
-Real vehicles are often interiors of vehicles (can quantify how many easily)
-Animacy/size prevalence comparisons 
-More objects > animals in general 
-Even though animal names are learned early
-Suggests role for heightened attention to animals
-Small objects → broad category of stuff they see
-Some of this measured in mealtime, but a lot more variability here than just food/utensils (toys/other small objects, etc)
-No developmental change in prevalence AFAWCT
- (maybe in stereotyped activities, not done yet)
-Is there a dip for toys? (less play as learning locomotion?)
+<!-- A second triking results is that there were a relatively sma -->
+<!-- Lots of people generally speaking (and partial views of furniture) -->
+<!-- Equal proportion of toys vs. real for animals/vehicle -->
+<!-- Not that much variance in exemplars for reals -- mostly dog/cats for animals  -->
+<!-- Real vehicles are often interiors of vehicles (can quantify how many easily) -->
+<!-- Animacy/size prevalence comparisons  -->
+<!-- More objects > animals in general -->
+<!-- Even though animal names are learned early -->'D
+
+<!-- Suggests role for heightened attention to animals -->
+<!-- Small objects → broad category of stuff they see -->
+<!-- Some of this measured in mealtime, but a lot more variability here than just food/utensils (toys/other small objects, etc) -->
+<!-- No developmental change in prevalence AFAWCT -->
+ <!-- (maybe in stereotyped activities, not done yet) -->
+<!-- Is there a dip for toys? (less play as learning locomotion?) -->
 
 
 
@@ -98,7 +101,13 @@ library(viridis)
 load(file = here::here('data/preprocessed_data/goldset_category_annotations.RData'))
 ```
 
+
+
 ```{r, echo=FALSE}
+
+d_hands <- d %>%
+  filter(child_hand_seg == TRUE)
+
 freq_by_category <- d %>%
   group_by(category) %>%
   dplyr::summarize(count = n()) %>%
@@ -107,7 +116,18 @@ freq_by_category <- d %>%
   mutate(category = fct_reorder(category, freq_category, .desc=TRUE)) 
 
 freq_by_categories_by_age <- d %>%
-  group_by(age_day_bin) %>%
+  group_by(age_day_bin, child_id) %>%
+  mutate(count_frames = n())  %>%
+  ungroup() %>%
+  group_by(category, age_day_bin, child_id) %>%
+  dplyr::summarize(count_categories = n(), count_frames = count_frames[1]) %>%
+  mutate(freq = count_categories / count_frames) %>%
+  left_join(freq_by_category) %>%
+  ungroup() %>%
+  mutate(category = forcats::fct_reorder(category, freq_category, .desc=TRUE)) 
+
+freq_by_categories_by_age_child_hands <- d_hands %>%
+  group_by(age_day_bin, child_id) %>%
   mutate(count_frames = n())  %>%
   ungroup() %>%
   group_by(category, age_day_bin, child_id) %>%
@@ -128,11 +148,21 @@ ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=freq, size=count_fra
   geom_smooth(span=20, aes(weight=count_frames), alpha=.1) +
   facet_wrap(~category) +
   xlab('Age (months)') +
-  ylab('Proportion frames detected') +
-  theme(aspect.ratio = 1, legend.position='none')
+  ylab('Proportion frames detected') 
+  # theme(aspect.ratio = 1, legend.position='none')
 
 ```
+```{r}
+ggplot(data=freq_by_categories_by_age_child_hands, aes(x=age_day_bin, y=freq, size=count_frames, col=child_id)) +
+  theme_few(base_size=10) + 
+  geom_point(alpha=.3) +
+  geom_smooth(span=20, aes(weight=count_frames), alpha=.1) +
+  facet_wrap(~category) +
+  xlab('Age (months)') +
+  ylab('Proportion frames detected') 
+  # theme(aspect.ratio = 1, legend.position='none')
 
+```
 
 ```{r, echo=FALSE}
 # Get long form data to look at conjunctions
@@ -147,13 +177,13 @@ d_by_image <- d_by_image %>%
   mutate(kid_things = (`Animal-toy`)>0  | (`Vehicle-toy`)>0 | (`Toy`)>0  | (`Book`)>0 ) %>%
   mutate(animal_all = (`Animal-real`>0) | (`Animal-toy`>0)) %>%
   mutate(big_obj = (BigObj>0) | (Furniture>0) | (`Vehicle-real`>0)) %>%
-  mutate(small_obj = (SmallObj>0) | (Toy>0) | (`Utensil-Dish`>0) | (Food>0))
+  mutate(small_obj = (SmallObj>0) | (Toy>0) | (`Utensil-Dish`>0) | (Food>0) | (`Vehicle-toy`)>0  | (`Animal-toy`>0) | (Book>0))
 
 animacy_size <- d_by_image %>%
   group_by(age_day_bin) %>%
   dplyr::summarize(count_anim = sum(animal_all, na.rm=TRUE), count_big = sum(big_obj, na.rm=TRUE), count_small = sum(small_obj, na.rm=TRUE), count_frames = n(), count_people = sum(Person>0, na.rm=TRUE)) %>%
   mutate(Animals = count_anim / count_frames, BigObj = count_big / count_frames, People = count_people / count_frames, SmallObj = count_small / count_frames) %>%
-  gather(key = anim_size, value = freq, BigObj, SmallObj, Animals) %>%
+  gather(key = anim_size, value = freq, BigObj, People, SmallObj, Animals) %>%
   select(-count_anim, -count_big, -count_small)
 ```
 
@@ -306,6 +336,9 @@ Stereotyped activities are not that frequent in kid’s experience, even though 
 Kids learning from both real and toy examples in equal measure → toys/depictions are real part of kid’s representations
 Role of extra attention to animals (i.e. saliency of animate objs) in learning animals/their names, not just pure frequency
 
+Though mealtime has been used to characterize the objects in the infant view [@clerkin2017], frames with food or utensil and dishes accounted for less than 5%\ of the randomly sampled frames in the dataset. 
+
+
 Future work
 Relationship to early learned words for these categories → need to drill down to basic-level categories to assess this hypothesis
 Generalization to other datasets
@@ -317,6 +350,8 @@ Yet suggests that at least some kids are learning quite a lot from books and dep
 Only 2 kids -- though we see consistency here
 When parents choose to wear headcam -- not getting time at daycare,etc
 Nonetheless, broad findings that objects > animals and consistency across age are things we predict will generalize broadly beyond this small population
+
+
 
 # Acknowledgements
 
