@@ -1,0 +1,168 @@
+<!-- You must include this JavaScript file -->
+<script src=“https://assets.crowd.aws/crowd-html-elements.js”></script>
+
+<head>
+    <style>
+        h3 {
+            font-size: 16px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 20px;
+        }
+
+        divTxt {
+            width: 50%;
+            position: absolute;
+            z-index: 99;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            font-size: 30px;
+            height: 50%;
+        }
+
+        div1 {
+            text-align: left;
+            font-size: 18px;
+        }
+
+        divIm {
+            position: relative;
+            text-align: center;
+            color: white;
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- <body onload=“appendTen()“></body>You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form>
+    <br>
+    <h1>Guide for Labeling</h1>
+    <ol style=“font-size:16px”>
+        <li>Search for the name of the five most obvious OBJECTS you see (do NOT label people or body parts)</li>
+        <li>Select the most appropriate label and draw a rectangle around each object, leaving a 2-3 pixel margin.</li>
+    </ol>
+    <div1>Click on the “Instructions” button below to see tips and examples of good and bad annotations.</div1>
+    <br>
+    <crowd-bounding-box id=“annotator1” name=“annotatedResult1" header=“Select and label 1-5 objects in each of the 10 images. Do not label people (no body parts, people, etc).” src=“${image_url1}” labels=“[‘other / label not found’, ‘activity gym’,
+        ‘airplane’, ‘alligator’, ‘animal’, ‘ant’, ‘apple’, ‘applesauce’, ‘art’, ‘backpack’, ‘backyard’, ‘bag’, ‘ball’, ‘balloon’, ‘banana’, ‘baseball glove’, ‘basket’, ‘bat’, ‘bath toy’, ‘bathtub’, ‘beanbag’, ‘beans’, ‘bear’, ‘bed’, ‘bee’, ‘bench’,
+        ‘bicycle’, ‘bike stand’, ‘bird’, ‘blanket’, ‘blender’, ‘block’, ‘blocks’, ‘boat’, ‘book’, ‘boots’, ‘bottle’, ‘bouncer’, ‘bowl’, ‘box’, ‘bread’, ‘broccoli’, ‘broom’, ‘brush’, ‘bubbles’, ‘bucket’, ‘bug’, ‘bunny’, ‘bus’, ‘bush’, ‘butter’,
+        ‘butterfly’, ‘button’, ‘cabinet’, ‘cake’, ‘camera’, ‘can (object)’, ‘candy’, ‘car’, ‘carrots’, ‘cat’, ‘cell phone’, ‘cereal’, ‘chair’, ‘chalk’, ‘changing table’, ‘cheerios’, ‘cheese’, ‘chicken (animal)’, ‘chicken (food)’, ‘chocolate’,
+        ‘clock’, ‘closet’, ‘cloud’, ‘coffee’, ‘coin’, ‘coins’, ‘coke’, ‘comb’, ‘container’, ‘cookie’, ‘corn’, ‘cow’, ‘cracker’, ‘cradle’, ‘crayon’, ‘crayons’, ‘crib’, ‘cup’, ‘curtain’, ‘deer’, ‘desk’, ‘desktop’, ‘diaper’, ‘dining table’, ‘dish’,
+        ‘dog’, ‘doll’, ‘dollhouse’, ‘donkey’, ‘donut’, ‘door’, ‘drawer’, ‘dress’, ‘drink (beverage)’, ‘dryer’, ‘duck’, ‘egg’, ‘elephant’, ‘eyeglasses’, ‘fan’, ‘fence’, ‘fire hydrant’, ‘firetruck’, ‘fish (animal)’, ‘fish (food)’, ‘flag’, ‘flower’,
+        ‘food’, ‘fork’, ‘frame’, ‘french fries’, ‘frisbee’, ‘frog’, ‘fruit’, ‘game’, ‘garbage’, ‘garden’, ‘giraffe’, ‘glass’, ‘glasses’, ‘glue’, ‘goose’, ‘grapes’, ‘grass’, ‘green beans’, ‘guitar’, ‘gum’, ‘hair brush’, ‘hair drier’, ‘hamburger’,
+        ‘hammer’, ‘handbag’, ‘hat’, ‘helicopter’, ‘hen’, ‘high chair’, ‘hook’, ‘horse’, ‘hose’, ‘hot dog’, ‘house or home’, ‘ice’, ‘ice cream’, ‘jacket’, ‘jar’, ‘jello’, ‘jelly’, ‘juice’, ‘keyboard’, ‘keys’, ‘kite’, ‘kitty’, ‘knife’, ‘ladder’,
+        ‘lamb’, ‘lamp’, ‘laptop’, ‘lawn mower’, ‘leaf’, ‘light’, ‘light switch’, ‘lion’, ‘lollipop’, ‘magnet’, ‘maraca’, ‘marker’, ‘mat’, ‘meat’, ‘medicine’, ‘melon’, ‘microwave’, ‘milk’, ‘mirror’, ‘mobile’, ‘mobile phone’, ‘money’, ‘monkey’, ‘moon’,
+        ‘moose’, ‘mop’, ‘motorcycle’, ‘mouse’, ‘muffin’, ‘mug’, ‘nail’, ‘napkin’, ‘noodles’, ‘nuts’, ‘orange (food)’, ‘oven’, ‘owl’, ‘paint’, ‘painting’, ‘pan’, ‘pancake’, ‘pants’, ‘paper’, ‘parking meter’, ‘peanut butter’, ‘peas’, ‘pen’, ‘pencil’,
+        ‘penguin’, ‘penny’, ‘pet toy’, ‘piano’, ‘pickle’, ‘picture’, ‘pig’, ‘pillow’, ‘pizza’, ‘plant’, ‘plate’, ‘play dough’, ‘play gym’, ‘play mat’, ‘play pen’, ‘pony’, ‘pool’, ‘popcorn’, ‘popsicle’, ‘porch’, ‘pot’, ‘potato’, ‘potato chip’, ‘potted
+        plant’, ‘potty’, ‘present’, ‘pretzel’, ‘pudding’, ‘pumpkin’, ‘puppy’, ‘purse’, ‘puzzle’, ‘rabbit’, ‘radio’, ‘rain’, ‘raisin’, ‘rattle’, ‘recycling bin’, ‘refrigerator’, ‘remote’, ‘rock’, ‘rocker’, ‘rocking chair’, ‘roof’, ‘rooster’, ‘rubber
+        duck’, ‘rug’, ‘salt’, ‘sandbox’, ‘sandwich’, ‘sauce’, ‘scissors’, ‘screen’, ‘seeds’, ‘sheep’, ‘shelf’, ‘shirt’, ‘shoe’, ‘shorts’, ‘shovel’, ‘shower’, ‘sidewalk’, ‘sink’, ‘sippy cup’, ‘skateboard’, ‘skirt’, ‘skis’, ‘sky’, ‘sled’, ‘slide
+        (object)’, ‘smartphone’, ‘snow’, ‘snowboard’, ‘snowman’, ‘soap’, ‘sock’, ‘soda/pop’, ‘sofa or couch’, ‘soil’, ‘soup’, ‘spaghetti’, ‘spoon’, ‘sports ball’, ‘sprinkler’, ‘squirrel’, ‘stairs’, ‘star’, ‘stick’, ‘stone’, ‘stool’, ‘stop sign’,
+        ‘story’, ‘stove’, ‘strawberry’, ‘street’, ‘street sign’, ‘stroller’, ‘stuffed animal’, ‘suitcase’, ‘sun’, ‘surfboard’, ‘swing (object)’, ‘table’, ‘tape’, ‘teddy bear’, ‘telephone’, ‘television (tv)’, ‘tennis racket’, ‘tie’, ‘tiger’, ‘tissue
+        or kleenex’, ‘toast’, ‘toaster’, ‘toilet’, ‘toothbrush’, ‘toothpaste’, ‘towel’, ‘toy (object)’, ‘tractor’, ‘traffic light’, ‘train’, ‘trash’, ‘trash can or garbage bin’, ‘tray’, ‘tree’, ‘tricycle’, ‘truck’, ‘tuna’, ‘turkey’, ‘turtle’,
+        ‘ukelele’, ‘umbrella’, ‘vacuum’, ‘vanilla’, ‘vanity’, ‘vase’, ‘vitamins’, ‘walker’, ‘washing machine’, ‘watch (object)’, ‘water (beverage)’, ‘water (not beverage)’, ‘wind’, ‘window’, ‘wine glass’, ‘wipes’, ‘wolf’, ‘yogurt’, ‘zebra’]”>
+
+        <short-instructions>
+            <h1>Tips and Examples</h1>
+            <p>This image contains an excellent set of labeled bounding boxes: </p>
+            <img width=“100%”
+                src=“https://lh3.googleusercontent.com/pw/ACtC-3fHa1ZIqlWQdySgGPV9pWjfwwmztZvowYlgtHeD_9yuWx3piJNfueVvC5Vrqt-9KsLvKpINE6GUehbIgNgr4pkwZU6JmNfGPNZt8npcUXrtiNVrniC_HUXIDXKyoYJVrc-sKiYs7MbPk7F94ivh1Tg=w640-h480-no?authuser=0” alt=“Good
+                annotation”>
+            <p>Boxes CAN overlap. This image contains good annotations for the two visible objects:</p>
+            <img width=“100%”
+                src=“https://lh3.googleusercontent.com/qloJbWqDiCdzHI-4Gv98nhQwLcjKav7AiHDJ76F8QybTDownStvdhfRnhSkqb3nnnkqJfFxdfdJcj65gD-2j69j8mkoOLYAx7WDGAgm8pShSWoZSPvPwhp49W2jAnLE7ve0mry2eAmL3dYRJiYpPVGQeQuh4mnrA5Mq0l9zpPA5_9pFomZGgF8h-TRkncuRiTrIlifIIk_6Qk_Py0oRefXBD5xjwHNNOISfD4wp45qdA1eqsu2gvI0sKaO6ojWg6O4FrLo7hwBYuHX2iuEimczV-bf_vZUs30bgkB4cPdttaVyBv_RU42_80wYI6jQaX9aZCbXwRwq4ePYpQELzfHwchXoJu8CsYqsIujtSDpxnfK7ynHau2coMbkd2tf4Ve5aaBzFM5zOZhMRzzSULvtY5WEjbtOlK8nfEtoa5a7iSfaZGnJxbQ9IYdPlBi_fddjhERq3PAexBQcO2goBIV-o78Oyz_w1_CSuDfISNzT5kazHMOmpAC4QW1-MbZ7LK-rOtMEqRtBByRDtVvqXpmG5fDTRXUwv-Ebn1_BMc4tNnjHo7N8hizoYuCNljvvSFGBgczgZXJgWG7NMEf_vk9QRESutPY8sZoJtqNiHehIUXVgVldJ8CGt44dPW9adKAb-IqlOcr6JAbyALqPTw9mAe9bOCZ9-fWnTgvX7Chr3wWmjfGUgh85ztnzLyZb=w270-h203-no?authuser=0”
+                alt=“Overlap is ok”>
+            <p>Be sure to include all visible parts of the object in the box. This image does not contain a good annotation for the book:</p>
+            <img width=“100%”
+                src=“https://lh3.googleusercontent.com/Xkx6yJpnxXQ7w6bCv6Gac1iLiAx9br5Ts0eognryljN9DNFYXa4-bs1ZtaPqtiR6t7kdJnunivIDpTkBIzmWcmJh0sqSs7hzgLaozi_xuON8fhVD_HVQsHHlw6YjHeG4oGCLXD8sK42oFO6pSIMQPLOSTnMF0_ONsY4qWtNhemUIXayjpADANzaf1D6bvic2FfSKIRmrHCZp4jpdMco21b5mS9s3hv4cRKNllJtpjsJx66AEtAyUqBc5B7vxL90mAAZrrhasTN3Vd8YPpfYhpXOmyg6rBPpdVdTV6Pnd_H6K1CRpInoAKqkG7Mz2axp8o07o1nwiZtczbtQu9Z28Pazbe3b5Fadbh_P0YV88nbckl5vgREydJuSprCvqzTEMauNWxtgS960-A5hFwzHtPGSeBu4PTPq2E24v2uCbQ7fZ3w85VJu7y_PfyNHr_mrlzXICmSlb1eMkS76Ah_lA4lRiUDwpICgKjkqtD-PHJfjHOosKwlL1W8cryhql9aGznkiXnDT1NEfOh-pwH6-65H7dF0-AbTBHF-WafQFNafnNXMUsQdJK2O12lXXJnMSqkHfxfXElh9EhL4yPvnRZ0FZ8l7wRtdNg6wzNA-sL9JnGUEKsyp4B5BQyRF_nOLo1p3W205w3uSIiJ72EsKnMzbhSyUaomOrTlgWWMnD6F8khkKrIMUrdLXqFQDHE=w640-h480-no?authuser=0”
+                alt=“Bad box”>
+            <br>
+            <p>Either label single objects (i.e. pictures in a book) or the entire collection of objects (the book). Do not label the same thing twice.</p>
+
+            <divIm>
+                <img src=“https://lh3.googleusercontent.com/LeypgcwBbZKWDVgUjIFeUUq1BjwkJnoEOcf-Rs3TMrb41b5imuV70vBycl22acA6rOjMChI2Xd2MgmJWMy5DQqxFGcpVJFj-UXmNRzD6EzqfLqDi8AiqVD_NOLhYxuIeiYOquLJIhN0KF8QtSF12I7k-qksIsPt089yKyjeLwxqJcFrlKSuOW_DQ1yb3U_-zTBu8uFQN2NiS6D_4-aBb82YyfSCfkxUHVuqFbTPQhWREAAo2pnKTRoKFe7he3d-mbZ4I3YPwYWUWiFl0530KuZTukqyZDD4b5x08GNnmY8E4WQxxSaxb1zcT-fzhwFI_V_YXa9TTRhXrg7buU6fV3l8h48OK_ExLpJnLbRtW7fAMNCNw4Kyk8ZUBNWztmffFsnSYJ22bUMGrsUEzevHIen0URpPTnhuYf_Wir_FBMYg3H1G-F4nxMQpWW8gHNF2jdaCrhEgHc8Bxsbg55M7xwM3NqRuWWWaU4Z9PoMda-HtoZOijPEDGtj5CrEg010QRgq2RuX-ahWf1oHfSK1JMBO9cEuuFjdttHHvs8AA1o6S0KjkDPOm1T-QmPVj23g8r1wHbCKpfYp0HOEOmsM6G1tfMHaAo6eDYds2dprXun0_ZKgD4zJqDbpxnYGbj92BYUiuIT8CV29AcjbaDwonCj7Ijw37k5IcdkG7HLf17JDYNl196kWYyB5i6NAZX=w640-h480-no?authuser=0”
+                    alt=“bad_ex” style=“width:100%;” />
+                <divTxt>Bad</divTxt>
+            </divIm>
+
+            <br><br>
+
+            <divIm>
+                <img src=“https://lh3.googleusercontent.com/5EYCXs_fgkyD2Qtcb4qKF5LAgXqiEz6NjiSpEayNQVUZDxm5XTl7txyjmvPPaK8TDciuFVP-2BwSQk8Su_o1lXjFTCLV2OhAJ9BYikOOV-UCy87RV1lV2mAIghqxuvqwgnbHyyDlTeGwV9oAxxzfZs61Uf7aIzcgLwLE-pGAzqQ8V7YdRkk35PhXLxVEml4EPFn1Wokt3ioVDdP-59ZLpLsODjPVKWoCIqbrlTdH3xIjSA9-e4Wl-NZrrugtnpiHl5fZygutaur4FX79ksQ71Nj2QYDAFDNYBY77LkxoRHZtZeVXiDhqY2SQCmSC1aLU4qqHVYGPHogcJNkWeYD3JeQ_OOlzQFBxuztDiM6gkI1ECnlOQmb1WwMUrKNHi2ux19YqEDbrl9gFuP6nbtTRbIv08soBiQaPmr1C3RrA2i1rV_caVevAR1kr0nd3YgD5bOrhnM6hlTTCfQz_ctmsye-CXqopnK8DkVfxaYzBE4kvPvB7fR_H1CUny06WG6OzG6klRWVzyeMuM_r1IXTscgKVdmVj5h4VWWfOc4_g9BaTP3gr1d861J46-ZNxOiKfecp0bdBwDdPhDtomZe-ILXCn8WOrrkeOgXCQT3oiCZOwdEhgtV_hclqLb9vYsbJe4X1-eOkH7ctZ4G6eMj1NR5RViO80QL4z224n14mDsbQrPaMyI2T9iQdJHmMh=w640-h480-no?authuser=0”
+                    alt=“good_ex” style=“width:100%;” />
+                <divTxt>Good</divTxt>
+            </divIm>
+
+            <br>
+            <p>Click “View full instructions” above for more details on the task and “View tool guide” for more information on how to select bounding boxes.</p>
+        </short-instructions>
+
+        <full-instructions header=“More Directions”>
+            <ol>
+                <li>Draw a rectangle using your mouse over each instance of the object.</li>
+                <li>Do not label people or body parts. </li>
+                <li> Do not include parts of the object that cannot be seen, even though you think you can interpolate the whole shape of the object. </li>
+                <li>Avoid shadows, they’re not considered as a part of the object.</li>
+                <li>If the object goes off the frame, label up to the edge of the image.</li>
+            </ol>
+        </full-instructions>
+    </crowd-bounding-box>
+</crowd-form>
+
+<script>
+    document.addEventListener(‘all - crowd - elements - ready’, () => {
+        //function appendTen() {
+        for (i = 2; i < 11; i++) {
+            prevId = “annotator”.concat(i - 1);
+            id = “annotator”.concat(i);
+            name = “annotatedResult”.concat(i);
+            src = “$ {
+                image_url”.concat(i, “
+                }”); // the titles of each column in the csv are image_url + num from 1 to 10
+            addElement(prevId, id, name, src);
+        }
+        //    }
+
+        function addElement(prevId, id, name, src) {
+            // create a new crowd bounding box element
+            var labels = “ [‘other / label not found’, ‘activity gym’, ‘airplane’, ‘alligator’, ‘animal’, ‘ant’, ‘apple’, ‘applesauce’, ‘art’, ‘backpack’, ‘backyard’, ‘bag’, ‘ball’, ‘balloon’, ‘banana’, ‘baseball glove’, ‘basket’, ‘bat’, ‘
+                bath toy’, ‘bathtub’, ‘beanbag’, ‘beans’, ‘bear’, ‘bed’, ‘bee’, ‘bench’, ‘bicycle’, ‘bike stand’, ‘bird’, ‘blanket’, ‘blender’, ‘block’, ‘blocks’, ‘boat’, ‘book’, ‘boots’, ‘bottle’, ‘bouncer’, ‘bowl’, ‘box’, ‘bread’, ‘
+                broccoli’, ‘broom’, ‘brush’, ‘bubbles’, ‘bucket’, ‘bug’, ‘bunny’, ‘bus’, ‘bush’, ‘butter’, ‘butterfly’, ‘button’, ‘cabinet’, ‘cake’, ‘camera’, ‘can(object)’, ‘candy’, ‘car’, ‘carrots’, ‘cat’, ‘cell phone’, ‘cereal’, ‘
+                chair’, ‘chalk’, ‘changing table’, ‘cheerios’, ‘cheese’, ‘chicken(animal)’, ‘chicken(food)’, ‘chocolate’, ‘clock’, ‘closet’, ‘cloud’, ‘coffee’, ‘coin’, ‘coins’, ‘coke’, ‘comb’, ‘container’, ‘cookie’, ‘corn’, ‘cow’, ‘
+                cracker’, ‘cradle’, ‘crayon’, ‘crayons’, ‘crib’, ‘cup’, ‘curtain’, ‘deer’, ‘desk’, ‘desktop’, ‘diaper’, ‘dining table’, ‘dish’, ‘dog’, ‘doll’, ‘dollhouse’, ‘donkey’, ‘donut’, ‘door’, ‘drawer’, ‘dress’, ‘drink(beverage)’, ‘
+                dryer’, ‘duck’, ‘egg’, ‘elephant’, ‘eyeglasses’, ‘fan’, ‘fence’, ‘fire hydrant’, ‘firetruck’, ‘fish(animal)’, ‘fish(food)’, ‘flag’, ‘flower’, ‘food’, ‘fork’, ‘frame’, ‘french fries’, ‘frisbee’, ‘frog’, ‘fruit’, ‘game’, ‘
+                garbage’, ‘garden’, ‘giraffe’, ‘glass’, ‘glasses’, ‘glue’, ‘goose’, ‘grapes’, ‘grass’, ‘green beans’, ‘guitar’, ‘gum’, ‘hair brush’, ‘hair drier’, ‘hamburger’, ‘hammer’, ‘handbag’, ‘hat’, ‘helicopter’, ‘hen’, ‘
+                high chair’, ‘hook’, ‘horse’, ‘hose’, ‘hot dog’, ‘house or home’, ‘ice’, ‘ice cream’, ‘jacket’, ‘jar’, ‘jello’, ‘jelly’, ‘juice’, ‘keyboard’, ‘keys’, ‘kite’, ‘kitty’, ‘knife’, ‘ladder’, ‘lamb’, ‘lamp’, ‘laptop’, ‘
+                lawn mower’, ‘leaf’, ‘light’, ‘light
+                switch’, ‘lion’, ‘lollipop’, ‘magnet’, ‘maraca’, ‘marker’, ‘mat’, ‘meat’, ‘medicine’, ‘melon’, ‘microwave’, ‘milk’, ‘mirror’, ‘mobile’, ‘mobile phone’, ‘money’, ‘monkey’, ‘moon’, ‘moose’, ‘mop’, ‘motorcycle’, ‘mouse’, ‘
+                muffin’, ‘mug’, ‘nail’, ‘napkin’, ‘noodles’, ‘nuts’, ‘orange(food)’, ‘oven’, ‘owl’, ‘paint’, ‘painting’, ‘pan’, ‘pancake’, ‘pants’, ‘paper’, ‘parking meter’, ‘peanut butter’, ‘peas’, ‘pen’, ‘pencil’, ‘penguin’, ‘penny’, ‘
+                pet toy’, ‘piano’, ‘pickle’, ‘picture’, ‘pig’, ‘pillow’, ‘pizza’, ‘plant’, ‘plate’, ‘play dough’, ‘play gym’, ‘play mat’, ‘play pen’, ‘pony’, ‘pool’, ‘popcorn’, ‘popsicle’, ‘porch’, ‘pot’, ‘potato’, ‘potato chip’, ‘
+                potted plant’, ‘potty’, ‘present’, ‘pretzel’, ‘pudding’, ‘pumpkin’, ‘puppy’, ‘purse’, ‘puzzle’, ‘rabbit’, ‘radio’, ‘rain’, ‘raisin’, ‘rattle’, ‘recycling bin’, ‘refrigerator’, ‘remote’, ‘rock’, ‘rocker’, ‘rocking chair’, ‘
+                roof’, ‘rooster’, ‘rubber duck’, ‘rug’, ‘salt’, ‘sandbox’, ‘sandwich’, ‘sauce’, ‘scissors’, ‘screen’, ‘seeds’, ‘sheep’, ‘shelf’, ‘shirt’, ‘shoe’, ‘shorts’, ‘shovel’, ‘shower’, ‘sidewalk’, ‘sink’, ‘sippy cup’, ‘
+                skateboard’, ‘skirt’, ‘skis’, ‘sky’, ‘sled’, ‘slide(object)’, ‘smartphone’, ‘snow’, ‘snowboard’, ‘snowman’, ‘soap’, ‘sock’, ‘soda / pop’, ‘sofa or couch’, ‘soil’, ‘soup’, ‘spaghetti’, ‘spoon’, ‘sports ball’, ‘sprinkler’, ‘
+                squirrel’, ‘stairs’, ‘star’, ‘stick’, ‘stone’, ‘stool’, ‘stop sign’, ‘story’, ‘stove’, ‘strawberry’, ‘street’, ‘street sign’, ‘stroller’, ‘stuffed animal’, ‘suitcase’, ‘sun’, ‘surfboard’, ‘swing(object)’, ‘table’, ‘
+                tape’, ‘teddy bear’, ‘telephone’, ‘television(tv)’, ‘tennis racket’, ‘tie’, ‘tiger’, ‘tissue or kleenex’, ‘toast’, ‘toaster’, ‘toilet’, ‘toothbrush’, ‘toothpaste’, ‘towel’, ‘toy(object)’, ‘tractor’, ‘traffic light’, ‘
+                train’, ‘trash’, ‘trash can or garbage bin’, ‘tray’, ‘tree’, ‘tricycle’, ‘truck’, ‘tuna’, ‘turkey’, ‘turtle’, ‘ukelele’, ‘umbrella’, ‘vacuum’, ‘vanilla’, ‘vanity’, ‘vase’, ‘vitamins’, ‘walker’, ‘washing machine’, ‘watch(
+                    object)’, ‘water(beverage)’, ‘water(not beverage)’, ‘wind’, ‘window’, ‘wine glass’, ‘wipes’, ‘wolf’, ‘yogurt’, ‘zebra’
+            ]“;
+            var newDiv = document.createElement(“crowd - bounding - box”);
+
+            // add the attributes to the newly created crowd bounding box
+            newDiv.setAttribute(“id”, id);
+            newDiv.setAttribute(“name”, name);
+            newDiv.setAttribute(“src”, src);
+            newDiv.setAttribute(“header”, “Select and label up to 5 objects in all 10 images.Do not label people(no body parts, people, etc).“);
+            newDiv.setAttribute(“labels”, labels);
+
+            // add the newly created element and its content into the DOM
+            document.querySelector(‘crowd - form’).form.appendChild(newDiv);
+        }
+    });
+</script>
