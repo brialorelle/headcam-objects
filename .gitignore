@@ -1,0 +1,5 @@
+*.png
+*.jpg
+.DS_Store
+analysis/.DS_Store
+data/.DS_Store
