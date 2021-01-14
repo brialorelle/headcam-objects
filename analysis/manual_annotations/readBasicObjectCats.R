@@ -35,5 +35,15 @@ ggplot(data=count_by_category, aes(x=label, y=Frequency)) +
   xlab('')  +
   ylim(0,.3)
 
+# retrieve higher frequencies only
+top_freqs <- count_by_category %>%
+  filter(!label %in% c('no object','unknown object')) %>%
+  filter(!(Frequency < 0.001))
 
-full_join
+# plot top frequencies
+ggplot(data=top_freqs, aes(x=label, y=Frequency)) +
+  geom_point() +
+  theme_few(base_size=10) +
+  theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust=1)) +
+  xlab('')  +
+  ylim(0,.3)
