@@ -63,15 +63,25 @@ across development}
 \maketitle
 
 \begin{abstract}
-Include no author information in the initial submission, to facilitate
-blind review. The abstract should be one paragraph, indented 1/8 inch on
-both sides, in 9\textasciitilde point font with single spacing. The
-heading `Abstract' should be 10\textasciitilde point, bold, centered,
-with one line of space below it. This one-paragraph abstract section is
-required only for standard six page proceedings papers. Following the
-abstract should be a blank line, followed by the header `Keywords' and a
-list of descriptive keywords separated by semicolons, all in
-9\textasciitilde point font, as shown below.
+What do children tend to see in their everyday lives? While an
+understanding of children's visual environment is central to both
+theories of language acquisition and visual development, relativey
+little work has examined the categories and objects that tend to be in
+the infant view during everyday experience. Here, we analyzed the
+prevalence of the superordinate categories (e.g., people, animals, food)
+in the infant view in a longitudinal dataset of egocentric infant visual
+experience (Sullivan et al., 2020). Overall, we found a surprising
+amount of consistency in the broad characteristics of children's visual
+environment across individuals and across developmental time, in
+constrast to prior work examining the changing nature of the social
+signals in the infant view. In addition, we analyzed the distribution
+and identity of the categories that children tended to be touching or
+interacting with in this data, confirming previous findings that these
+objects tended to be distributed in a Zipfian manner (Clerkin et al.,
+2017). Taken together, these findings take a first step towards
+characterizingchanging visual environment, and call for future work to
+examine the generalizability of these results and to link them to
+learning outcomes.
 
 \textbf{Keywords:}
 Object categorization; infant visual experience; head-mounted cameras;
@@ -269,14 +279,14 @@ view, suggesting that these broader characteristics of children's visual
 experience may be more consistent and more stable.
 
 \begin{CodeChunk}
-\begin{figure}[h]
+\begin{figure*}[h]
 
 {\centering \includegraphics{figs/anim_size-1} 
 
 }
 
-\caption[Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset]{Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset.}\label{fig:anim_size}
-\end{figure}
+\caption[Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset, both when analyzing all frames that were annotated (left) and the subset of frames where a child's hand was visible in the frame (right)]{Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset, both when analyzing all frames that were annotated (left) and the subset of frames where a child's hand was visible in the frame (right).}\label{fig:anim_size}
+\end{figure*}
 \end{CodeChunk}
 
 We next examined the details of these environments. We found that people
@@ -321,8 +331,8 @@ Finally, we next examined the degree to which these broad categories
 appeared together in different frames. With some frequent activity
 context activities (i.e.~mealtime) may have a fixed set of categories
 that are usually co-present (i.e.~utensils/dishes and food), others may
-not be so easy to intuit. Figure X shows the co-occurance of the broad
-categories that were annotated
+not be so easy to intuit. Figure \ref{fig:coocc_stats} shows the
+co-occurance of the broad categories that were annotated
 
 \begin{CodeChunk}
 \begin{figure}[h]
@@ -360,17 +370,20 @@ confirming that the distribution of the objects that children interact
 with during is also likely very skewed -- as is the distribution of
 categories that they tend to see. When we examined which categories were
 most frequent, we found that books were overwhelming the most present
-object in the views of these two childrent, comprising over 15\% of the
+object in the views of these two children, comprising over 15\% of the
 objects that children's hands were interacting with. Generic baby toys
 (that were unidentifiable to the authors as specific toys) were the next
 most frequent object category, and children were often seen to be
 touching or holding on to their caregivers (see top 20 most frequent
-categories in Figure \ref{fig:freq_interact}). We also saw evidence of
-some coarse developmental differences, attesting to different play
-habits across childhood: for example, when these children were older
-than 18 months they were often seen holding crayons or paper, this was
-untrue in the views capture during their early infancy (i.e.~6-12 months
-of age).
+categories in Figure \ref{fig:freq_interact}). Additionally, frames in
+which objects were occluded or unidentifiable had a high frequency of
+appearance, accounting for around 6\% of grams, affirming previous
+assertions that infant egocentric views are nonintuitive. However, we
+also saw evidence of some coarse developmental differences, attesting to
+different play habits across childhood: for example, when these children
+were older than 18 months they were often seen holding crayons or paper,
+this was untrue in the views capture during their early infancy
+(i.e.~6-12 months of age).
 
 \begin{CodeChunk}
 \begin{figure}[h]

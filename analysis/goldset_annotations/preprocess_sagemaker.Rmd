@@ -157,10 +157,14 @@ d <- d %>%
 ```{r}
 set_1 <- read.csv(file=here::here('data/annotations/basic_level_manual/naitiHandsObjLabeled.csv')) %>%
   as_tibble()
+
+set_2 <- read.csv (file=here::here('data/annotations/basic_level_manual/georgeHandsObjLabeled.csv')) %>%
+  as_tibble()
                            
 d_basic <- read.csv(file=here::here('data/annotations/basic_level_manual/briaHandsObjLabeled.csv')) %>%
   as_tibble() %>%
   full_join(set_1) %>%
+  full_join(set_2) %>%
   rename(public_url = url, basic_level = label)
 ```
 

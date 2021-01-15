@@ -8,15 +8,8 @@ author-information: >
     \author{}
 
 abstract: >
-    Include no author information in the initial submission, to facilitate
-    blind review.  The abstract should be one paragraph, indented 1/8 inch on both sides,
-    in 9~point font with single spacing. The heading 'Abstract'
-    should be 10~point, bold, centered, with one line of space below
-    it. This one-paragraph abstract section is required only for standard
-    six page proceedings papers. Following the abstract should be a blank
-    line, followed by the header 'Keywords' and a list of
-    descriptive keywords separated by semicolons, all in 9~point font, as
-    shown below.
+    What do children tend to see in their everyday lives? While an understanding of children's visual environment is central to both theories of language acquisition and visual development, relativey little work has examined the categories and objects that tend to be in the infant view during everyday experience. Here, we analyzed the prevalence of the superordinate categories (e.g., people, animals, food) in the infant view in a longitudinal dataset of egocentric infant visual experience (Sullivan et al., 2020). Overall, we found a surprising amount of consistency in the broad characteristics of children's visual environment across individuals and across developmental time, in constrast to prior work examining the changing nature of the social signals in the infant view. In addition, we analyzed the distribution and identity of the categories that children tended to be touching or interacting with in this data, confirming previous findings that these objects tended to be distributed in a Zipfian manner (Clerkin et al., 2017). Taken together, these findings take a first step towards characterizingchanging visual environment, and call for future work to examine the generalizability of these results and to link them to learning outcomes.
+
     
 keywords: >
     Object categorization; infant visual experience; head-mounted cameras; longitudinal data.
@@ -197,7 +190,7 @@ We further annotated the objects that children were interacting with in a subset
 ## Which categories are prevalent in the child's view?
 First, we examined the overall prevalence of each category in the infant view. Somewhat surprisingly, we found that the prevalence of most of these broad categories was relatively stable both across the two children in the dataset as well as over developmental time. This stands in contrast to prior work on the prevalence of faces/hands in the infant view, suggesting that these broader characteristics of children's visual experience may be more consistent and more stable.
 
-```{r anim_size, echo=F, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3, fig.height=4.5, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset."}
+```{r anim_size, echo=F, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', fig.width=6, set.cap.width=T, num.cols.cap=2, fig.align = "center", fig.cap = "Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset, both when analyzing all frames that were annotated (left) and the subset of frames where a child's hand was visible in the frame (right)."}
 # Figure  3
 ## Animacy/size frequency across age
 ggplot(data=animacy_size, aes(x=age_day_bin, y=freq, size=count_frames, col=anim_size, group=anim_size)) +
@@ -206,8 +199,8 @@ ggplot(data=animacy_size, aes(x=age_day_bin, y=freq, size=count_frames, col=anim
   geom_smooth(span=10) + 
   xlab('Age (in months)') +
   ylab('Proportion detected') +
-  theme(legend.position='bottom') +
-  facet_wrap(~data_type, nrow=2) +
+  theme(legend.position='right') +
+  facet_wrap(~data_type, nrow=1) +
   scale_color_manual(name="", values = c("purple", "blue", "orange"), labels = c('Animals','Big Objects','Small Objects')) +
   scale_size_area(name = "# of frames")
 
@@ -218,7 +211,7 @@ We next examined the details of these environments. We found that people were by
 Far more prevalent than animals, instead, were objects. Views of furniture were the next most common category after "people". However, in older age ranges speaking, "big objects" -- including furniture, vehicles, and other big objects -- tended to be less frequently in the view of infants than "small" objects -- including toys (of all kinds), food, utensils, books, and other small objects (see Figure \ref{fig:anim_size}). This effect was much exaggerated when we conducted this analysis on a subset of the frames where children's hands were also in view -- as a proxy for times when children were interacting with objects. In these frames, small objects tended to be much more prevalent in the frames that we annotated. These data are consistent children grow and become more adept at handling objects on their own, they may tend to be more often in view. 
 
 ## Which categories co-occur in children's visual environment? 
-Finally, we next examined the degree to which these broad categories appeared together in different frames. With some frequent activity context activities (i.e. mealtime) may have a fixed set of categories that are usually co-present (i.e. utensils/dishes and food), others may not be so easy to intuit. Figure X shows the co-occurance of the broad categories that were annotated 
+Finally, we next examined the degree to which these broad categories appeared together in different frames. With some frequent activity context activities (i.e. mealtime) may have a fixed set of categories that are usually co-present (i.e. utensils/dishes and food), others may not be so easy to intuit. Figure \ref{fig:coocc_stats} shows the co-occurance of the broad categories that were annotated 
 <!-- Separation of these activities by child-alone vs. with parent (adult-hand or adult-face present) -->
 <!-- Mealtime (food + utensil?) -->
 <!-- Storytime (book + person) or book on own -->
@@ -305,7 +298,7 @@ ggplot(ordered_prob, aes(x=Category1, y=Category2, fill=prob)) +
 ## Which categories do children tend to interact with?
 While many different categories may be in the child's view, not all of these objects may be equally important in the child's environment. In particular, objects that children physically interact with may be more likely to be those that they form robust representations of, and by extension those whose labels are learned earlier. In this analysis, we sough to analyze the basic-level identities of the objects that children tended to be interacting with in their home environments, and the distributions of those object categories. While some work has suggestion that the objects in view tend to have a Zipfian distribution [@clerkin2017], it is unclear whether this only applies to the objects that tend to be in view during mealtime vs. the objects that children tend to actually interact with during a wide range of activities. For example, there may be far fewer objects that are only interacted with a limited number of times vs. seen a limited number of times.
 
-First, we found that the distribution of the objects in view roughly followed a power law distribution [@clerkin2017] (STATS), confirming that the distribution of the objects that children interact with during is also likely very skewed -- as is the distribution of categories that they tend to see. When we examined which categories were most frequent, we found that books were overwhelming the most present object in the views of these two childrent, comprising over 15\% of the objects that children's hands were interacting with. Generic baby toys (that were unidentifiable to the authors as specific toys) were the next most frequent object category, and children were often seen to be touching or holding on to their caregivers (see top 20 most frequent categories in Figure \ref{fig:freq_interact}). We also saw evidence of some coarse developmental differences, attesting to different play habits across childhood: for example, when these children were older than 18 months they were often seen holding crayons or paper, this was untrue in the views capture during their early infancy (i.e. 6-12 months of age).  
+First, we found that the distribution of the objects in view roughly followed a power law distribution [@clerkin2017] (STATS), confirming that the distribution of the objects that children interact with during is also likely very skewed -- as is the distribution of categories that they tend to see. When we examined which categories were most frequent, we found that books were overwhelming the most present object in the views of these two children, comprising over 15\% of the objects that children's hands were interacting with. Generic baby toys (that were unidentifiable to the authors as specific toys) were the next most frequent object category, and children were often seen to be touching or holding on to their caregivers (see top 20 most frequent categories in Figure \ref{fig:freq_interact}). Additionally, frames in which objects were occluded or unidentifiable had a high frequency of appearance, accounting for around 6\% of grams,   affirming previous assertions that infant egocentric views are nonintuitive. However, we also saw evidence of some coarse developmental differences, attesting to different play habits across childhood: for example, when these children were older than 18 months they were often seen holding crayons or paper, this was untrue in the views capture during their early infancy (i.e. 6-12 months of age).  
 ```{r}
 d_basic <- d %>%
   filter(!is.na(basic_level)) %>%
