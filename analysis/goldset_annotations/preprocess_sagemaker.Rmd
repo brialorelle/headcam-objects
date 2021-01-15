@@ -17,7 +17,7 @@ library(ggthemes)
 # Import data
 ## Filename to import data from sagemaker
 ```{r}
-filename = here::here('data/saycam_goldset_annotations/24k/output.manifest')
+filename = here::here('data/annotations/broad_categories/24k/output.manifest')
 ```
 
 ## Use this awk construction to read the nested json
@@ -111,7 +111,7 @@ d <- d %>%
 ```
 
 ```{r}
-allocentric_file = here::here("data/SAYCAM_allocentric_videos.csv")
+allocentric_file = here::here("data/annotations/SAYCAM_allocentric_videos.csv")
 to_exclude =read.csv(allocentric_file)
 
 # get INCORRECT videos where allocentric videopoint 
@@ -120,6 +120,8 @@ to_exclude <- to_exclude %>%
   rename(vid_name = video)
 
 vids_to_exclude = unique(to_exclude$vid_name)
+pre_exclude_vid_count = length(unique(d$vid_name))
+
 ```
 
 ```{r}
@@ -130,11 +132,17 @@ d <- d %>%
   mutate(frame = as.numeric(str_split_fixed(frame_num_temp, '.jpg',2)[,1])) %>%
   select(-vid_name_temp, -frame_num_temp)
 
+post_exclude_vid_count = length(unique(d$vid_name))
+
+assertthat::assert_that(pre_exclude_vid_count>post_exclude_vid_count)
+
 ```
+
+
 
 # Merge hand annotations
 ```{r}
-load(here::here('data/face_hand_goldset/child_adult_hand_annotations_by_frame.RData'))
+load(here::here('data/annotations/faces_hands/child_adult_hand_annotations_by_frame.RData'))
 hand_id <- child_adult_hand_annotations %>%
   select(-full_image_path)
 ```
@@ -145,120 +153,31 @@ d <- d %>%
   left_join(hand_id, by=c('frame','vid_name'))
 ```
 
+# Read in basic-level annotations
+```{r}
+set_1 <- read.csv(file=here::here('data/annotations/basic_level_manual/naitiHandsObjLabeled.csv')) %>%
+  as_tibble()
+                           
+d_basic <- read.csv(file=here::here('data/annotations/basic_level_manual/briaHandsObjLabeled.csv')) %>%
+  as_tibble() %>%
+  full_join(set_1) %>%
+  rename(public_url = url, basic_level = label)
+```
+
+# Add to data structure
+```{r}
+d <- d %>%
+  left_join(d_basic, by=c('public_url'))
+```
+
+
 # save out datafile
 ```{r}
 # dir.create(here::here('data/preprocessed_data/'))
-save(file = here::here('data/preprocessed_data/goldset_category_annotations.RData'), d)
+save(file = here::here('data/preprocessed_data/merged_annotations.RData'), d)
 ```
 
 
-# Render out examples
-
-## Render out child hand examples
-```{r}
-
-  child_hands <- d %>%
-    filter(child_hand_seg == TRUE) 
-
-  public_urls = unique(child_hands$public_url)
-  img_names_short = unique(child_hands$img_name)
-
-  dir.create(here::here("data/annotation_examples/child_hands_take2"),recursive = TRUE)
-
-  for (i in 1:length(public_urls)){
-    this_image = image_read(public_urls[i])
-    image_write(this_image,here::here("data/annotation_examples/child_hands_take2", img_names_short[i]))
-  }
 
 
-```
 
-```{r}
-
-  child_hands <- d %>%
-    filter(child_hand_seg == TRUE) %>%
-    filter(category=='Food')
-    
-
-  public_urls = unique(child_hands$public_url)
-  img_names_short = unique(child_hands$img_name)
-
-  dir.create(here::here("data/annotation_examples/hands_food"),recursive = TRUE)
-
-  for (i in 1:length(public_urls)){
-    this_image = image_read(public_urls[i])
-    image_write(this_image,here::here("data/annotation_examples/hands_food", img_names_short[i]))
-  }
-```
-
-```{r}
-  hands_toys <- d %>%
-    filter(child_hand_seg == TRUE) %>%
-    filter(category=='Toy')
-    
-  public_urls = unique(hands_toys$public_url)
-  img_names_short = unique(hands_toys$img_name)
-
-  dir.create(here::here("data/annotation_examples/hands_toys"),recursive = TRUE)
-
-  for (i in 1:length(public_urls)){
-    this_image = image_read(public_urls[i])
-    image_write(this_image,here::here("data/annotation_examples/hands_toys", img_names_short[i]))
-  }
-```
-
-```{r}
-  hands_toys <- d %>%
-    filter(child_hand_seg == TRUE) %>%
-    filter(category=='Toy')
-    
-  public_urls = unique(hands_toys$public_url)
-  img_names_short = unique(hands_toys$img_name)
-
-  dir.create(here::here("data/annotation_examples/hands_toys"),recursive = TRUE)
-
-  for (i in 1:length(public_urls)){
-    this_image = image_read(public_urls[i])
-    image_write(this_image,here::here("data/annotation_examples/hands_toys", img_names_short[i]))
-  }
-```
-
-```{r}
-  dishes <- d %>%
-    filter(child_hand_seg == TRUE) %>%
-    filter(category=='Utensil-Dish')
-    
-  public_urls = unique(dishes$public_url)
-  img_names_short = unique(dishes$img_name)
-
-  dir.create(here::here("data/annotation_examples/hands_dishes"),recursive = TRUE)
-
-  for (i in 1:length(public_urls)){
-    this_image = image_read(public_urls[i])
-    image_write(this_image,here::here("data/annotation_examples/hands_dishes", img_names_short[i]))
-  }
-```
-
-## Render out individual categories
-```{r}
-reallyRun =0
-if (reallyRun){
-class_list  = unique(d$category)
-
-for (c in class_list) {
-  examples <- d %>%
-    filter(category == c) %>%
-    dplyr::sample_n(200)
-
-  public_urls = unique(examples$public_url)
-  img_names_short = unique(examples$img_name)
-
-  dir.create(here::here("data/annotation_examples/",c),recursive = TRUE)
-
-  for (i in 1:length(public_urls)){
-    this_image = image_read(public_urls[i])
-    image_write(this_image,here::here("data/annotation_examples/", c, img_names_short[i]))
-  }
-}
-}
-```

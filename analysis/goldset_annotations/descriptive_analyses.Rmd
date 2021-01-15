@@ -27,7 +27,7 @@ load(file = here::here('data/preprocessed_data/goldset_category_annotations.RDat
 ## Frequency of each category
 ```{r}
 freq_by_category <- d %>%
-  group_by(category) %>%
+  group_by(category,) %>%
   dplyr::summarize(count = n()) %>%
   mutate(freq_category = count / sum(count)) %>%
   arrange(desc(freq_category)) %>%
