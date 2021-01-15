@@ -7,15 +7,19 @@ library(ggplot2)
 library(ggthemes)
 
 # read in csvs
-
+path
 nlabeledImages <- read.csv(file='naitiHandsObjLabeled.csv')
 nlabeledImages <- as_tibble(nlabeledImages)
 
 blabeledImages <- read.csv(file='briaHandsObjLabeled.csv')
 blabeledImages <- as_tibble(blabeledImages)
 
+glabeledImages <- read.csv(file='georgeHandsObjLabeled.csv')
+glabeledImages <- as_tibble(glabeledImages)
+
 # join csvs
 labeledImages <- full_join(nlabeledImages, blabeledImages)
+labeledImages <- full_join(labeledImages, glabeledImages)
 
 # retrieve counts
 count_by_category <- labeledImages %>%
@@ -47,3 +51,5 @@ ggplot(data=top_freqs, aes(x=label, y=Frequency)) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust=1)) +
   xlab('')  +
   ylim(0,.3)
+
+
