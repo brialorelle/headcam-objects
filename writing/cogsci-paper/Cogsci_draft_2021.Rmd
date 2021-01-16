@@ -46,10 +46,7 @@ grid::grid.raster(examples)
 ```
 
 
-More recent research has made progress towards understanding what objects tend to be the infant view, starting with annotating the basic-level categories (e.g., spoons, cups) in the view of 8-month-olds during mealtime. This research suggests that a small number of objects are both pervasively present during mealtime and among infants' first-learned words [@clerkin2017], pointing towards a link between visual experience and early word learning.  These findings suggest that a more complete understanding of the visual environment of infants and young children could yield insights about the inputs to both category learning and word learning.
-More recent research has made progress towards understanding what objects tend to be the infant view, starting with annotating the basic-level categories (e.g., spoons, cups) in the view of 8-month-olds during mealtime.
-This research suggests that a small number of objects are both pervasively present during mealtime and among infants' first-learned words [@clerkin2017], pointing towards a link between visual experience and early word learning.  
-These findings suggest that a more complete understanding of the visual environment of infants and young children could yield insights about the inputs to both category learning and word learning.
+More recent research has made progress towards understanding what objects tend to be the infant view, starting with annotating the basic-level categories (e.g., spoons, cups) in the view of 8-month-olds during mealtime. This research suggests that a small number of objects are both pervasively present during mealtime and among infants' first-learned words [@clerkin2017], pointing towards a link between visual experience and early word learning. These findings suggest that a more complete understanding of the visual environment of infants and young children could yield insights about the inputs to both category learning and word learning.
 
 Here, we take a step towards characterizing the visual environment of young children by analyzing the categories of objects (e.g., animals, vehicles, toys, people) present in the infant view in a longitudinal corpus of head-mounted camera data [@SAYcam].
 To start, we choose to annotate these broad categories -- rather than the basic-level identities of all objects that were present -- as these less detailed annotations allow us to collect data about many more frames from the dataset.
@@ -326,14 +323,14 @@ ordered_prob$Category2 = factor(ordered_prob$Category2, levels = levels(ordered_
 ```
 
 
-```{r coocc_stats, echo=F, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3.5, fig.height=3.5, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Co-occurrence between different categories detected in the dataset across all frames. Each cell represents the probability that the category the y-axis (e.g., clothing) occurs relative to the occurrence of the category on the x-axis (e.g., person). Lighter values indicate higher probabilities of co-occurrence (max=.8, min=0)."}
+```{r coocc_stats, echo=F, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3.5, fig.height=3.5, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Co-occurrence between different categories detected in the dataset across all frames. Each cell represents the probability that the category on the y-axis (e.g., clothing) occurs relative to the occurrence of the category on the x-axis (e.g., person). Lighter values indicate higher probabilities of co-occurrence (max=.8, min=0)."}
 # Plot co-occurrence stats
-ggplot(ordered_prob, aes(x=Category2, y=Category1, fill=prob)) +
+ggplot(ordered_prob, aes(x=Category1, y=Category2, fill=prob)) +
   geom_tile() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1,vjust=.5)) +
   scale_fill_viridis(option='D', begin=.1, end=.9) +
-  xlab('Frequency of occurrence') +
-  ylab('Relative to') +
+  ylab('Frequency of occurrence') +
+  xlab('Relative to') +
   theme(legend.position='none')
 
 # alternative
@@ -341,8 +338,7 @@ ggplot(ordered_prob, aes(x=Category2, y=Category1, fill=prob)) +
 #heatmap.2(x=cat_coocs, scale="row", col="bluered")
 ```
 
-## Which categories do children tend to interact with?
-
+## What objects do children tend to interact with?
 ```{r power-law}
 d_basic <- d %>%
   filter(!is.na(basic_level)) %>%
