@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  15 JAN 2021 17:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  15 JAN 2021 17:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -407,11 +407,11 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 86.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 92.
-<figs/examples-1.pdf, id=48, 216.81pt x 116.435pt>
+<figs/examples-1.pdf, id=48, 405.515pt x 216.81pt>
 File: figs/examples-1.pdf Graphic file (type pdf)
 <use figs/examples-1.pdf>
 Package pdftex.def Info: figs/examples-1.pdf used on input line 123.
-(pdftex.def)             Requested size: 216.80946pt x 116.43471pt.
+(pdftex.def)             Requested size: 405.51399pt x 216.80946pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -427,7 +427,10 @@ Package pdftex.def Info: figs/freq_by_category-1.pdf used on input line 200.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2 <./figs/examples-1.pdf>] <figs/anim_size-1.pdf, id=76, 494.84875pt x 131.491
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[2 <./figs/examples-1.pdf>] <figs/anim_size-1.pdf, id=74, 494.84875pt x 131.491
 26pt>
 File: figs/anim_size-1.pdf Graphic file (type pdf)
 <use figs/anim_size-1.pdf>
@@ -436,19 +439,28 @@ Package pdftex.def Info: figs/anim_size-1.pdf used on input line 298.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3 <./figs/freq_by_category-1.pdf>] <figs/coocc_stats-1.pdf, id=101, 210.7875pt
- x 207.77625pt>
+
+Underfull \vbox (badness 4060) has occurred while \output is active []
+
+[3 <./figs/freq_by_category-1.pdf>] <figs/coocc_stats-1.pdf, id=99, 210.7875pt 
+x 207.77625pt>
 File: figs/coocc_stats-1.pdf Graphic file (type pdf)
 <use figs/coocc_stats-1.pdf>
 Package pdftex.def Info: figs/coocc_stats-1.pdf used on input line 360.
 (pdftex.def)             Requested size: 210.78699pt x 207.77573pt.
-<figs/freq_interact-1.pdf, id=103, 211.79124pt x 195.73125pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<figs/freq_interact-1.pdf, id=101, 211.79124pt x 195.73125pt>
 File: figs/freq_interact-1.pdf Graphic file (type pdf)
 <use figs/freq_interact-1.pdf>
 Package pdftex.def Info: figs/freq_interact-1.pdf used on input line 405.
 (pdftex.def)             Requested size: 211.79073pt x 195.73076pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [4 <./figs/anim_size-1.pdf> <./figs/coocc_stats-1.pdf>] [5 <./figs/freq_interac
 t-1.pdf>]
@@ -491,7 +503,7 @@ exlive/2017/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2
 017/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-
 dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts
 /type1/urw/times/utmri8a.pfb>
-Output written on Cogsci_draft_2021.pdf (6 pages, 985276 bytes).
+Output written on Cogsci_draft_2021.pdf (6 pages, 985166 bytes).
 PDF statistics:
  195 PDF objects out of 1000 (max. 8388607)
  165 compressed objects within 2 object streams
