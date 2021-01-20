@@ -17,9 +17,13 @@ blabeledImages <- as_tibble(blabeledImages)
 glabeledImages <- read.csv(file='georgeHandsObjLabeled.csv')
 glabeledImages <- as_tibble(glabeledImages)
 
+nblabeledImages <- read.csv(file='nbHandsObjLabeled.csv')
+nblabeledImages <- as_tibble(nblabeledImages)
+
 # join csvs
 labeledImages <- full_join(nlabeledImages, blabeledImages)
 labeledImages <- full_join(labeledImages, glabeledImages)
+labeledImages <- full_join(labeledImages, nblabeledImages)
 
 # retrieve counts
 count_by_category <- labeledImages %>%
