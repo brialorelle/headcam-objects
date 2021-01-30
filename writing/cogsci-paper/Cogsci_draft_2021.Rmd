@@ -114,7 +114,7 @@ freq_by_categories_by_age_child_hands <- d_hands %>%
 ```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h",num.cols.cap=2, fig.width=7, fig.height=3, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months); each child's age was calculated in days relative to the date that the videos were filmed and converted to months."}
 ## Figure 2
 
-ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=log(freq), size=count_frames, col=child_id)) +
+ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=(freq), size=count_frames, col=child_id)) +
   theme_few(base_size=10) +
   geom_point(alpha=.3) +
   geom_smooth(span=20, aes(weight=count_frames), alpha=.1) +

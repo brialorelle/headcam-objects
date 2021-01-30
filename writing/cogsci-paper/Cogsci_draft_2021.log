@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  29 JAN 2021 16:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  29 JAN 2021 16:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -424,11 +424,11 @@ Underfull \hbox (badness 1048) in paragraph at lines 173--181
 \OT1/ptm/m/n/10 learn-ing, we ex-am-ined the co-occurrence be-tween these
  []
 
-<figs/freq_by_category-1.pdf, id=57, 500.87125pt x 165.61874pt>
+<figs/freq_by_category-1.pdf, id=57, 500.87125pt x 164.615pt>
 File: figs/freq_by_category-1.pdf Graphic file (type pdf)
 <use figs/freq_by_category-1.pdf>
 Package pdftex.def Info: figs/freq_by_category-1.pdf used on input line 208.
-(pdftex.def)             Requested size: 500.87001pt x 165.61833pt.
+(pdftex.def)             Requested size: 500.87001pt x 164.6146pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
@@ -508,7 +508,7 @@ live/2017/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/201
 t/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
 pe1/urw/times/utmr8a.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/urw/ti
 mes/utmri8a.pfb>
-Output written on Cogsci_draft_2021.pdf (6 pages, 995377 bytes).
+Output written on Cogsci_draft_2021.pdf (6 pages, 994975 bytes).
 PDF statistics:
  203 PDF objects out of 1000 (max. 8388607)
  171 compressed objects within 2 object streams
