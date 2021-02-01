@@ -224,11 +224,19 @@ missed = sanity_check$count[sanity_check$what=="present"] / total_images
 Overall, we found that the majority -- `r round(ambiguous*100,2)` of the disagreements resulted from ambiguous exemplars of the categories, for example where the category was present but very occluded, blurry, or distant. Annotators also showed some disagreement about whether glossy photos of different categories in books should be counted as "real" or "toy/drawing."  If these ambiguous exemplars , there were still `r round(false_alarms,2)` percent of images with false alarms, and `r round(missed,2)`
 
 ### Objects in the child's reach
-We also annotated the objects that children were interacting with in a subset of these frames. Specifically, we selected the frames in which a previous set of participants recruited via Amazon Mechanical Turk annotated whether the hands present in a given image belong to an adult or a child and drew bounding boxes around those hands; these frames a subset of frames that were previously annotated by another set participants who indicated that a hand was present. This resulted in a set of 3050 images that were then annotated by the authors who established labeling conventions prior to annotation. Annotators noted what object the child was interacting with in frames containing children’s hands, using basic level object categories, such as "bird" and "cracker." When children were interacting with drawing or toy versions, these annotations were marked a ‘-drawing’ and ‘-toy’ modifier. If a view was allocentric or there were no child hands in view, these frames were excluded from analysis. Finally, if there was no object or the object was unclear, these frames were marked accordingly.
+We also annotated the objects that children were interacting with in a subset of these frames.
+Specifically, we selected the frames in which annotators recruited via Amazon Mechanical Turk indicated that a child's hand or hands were visible in the image. <!-- Specifically, we selected the frames in which a previous set of participants recruited via Amazon Mechanical Turk annotated whether the hands present in a given image belong to an adult or a child and drew bounding boxes around those hands; these frames were a subset of frames that were previously annotated by another set participants who indicated that a hand was present. -->
+This resulted in a set of 3050 images that were then annotated by the authors who established labeling conventions prior to annotation. 
+Annotators noted what object the child was interacting with in frames containing children’s hands, using basic level object categories such as "bird" and "cracker." 
+When children were interacting with drawing or toy versions, these annotations were marked with a ‘-drawing’ and ‘-toy’ modifier. 
+If a view was allocentric or there were no child hands in view, these frames were excluded from analysis. 
+Finally, if there was no object or the object was unclear, these frames were marked accordingly.
 
 # Results
 ## Which categories are prevalent in the child's view?
-First, we examined the overall prevalence of each broad category in the infant view. Somewhat surprisingly, we found that the prevalence of most of these categories were relatively stable both across the two children in the dataset as well as over developmental time. This stands in contrast to prior work on the prevalence of faces/hands in the infant view [@fausey2016; @long2020], suggesting that these broader characteristics of children's visual experience may be more consistent.
+First, we examined the overall prevalence of each broad category in the infant view. 
+Somewhat surprisingly, we found that the prevalence of most of these categories were relatively stable both across the two children in the dataset as well as over developmental time. 
+This stands in contrast to prior work on the prevalence of faces/hands in the infant view [@fausey2016; @long2020], suggesting that these broader characteristics of children's visual experience may be more consistent.
 
 ```{r anim_size, echo=F, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', fig.width=7, fig.height=2, set.cap.width=T, num.cols.cap=2, fig.align = "center", fig.cap = "Frequency of animals (including toys) relative to big and small inanimate objects detected in the dataset, both when analyzing all frames that were annotated (left) and the subset of frames where a child's hand was visible in the frame (right)."}
 # Figure  3
@@ -249,13 +257,17 @@ ggplot(data=animacy_size, aes(x=age_day_bin, y=freq, size=count_frames, col=anim
 ```
 
 We next examined the details of these environments.
-We found that people were by far the most prevalent of these categories: over 20%\ of the frames that were annotated contained people, far more than any categories (including all kinds of toys combined).
+We found that people were by far the most prevalent of these categories: over 20%\ of the annotated frames contained people, far more than any other category (including all kinds of toys combined).
 In contrast, there were relatively few instances of animals in the infant view--either as toys or their real-life counterparts.
 Less than 5%\ of the frames contained any kind of depicted or real animal, and those few frames that did contained depicted vs. real animals in equal proportion.
 Manual inspection of these frames containing animals revealed that the "real" animals had relatively little variety -- they were overwhelmingly frames containing images of household pets (i.e., cats, dogs, and chickens, in the case of A), whereas the animals that were "toys/drawings" depicted a much larger variety of animals, as one might expect.
 Overall, these results suggest that -- at least for these children -- people are much more frequent that depictions or real-life versions of animals, indicating that toys and drawings may provide frequent input to their representations of these categories -- despite the fact that animal names are often among children's first words [@frank2020] and often referenced in storybooks.
 
-Far more prevalent than animals, instead, were objects. Views of furniture were the next most common category after "people". However, in older age ranges, "big objects" -- including furniture, vehicles, and other big objects -- tended to be less frequently in the view of infants than "small" objects -- including toys (of all kinds), food, utensils, books, and other small objects (see Figure \ref{fig:anim_size}). This effect was much exaggerated when we conducted this analysis on a subset of the frames where children's hands were also in view -- as a proxy for times when children were interacting with objects. In these frames, small objects tended to be much more prevalent in the frames that we annotated. These data are consistent with the idea that as children grow and become more adept at handling objects on their own, small objects may tend to be more often in view.
+Far more prevalent than animals, instead, were objects. 
+Views of furniture were the next most common category after "people". However, in older age ranges, "big objects" -- including furniture, vehicles, and other big objects -- tended to be less frequently in the view of infants than "small" objects -- including toys (of all kinds), food, utensils, books, and other small objects (see Figure \ref{fig:anim_size}). 
+This effect was much exaggerated when we conducted this analysis on a subset of the frames where children's hands were also in view -- as a proxy for times when children were interacting with objects. 
+In these frames, small objects tended to be much more prevalent in the frames that we annotated. 
+These data are consistent with the idea that as children grow and become more adept at handling objects on their own, small objects may tend to be more often in view.
 
 ## Which categories co-occur in children's visual environment?
 Next, we next examined the degree to which these broad categories appeared together in different frames.
@@ -283,43 +295,77 @@ temp <- d %>%
   ungroup() %>%
   select(-img)
 
-col_names = colnames(temp)
 
-cat_coocs <- matrix(0, nrow=length(col_names),
-                    ncol=length(col_names))
+get_img_category_coocs <- function(temp) {
+  col_names = colnames(temp)
+  cat_coocs <- matrix(0, nrow=length(col_names),
+                         ncol=length(col_names))
 
-for (c1 in 1:length(col_names)) {
-  for (c2 in 1:length(col_names)) {
-    if(c1!=c2) cat_coocs[c1,c2] = sum(temp[,c1]==1 & temp[,c2]==1)
+  for (c1 in 1:length(col_names)) {
+    for (c2 in 1:length(col_names)) {
+      if(c1!=c2) cat_coocs[c1,c2] = sum(temp[,c1]==1 & temp[,c2]==1)
+    }
   }
+
+  rownames(cat_coocs) = col_names
+  colnames(cat_coocs) = col_names
+  return(cat_coocs)
 }
 
-rownames(cat_coocs) = col_names
-colnames(cat_coocs) = col_names
+cat_coocs <- get_img_category_coocs(temp)
+# 16 x 16
+
+do_permutation_analysis <- function(temp, Nsim=100) {
+  col_names = colnames(temp)
+  perm_coocs <- matrix(0, nrow=length(col_names),
+                         ncol=length(col_names))
+  diag(perm_coocs) = NA
+  perm_vec = c() # flat vector of all the values (I think this distro is what we want to look at)
+  for(i in 1:Nsim) {
+    # permute rows
+    permed <- t(apply(temp, 1, sample))
+    colnames(permed) = colnames(temp)
+    new_perm_mat = get_img_category_coocs(permed)
+    diag(new_perm_mat) = NA
+    perm_coocs = perm_coocs + new_perm_mat
+    perm_vec = c(perm_vec, na.omit(as.vector(new_perm_mat)))
+    # sum(rowSums(permed)!=rowSums(temp)) # test: yup, same totals per row
+  }
+  # do we actually want to save the entire flattened matrix of values, and look at the distribution?
+  rownames(perm_coocs) = col_names
+  colnames(perm_coocs) = col_names
+  perm_coocs = perm_coocs / 100 
+  return(list(mat=perm_coocs, vec=perm_vec))
+}
 
 ### Wanted this to work in tidyverse.....sorrrry
 # GK: no worries--it's complicated! I made a classic co-occurrence matrix
 # (same as yours but in wide format) to make a heatmap with dendrograms as an alternative
 
+get_img_category_coocs_long <- function(temp) {
+  col_names = colnames(temp)
+  for (c1 in 1:length(col_names)) {
+    for (c2 in 1:length(col_names)) {
+      both_present= sum(temp[c1]==1 & temp[c2]==1)
+      if (c1==c2){
+        both_present=NA
+      }
+      this_data = tibble(col_names[c1], col_names[c2], both_present)
+      colnames(this_data) = c('Category1','Category2','Count')
 
-for (c1 in 1:length(col_names)) {
-  for (c2 in 1:length(col_names)) {
-  both_present= sum(temp[c1]==1 & temp[c2]==1)
-   if (c1==c2){
-    both_present=NA
+    if (c1==1 & c2==1){
+      coocc_data = this_data
+    } 
+    else {
+      coocc_data <- coocc_data %>%
+      full_join(this_data)
+    }
+    }
   }
-  this_data = tibble(col_names[c1], col_names[c2], both_present)
-  colnames(this_data) = c('Category1','Category2','Count')
-
-  if (c1==1 & c2==1){
-    coocc_data = this_data
-  }
-  else {
-  coocc_data <- coocc_data %>%
-    full_join(this_data)
-  }
-  }
+  return(coocc_data)
 }
+
+coocc_data <- get_img_category_coocs_long(temp)
 
 ## Reorder data for plot
 # num_images = length(unique(d$img))
@@ -332,6 +378,22 @@ for (c1 in 1:length(col_names)) {
 # ordered_coocc$Category2 = factor(ordered_coocc$Category2, levels = levels(ordered_coocc$Category1))
 
 ```
+
+
+```{r permutation-analysis, eval=F}
+# Mike: what about permutation testing to identify those co-occurrences that are outside of chance levels?
+# G: permute individual co-occurrences?
+# for each row (frame), permute the categories
+
+perm_coocs <- do_permutation_analysis(temp)
+
+hist(perm_coocs$vec)
+perm_vals = perm_vals[which(perm_vals > 0)] # 0s are from the diagonal
+summary(perm_coocs$vec) # min: 502, max: 671
+permLB = mean(perm_coocs$vec) - 1.96 * sd(perm_coocs$vec) # 
+permUB = mean(perm_coocs$vec) + 1.96 * sd(perm_coocs$vec)
+```
+
 
 ```{r}
 freq_by_category_to_join <- freq_by_category %>%
