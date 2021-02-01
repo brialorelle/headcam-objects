@@ -71,6 +71,16 @@ library(egg)
 load(file = here::here('data/preprocessed_data/merged_annotations.RData'))
 ```
 
+```{r}
+sanity = read_csv(file = here::here('data/annotations/broad_categories/spotcheck.csv')) 
+
+sanity_check <- sanity %>%
+  as_tibble() %>%
+  group_by(what) %>%
+  summarize(count = n())
+
+```
+
 ```{r, echo=FALSE}
 freq_by_category <- d %>%
   group_by(category) %>%
@@ -197,7 +207,21 @@ The dataset is described in detail in @SAYcam. Children wore Veho Muvi miniature
 
 ## Annotation procedures
 ### Broad categories in view
-Annotations of the broad categories in the dataset were obtained using AWS Sagemaker annotations. Participants were instructed to select all of the categories that could be applied to an image; two workers annotated each image, and each category that was annotated for an image was assigned a confidence score (possible range: 0-1, range in dataset: .5-1). Participants selected whether the following categories were present in the shown image: Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, Other, or Nothing visible.  We included "other small objects" and "other big objects" as categories that participants could use to indicate objects that fell outside of these traditional superordinate categories (i.e. furniture, plant, toy). Additional instructions were provided to specify that 'other big object" refers to an object that is bigger than a chair, and that 'other small object' refers to an object that is small enough to be held with one or two hands [@konkle2012familiar]. Annotators were required to select at least one category before proceeding. Individual annotations had confidence scores below the 25\%th percentile were excluded from analyses (although all conclusions hold with and without these low-confidence annotations). 
+Annotations of the broad categories in the dataset were obtained using AWS Sagemaker annotations. Participants were instructed to select all of the categories that could be applied to an image; two workers annotated each image, and each category that was annotated for an image was assigned a confidence score (possible range: 0-1, range in dataset: .5-1). Participants selected whether the following categories were present in the shown image: Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, Other, or Nothing visible.  We included "other small objects" and "other big objects" as categories that participants could use to indicate objects that fell outside of these traditional superordinate categories (i.e. furniture, plant, toy). Additional instructions were provided to specify that 'other big object" refers to an object that is bigger than a chair, and that 'other small object' refers to an object that is small enough to be held with one or two hands [@konkle2012familiar]. Annotators were required to select at least one category before proceeding. Individual annotations had confidence scores below the 25\%th percentile were excluded from analyses (although all conclusions hold with and without these low-confidence annotations).
+
+We assessed reliability of these annotations by comparing them to annotations made on random subsample of 1000 frames on AWS Sagemaker, again using two workers per image.
+<!-- the task was identical except did not include "Other Big Object", "Other", or "Nothing Visible" as options.  -->
+When excluding low-confidence annotations, we found agreement was moderate (average Cohen's Kappa = ` round(mean(all_kappas$kappa),2)`, but varied  between different categories  (range = `r round(range(all_kappas$kappa),2)`). Annotators disagreed most on whether "clothing" was present in an image and whether a toy/drawing of a vehicle  was present. To assess the nature of these disagreements, we examined 130 images with disagreements, sampling 10 images from each category. 
+
+```{r}
+total_images = 130
+num_ambiguous = total_images - (sanity_check$count[sanity_check$what=="absent"] + sanity_check$count[sanity_check$what=="present"])
+ambiguous = num_ambiguous/total_images
+false_alarms = sanity_check$count[sanity_check$what=="absent"] / total_images
+missed = sanity_check$count[sanity_check$what=="present"] / total_images
+```
+
+Overall, we found that the majority -- `r round(ambiguous*100,2)` of the disagreements resulted from ambiguous exemplars of the categories, for example where the category was present but very occluded, blurry, or distant. Annotators also showed some disagreement about whether glossy photos of different categories in books should be counted as "real" or "toy/drawing."  If these ambiguous exemplars , there were still `r round(false_alarms,2)` percent of images with false alarms, and `r round(missed,2)`
 
 ### Objects in the child's reach
 We also annotated the objects that children were interacting with in a subset of these frames. Specifically, we selected the frames in which a previous set of participants recruited via Amazon Mechanical Turk annotated whether the hands present in a given image belong to an adult or a child and drew bounding boxes around those hands; these frames a subset of frames that were previously annotated by another set participants who indicated that a hand was present. This resulted in a set of 3050 images that were then annotated by the authors who established labeling conventions prior to annotation. Annotators noted what object the child was interacting with in frames containing children’s hands, using basic level object categories, such as "bird" and "cracker." When children were interacting with drawing or toy versions, these annotations were marked a ‘-drawing’ and ‘-toy’ modifier. If a view was allocentric or there were no child hands in view, these frames were excluded from analysis. Finally, if there was no object or the object was unclear, these frames were marked accordingly.
