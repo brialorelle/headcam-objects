@@ -273,7 +273,9 @@ These data are consistent with the idea that as children grow and become more ad
 Next, we next examined the degree to which these broad categories appeared together in different frames.
 Figure \ref{fig:coocc_stats} shows the co-occurrence of the broad categories, and reveals some relatively intuitive patterns that may reflect activity contexts.
 For example, "dishes" and "food" co-occurred quite frequently together, as did "people" and "clothing," and most animals that were toys or drawings appeared when "books" were also present.
-Broadly, these results suggest that activity contexts -- such as playtime, mealtime, or storytime -- may have a considerable influence on the categories that tend to be in the infant view,  pointing towards the role of these structured activity contexts for shaping what children learn about these categories [@bruner1985role].
+To determine which cells significantly deviate from chance we used a permutation analysis in which we shuffled the annotated category labels within each frame and examined the distribution of co-occurrences across 100 randomized co-occurrence matrices.
+The cells in the plot that occurred fewer times than expected by chance (<99% of permuted cells) are labeled with a '-', while those that occurred more often than expected by chance (>99% of permuted cells) are labeled with a '+'.
+Broadly, these results suggest that activity contexts -- such as playtime, mealtime, or storytime -- may have a considerable influence on structuring the categories that tend to be in the infant view, pointing towards the role of these contexts for shaping what children learn about these categories [@bruner1985role].
 
 <!-- Separation of these activities by child-alone vs. with parent (adult-hand or adult-face present) -->
 <!-- Mealtime (food + utensil?) -->
@@ -416,11 +418,11 @@ ordered_prob$Sig = ifelse(ordered_prob$Count < perm_99bounds[1], "-",
 ```
 
 
-```{r coocc_stats, echo=F, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3.5, fig.height=3.5, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Co-occurrence between different categories detected in the dataset across all frames. Each cell represents the probability that the category on the y-axis (e.g., clothing) occurs relative to the occurrence of the category on the x-axis (e.g., person). Lighter values indicate higher probabilities of co-occurrence (max=.8, min=0)."}
+```{r coocc_stats, echo=F, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3.5, fig.height=3.5, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Co-occurrence between different categories detected in the dataset across all frames. Each cell represents the probability that the category on the y-axis (e.g., clothing) occurs relative to the occurrence of the category on the x-axis (e.g., person). Lighter values indicate higher probabilities of co-occurrence (max=.8, min=0). A permutation analysis was used to determine which cell values were outside the 99\\% confidence interval of counts: - = <99\\%, + = >99\\%."}
 # Plot co-occurrence stats
 ggplot(ordered_prob, aes(x=Category1, y=Category2, fill=prob)) +
   geom_tile() +
-  geom_text(aes(label=Sig), color="red") + 
+  geom_text(aes(label=Sig), color="white") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1,vjust=.5)) +
   scale_fill_viridis(option='D', begin=.1, end=.9) +
   ylab('Frequency of occurrence') +
