@@ -360,18 +360,21 @@ coocc_data <- get_img_category_coocs_long(temp)
 # Mike: what about permutation testing to identify those co-occurrences that are outside of chance levels?
 # G: permute individual co-occurrences?
 # for each row (frame), permute the categories
-
+set.seed(123)
 perm_coocs <- do_permutation_analysis(temp)
 
-hist(perm_coocs$vec)
-perm_vals = perm_vals[which(perm_vals > 0)] # 0s are from the diagonal
-summary(perm_coocs$vec) # min: 502, max: 671
-permLB = mean(perm_coocs$vec) - 1.96 * sd(perm_coocs$vec) # 
-permUB = mean(perm_coocs$vec) + 1.96 * sd(perm_coocs$vec)
+#perm_95bounds = quantile(perm_coocs$vec, probs = c(0.05, 0.95))
+perm_99bounds = quantile(perm_coocs$vec, probs = c(0.01, 0.99))
+
+hist(perm_coocs$vec, main="Distribution of Permuted Co-occurrences", xlab="Permuted Co-occurrence Count")
+abline(v=perm_99bounds, col="red")
 ```
 
 
 ```{r}
+# (from above permutation analysis; not re-run every time because it's slow)
+perm_99bounds = c(535, 647)
+
 freq_by_category_to_join <- freq_by_category %>%
   rename(Category1 = category, Category1_Count = count)
 
@@ -384,6 +387,8 @@ ordered_prob  <- coocc_data %>%
   filter(!prob==1)
 
 ordered_prob$Category2 = factor(ordered_prob$Category2, levels = levels(ordered_prob$Category1))
+ordered_prob$Sig = ifelse(ordered_prob$Count < perm_99bounds[1], "-", 
+                          ifelse(ordered_prob$Count > perm_99bounds[2], "+", ""))
 ```
 
 
@@ -391,6 +396,7 @@ ordered_prob$Category2 = factor(ordered_prob$Category2, levels = levels(ordered_
 # Plot co-occurrence stats
 ggplot(ordered_prob, aes(x=Category1, y=Category2, fill=prob)) +
   geom_tile() +
+  geom_text(aes(label=Sig), color="red") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1,vjust=.5)) +
   scale_fill_viridis(option='D', begin=.1, end=.9) +
   ylab('Frequency of occurrence') +
