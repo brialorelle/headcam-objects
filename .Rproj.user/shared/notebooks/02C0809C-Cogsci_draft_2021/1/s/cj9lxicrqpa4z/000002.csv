@@ -1,0 +1,27 @@
+"0","do_permutation_analysis <- function(temp, Nsim=100) {
+  col_names = colnames(temp)
+  perm_coocs <- matrix(0, nrow=length(col_names),
+                         ncol=length(col_names))
+  diag(perm_coocs) = NA
+  perm_vec = c() # flat vector of all the values (I think this distro is what we want to look at)
+  for(i in 1:Nsim) {
+    # permute rows
+    permed <- t(apply(temp, 1, sample))
+    colnames(permed) = colnames(temp)
+    new_perm_mat = get_img_category_coocs(permed)
+    diag(new_perm_mat) = NA
+    perm_coocs = perm_coocs + new_perm_mat
+    perm_vec = c(perm_vec, na.omit(as.vector(new_perm_mat)))
+    # sum(rowSums(permed)!=rowSums(temp)) # test: yup, same totals per row
+  }
+  # do we actually want to save the entire flattened matrix of values, and look at the distribution?
+  rownames(perm_coocs) = col_names
+  colnames(perm_coocs) = col_names
+  perm_coocs = perm_coocs / 100 
+  return(list(mat=perm_coocs, vec=perm_vec)
+}
+"
+"2","Error: unexpected '}' in:
+""  return(list(mat=perm_coocs, vec=perm_vec)
+}""
+"

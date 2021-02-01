@@ -291,22 +291,27 @@ get_img_category_coocs <- function(temp) {
 cat_coocs <- get_img_category_coocs(temp)
 # 16 x 16
 
-get_avg_permutation_matrix <- function(temp, Nsim=100) {
+do_permutation_analysis <- function(temp, Nsim=100) {
   col_names = colnames(temp)
   perm_coocs <- matrix(0, nrow=length(col_names),
                          ncol=length(col_names))
+  diag(perm_coocs) = NA
+  perm_vec = c() # flat vector of all the values (I think this distro is what we want to look at)
   for(i in 1:Nsim) {
     # permute rows
     permed <- t(apply(temp, 1, sample))
     colnames(permed) = colnames(temp)
-    perm_coocs = perm_coocs + get_img_category_coocs(permed)
+    new_perm_mat = get_img_category_coocs(permed)
+    diag(new_perm_mat) = NA
+    perm_coocs = perm_coocs + new_perm_mat
+    perm_vec = c(perm_vec, na.omit(as.vector(new_perm_mat)))
     # sum(rowSums(permed)!=rowSums(temp)) # test: yup, same totals per row
   }
   # do we actually want to save the entire flattened matrix of values, and look at the distribution?
   rownames(perm_coocs) = col_names
   colnames(perm_coocs) = col_names
   perm_coocs = perm_coocs / 100 
-  return(perm_coocs)
+  return(list(mat=perm_coocs, vec=perm_vec))
 }
 
 ### Wanted this to work in tidyverse.....sorrrry
@@ -356,11 +361,13 @@ coocc_data <- get_img_category_coocs_long(temp)
 # G: permute individual co-occurrences?
 # for each row (frame), permute the categories
 
-perm_coocs <- get_avg_permutation_matrix(temp)
+perm_coocs <- do_permutation_analysis(temp)
 
-perm_vals = unlist(perm_coocs)
+hist(perm_coocs$vec)
 perm_vals = perm_vals[which(perm_vals > 0)] # 0s are from the diagonal
-summary(perm_vals) # min: 583.7, max: 595.9
+summary(perm_coocs$vec) # min: 502, max: 671
+permLB = mean(perm_coocs$vec) - 1.96 * sd(perm_coocs$vec) # 
+permUB = mean(perm_coocs$vec) + 1.96 * sd(perm_coocs$vec)
 ```
 
 
