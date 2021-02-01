@@ -271,43 +271,72 @@ temp <- d %>%
   ungroup() %>%
   select(-img)
 
-col_names = colnames(temp)
 
-cat_coocs <- matrix(0, nrow=length(col_names),
-                    ncol=length(col_names))
+get_img_category_coocs <- function(temp) {
+  col_names = colnames(temp)
+  cat_coocs <- matrix(0, nrow=length(col_names),
+                         ncol=length(col_names))
 
-for (c1 in 1:length(col_names)) {
-  for (c2 in 1:length(col_names)) {
-    if(c1!=c2) cat_coocs[c1,c2] = sum(temp[,c1]==1 & temp[,c2]==1)
+  for (c1 in 1:length(col_names)) {
+    for (c2 in 1:length(col_names)) {
+      if(c1!=c2) cat_coocs[c1,c2] = sum(temp[,c1]==1 & temp[,c2]==1)
+    }
   }
+
+  rownames(cat_coocs) = col_names
+  colnames(cat_coocs) = col_names
+  return(cat_coocs)
 }
 
-rownames(cat_coocs) = col_names
-colnames(cat_coocs) = col_names
+cat_coocs <- get_img_category_coocs(temp)
+# 16 x 16
+
+get_avg_permutation_matrix <- function(temp, Nsim=100) {
+  col_names = colnames(temp)
+  perm_coocs <- matrix(0, nrow=length(col_names),
+                         ncol=length(col_names))
+  for(i in 1:Nsim) {
+    # permute rows
+    permed <- t(apply(temp, 1, sample))
+    colnames(permed) = colnames(temp)
+    perm_coocs = perm_coocs + get_img_category_coocs(permed)
+    # sum(rowSums(permed)!=rowSums(temp)) # test: yup, same totals per row
+  }
+  # do we actually want to save the entire flattened matrix of values, and look at the distribution?
+  rownames(perm_coocs) = col_names
+  colnames(perm_coocs) = col_names
+  perm_coocs = perm_coocs / 100 
+  return(perm_coocs)
+}
 
 ### Wanted this to work in tidyverse.....sorrrry
 # GK: no worries--it's complicated! I made a classic co-occurrence matrix
 # (same as yours but in wide format) to make a heatmap with dendrograms as an alternative
 
+get_img_category_coocs_long <- function(temp) {
+  col_names = colnames(temp)
+  for (c1 in 1:length(col_names)) {
+    for (c2 in 1:length(col_names)) {
+      both_present= sum(temp[c1]==1 & temp[c2]==1)
+      if (c1==c2){
+        both_present=NA
+      }
+      this_data = tibble(col_names[c1], col_names[c2], both_present)
+      colnames(this_data) = c('Category1','Category2','Count')
 
-for (c1 in 1:length(col_names)) {
-  for (c2 in 1:length(col_names)) {
-  both_present= sum(temp[c1]==1 & temp[c2]==1)
-   if (c1==c2){
-    both_present=NA
+    if (c1==1 & c2==1){
+      coocc_data = this_data
+    } 
+    else {
+      coocc_data <- coocc_data %>%
+      full_join(this_data)
+    }
+    }
   }
-  this_data = tibble(col_names[c1], col_names[c2], both_present)
-  colnames(this_data) = c('Category1','Category2','Count')
-
-  if (c1==1 & c2==1){
-    coocc_data = this_data
-  }
-  else {
-  coocc_data <- coocc_data %>%
-    full_join(this_data)
-  }
-  }
+  return(coocc_data)
 }
+
+coocc_data <- get_img_category_coocs_long(temp)
 
 ## Reorder data for plot
 # num_images = length(unique(d$img))
@@ -320,6 +349,20 @@ for (c1 in 1:length(col_names)) {
 # ordered_coocc$Category2 = factor(ordered_coocc$Category2, levels = levels(ordered_coocc$Category1))
 
 ```
+
+
+```{r permutation-analysis, eval=F}
+# Mike: what about permutation testing to identify those co-occurrences that are outside of chance levels?
+# G: permute individual co-occurrences?
+# for each row (frame), permute the categories
+
+perm_coocs <- get_avg_permutation_matrix(temp)
+
+perm_vals = unlist(perm_coocs)
+perm_vals = perm_vals[which(perm_vals > 0)] # 0s are from the diagonal
+summary(perm_vals) # min: 583.7, max: 595.9
+```
+
 
 ```{r}
 freq_by_category_to_join <- freq_by_category %>%
