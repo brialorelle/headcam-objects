@@ -392,7 +392,12 @@ d_basic <- d_basic %>%
                           "sippycup" = "sippy cup",
                           "magazine" = "book",
                           "remote control" = "remote",
-                          "plastic bag" = "bag")) %>%
+                          "plastic bag" = "bag",
+                          "photograph" = "photo",
+                          "picture" = "photo",
+                          "frui" = "fruit",
+                          "atoy" = "toy",
+                          "fenc" = "fence")) %>%
   mutate(basic_level = str_replace(basic_level, '-book','-drawing')) %>%
   mutate(basic_level = as.factor(basic_level))
 ```
