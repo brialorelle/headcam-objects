@@ -1,10 +1,10 @@
 url,label
 https://langcog.stanford.edu/expts/saycam/frames/16638-S_20140101_1415_04.mp4-4290.jpg,tree-toy
 https://langcog.stanford.edu/expts/saycam/frames/16649-S_20140101_1415_04.mp4-11650.jpg,bag
-https://langcog.stanford.edu/expts/saycam/frames/16657-S_20140101_1415_05.mp4-5750.jpg,unknown object
+https://langcog.stanford.edu/expts/saycam/frames/16657-S_20140101_1415_05.mp4-5750.jpg,comb
 https://langcog.stanford.edu/expts/saycam/frames/16667-S_20140101_1415_05.mp4-15190.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16668-S_20140101_1415_05.mp4-16885.jpg,book
-https://langcog.stanford.edu/expts/saycam/frames/16669-S_20140101_1415_05.mp4-18170.jpg,book
+https://langcog.stanford.edu/expts/saycam/frames/16669-S_20140101_1415_05.mp4-18170.jpg,apple-drawing
 https://langcog.stanford.edu/expts/saycam/frames/16672-S_20140101_1415_05.mp4-20810.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16673-S_20140101_1415_05.mp4-21885.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/1668-A_20130721_1008_02.mp4-30340.jpg,book
@@ -14,22 +14,22 @@ https://langcog.stanford.edu/expts/saycam/frames/16685-S_20140104_1418_01.mp4-27
 https://langcog.stanford.edu/expts/saycam/frames/16690-S_20140104_1418_02.mp4-5240.jpg,block
 https://langcog.stanford.edu/expts/saycam/frames/16692-S_20140104_1418_02.mp4-9670.jpg,block
 https://langcog.stanford.edu/expts/saycam/frames/16695-S_20140104_1418_02.mp4-15115.jpg,toy
-https://langcog.stanford.edu/expts/saycam/frames/16697-S_20140104_1418_02.mp4-15525.jpg,unknown object
-https://langcog.stanford.edu/expts/saycam/frames/16698-S_20140104_1418_02.mp4-15665.jpg,unknown object
+https://langcog.stanford.edu/expts/saycam/frames/16697-S_20140104_1418_02.mp4-15525.jpg,block
+https://langcog.stanford.edu/expts/saycam/frames/16698-S_20140104_1418_02.mp4-15665.jpg,block
 https://langcog.stanford.edu/expts/saycam/frames/16699-S_20140104_1418_02.mp4-15880.jpg,block
-https://langcog.stanford.edu/expts/saycam/frames/1670-A_20130721_1008_02.mp4-34420.jpg,book
-https://langcog.stanford.edu/expts/saycam/frames/16703-S_20140104_1418_03.mp4-7155.jpg,book
-https://langcog.stanford.edu/expts/saycam/frames/16707-S_20140104_1418_03.mp4-10895.jpg,pig
-https://langcog.stanford.edu/expts/saycam/frames/16708-S_20140104_1418_03.mp4-11035.jpg,animal-drawing
+https://langcog.stanford.edu/expts/saycam/frames/1670-A_20130721_1008_02.mp4-34420.jpg,chick-drawing
+https://langcog.stanford.edu/expts/saycam/frames/16703-S_20140104_1418_03.mp4-7155.jpg,chick-drawing
+https://langcog.stanford.edu/expts/saycam/frames/16707-S_20140104_1418_03.mp4-10895.jpg,pig-drawing
+https://langcog.stanford.edu/expts/saycam/frames/16708-S_20140104_1418_03.mp4-11035.jpg,pig-drawing
 https://langcog.stanford.edu/expts/saycam/frames/16710-S_20140104_1418_03.mp4-11835.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16712-S_20140107_1421_01.mp4-3185.jpg,computer
 https://langcog.stanford.edu/expts/saycam/frames/16713-S_20140107_1421_01.mp4-3630.jpg,toy
 https://langcog.stanford.edu/expts/saycam/frames/16716-S_20140107_1421_01.mp4-5010.jpg,computer
 https://langcog.stanford.edu/expts/saycam/frames/16718-S_20140107_1421_01.mp4-6935.jpg,computer
 https://langcog.stanford.edu/expts/saycam/frames/16724-S_20140107_1421_01.mp4-12930.jpg,computer
-https://langcog.stanford.edu/expts/saycam/frames/16732-S_20140107_1421_02.mp4-11890.jpg,person
-https://langcog.stanford.edu/expts/saycam/frames/16743-S_20140107_1421_03.mp4-14135.jpg,food
-https://langcog.stanford.edu/expts/saycam/frames/16744-S_20140107_1421_03.mp4-14210.jpg,food
+https://langcog.stanford.edu/expts/saycam/frames/16732-S_20140107_1421_02.mp4-11890.jpg,no object
+https://langcog.stanford.edu/expts/saycam/frames/16743-S_20140107_1421_03.mp4-14135.jpg,cucumber
+https://langcog.stanford.edu/expts/saycam/frames/16744-S_20140107_1421_03.mp4-14210.jpg,cucumber
 https://langcog.stanford.edu/expts/saycam/frames/16747-S_20140107_1421_03.mp4-19290.jpg,cucumber
 https://langcog.stanford.edu/expts/saycam/frames/16749-S_20140107_1421_03.mp4-24780.jpg,food
 https://langcog.stanford.edu/expts/saycam/frames/1675-A_20130721_1008_02.mp4-40095.jpg,window
@@ -37,19 +37,19 @@ https://langcog.stanford.edu/expts/saycam/frames/16763-S_20140107_1421_06.mp4-21
 https://langcog.stanford.edu/expts/saycam/frames/16798-S_20140112_1426_03.mp4-2200.jpg,person
 https://langcog.stanford.edu/expts/saycam/frames/16800-S_20140112_1426_03.mp4-4515.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16804-S_20140112_1426_03.mp4-9145.jpg,shovel-drawing
-https://langcog.stanford.edu/expts/saycam/frames/16808-S_20140112_1426_03.mp4-14115.jpg,book
+https://langcog.stanford.edu/expts/saycam/frames/16808-S_20140112_1426_03.mp4-14115.jpg,train-drawing
 https://langcog.stanford.edu/expts/saycam/frames/16809-S_20140112_1426_03.mp4-14955.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16812-S_20140112_1426_03.mp4-19980.jpg,no object
 https://langcog.stanford.edu/expts/saycam/frames/16815-S_20140112_1426_04.mp4-1810.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16816-S_20140112_1426_04.mp4-2595.jpg,book
-https://langcog.stanford.edu/expts/saycam/frames/16818-S_20140112_1426_04.mp4-8580.jpg,picture
-https://langcog.stanford.edu/expts/saycam/frames/1682-A_20130721_1008_02.mp4-50655.jpg,no object
+https://langcog.stanford.edu/expts/saycam/frames/16818-S_20140112_1426_04.mp4-8580.jpg,photograph
+https://langcog.stanford.edu/expts/saycam/frames/1682-A_20130721_1008_02.mp4-50655.jpg,table
 https://langcog.stanford.edu/expts/saycam/frames/16820-S_20140112_1426_04.mp4-17255.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16821-S_20140112_1426_04.mp4-17280.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/16823-S_20140112_1426_04.mp4-19380.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/1683-A_20130721_1008_02.mp4-52395.jpg,table
 https://langcog.stanford.edu/expts/saycam/frames/1687-A_20130721_1008_03.mp4-2980.jpg,play gym
-https://langcog.stanford.edu/expts/saycam/frames/16874-S_20140119_1502_01.mp4-4240.jpg,unknown object
+https://langcog.stanford.edu/expts/saycam/frames/16874-S_20140119_1502_01.mp4-4240.jpg,lamp
 https://langcog.stanford.edu/expts/saycam/frames/16878-S_20140119_1502_01.mp4-4955.jpg,telephone
 https://langcog.stanford.edu/expts/saycam/frames/16880-S_20140119_1502_01.mp4-6330.jpg,no child hands
 https://langcog.stanford.edu/expts/saycam/frames/16883-S_20140119_1502_01.mp4-8070.jpg,lamp
@@ -75,12 +75,12 @@ https://langcog.stanford.edu/expts/saycam/frames/17033-S_20140125_1508_02.mp4-11
 https://langcog.stanford.edu/expts/saycam/frames/17034-S_20140125_1508_02.mp4-13790.jpg,bottle
 https://langcog.stanford.edu/expts/saycam/frames/17036-S_20140125_1508_02.mp4-16375.jpg,bottle
 https://langcog.stanford.edu/expts/saycam/frames/17042-S_20140125_1508_02.mp4-24695.jpg,fruit
-https://langcog.stanford.edu/expts/saycam/frames/17044-S_20140125_1508_02.mp4-27575.jpg,sippy cup
+https://langcog.stanford.edu/expts/saycam/frames/17044-S_20140125_1508_02.mp4-27575.jpg,bottle
 https://langcog.stanford.edu/expts/saycam/frames/17049-S_20140125_1508_02.mp4-32870.jpg,no object
-https://langcog.stanford.edu/expts/saycam/frames/17053-S_20140125_1508_03.mp4-2520.jpg,picture
+https://langcog.stanford.edu/expts/saycam/frames/17053-S_20140125_1508_03.mp4-2520.jpg,photograph
 https://langcog.stanford.edu/expts/saycam/frames/17055-S_20140125_1508_03.mp4-4085.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17058-S_20140125_1508_03.mp4-10455.jpg,block
-https://langcog.stanford.edu/expts/saycam/frames/17060-S_20140125_1508_03.mp4-13985.jpg,chicken
+https://langcog.stanford.edu/expts/saycam/frames/17060-S_20140125_1508_03.mp4-13985.jpg,chicken-drawing
 https://langcog.stanford.edu/expts/saycam/frames/17063-S_20140125_1508_03.mp4-15140.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17065-S_20140125_1508_03.mp4-19830.jpg,toy
 https://langcog.stanford.edu/expts/saycam/frames/17066-S_20140125_1508_03.mp4-21145.jpg,toy
@@ -88,7 +88,7 @@ https://langcog.stanford.edu/expts/saycam/frames/17067-S_20140125_1508_03.mp4-21
 https://langcog.stanford.edu/expts/saycam/frames/17068-S_20140125_1508_03.mp4-23560.jpg,toy
 https://langcog.stanford.edu/expts/saycam/frames/17069-S_20140125_1508_03.mp4-23615.jpg,toy
 https://langcog.stanford.edu/expts/saycam/frames/17070-S_20140125_1508_03.mp4-24580.jpg,toy
-https://langcog.stanford.edu/expts/saycam/frames/17071-S_20140129_1512_01.mp4-3645.jpg,horse
+https://langcog.stanford.edu/expts/saycam/frames/17071-S_20140129_1512_01.mp4-3645.jpg,horse-drawing
 https://langcog.stanford.edu/expts/saycam/frames/17072-S_20140129_1512_01.mp4-4820.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17074-S_20140129_1512_01.mp4-7845.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17075-S_20140129_1512_01.mp4-9035.jpg,book
@@ -138,7 +138,7 @@ https://langcog.stanford.edu/expts/saycam/frames/17238-S_20140202_1516_09.mp4-25
 https://langcog.stanford.edu/expts/saycam/frames/1724-A_20130726_1013_02.mp4-4015.jpg,toy
 https://langcog.stanford.edu/expts/saycam/frames/17240-S_20140202_1516_09.mp4-27840.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17241-S_20140202_1516_09.mp4-29020.jpg,book
-https://langcog.stanford.edu/expts/saycam/frames/17246-S_20140206_1520_01.mp4-3820.jpg,sofa / couch
+https://langcog.stanford.edu/expts/saycam/frames/17246-S_20140206_1520_01.mp4-3820.jpg,ipad
 https://langcog.stanford.edu/expts/saycam/frames/17247-S_20140206_1520_01.mp4-4695.jpg,ipad
 https://langcog.stanford.edu/expts/saycam/frames/17248-S_20140206_1520_01.mp4-5375.jpg,ipad
 https://langcog.stanford.edu/expts/saycam/frames/1725-A_20130726_1013_02.mp4-4105.jpg,toy
@@ -172,7 +172,7 @@ https://langcog.stanford.edu/expts/saycam/frames/17335-S_20140208_1522_01.mp4-12
 https://langcog.stanford.edu/expts/saycam/frames/17336-S_20140208_1522_01.mp4-13385.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17338-S_20140208_1522_01.mp4-14765.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17339-S_20140208_1522_01.mp4-15995.jpg,dinosaur-drawing
-https://langcog.stanford.edu/expts/saycam/frames/17350-S_20140208_1522_02.mp4-19150.jpg,unknown object
+https://langcog.stanford.edu/expts/saycam/frames/17350-S_20140208_1522_02.mp4-19150.jpg,carrot
 https://langcog.stanford.edu/expts/saycam/frames/17358-S_20140208_1522_03.mp4-5985.jpg,food
 https://langcog.stanford.edu/expts/saycam/frames/17366-S_20140208_1522_04.mp4-2355.jpg,ipad
 https://langcog.stanford.edu/expts/saycam/frames/17367-S_20140208_1522_04.mp4-3985.jpg,ipad
@@ -194,7 +194,7 @@ https://langcog.stanford.edu/expts/saycam/frames/17427-S_20140212_1526_07.mp4-20
 https://langcog.stanford.edu/expts/saycam/frames/1744-A_20130726_1013_02.mp4-29280.jpg,book
 https://langcog.stanford.edu/expts/saycam/frames/17441-S_20140212_1526_08.mp4-4035.jpg,clothing
 https://langcog.stanford.edu/expts/saycam/frames/17442-S_20140212_1526_08.mp4-4090.jpg,clothing
-https://langcog.stanford.edu/expts/saycam/frames/17443-S_20140212_1526_08.mp4-5945.jpg,unknown object
+https://langcog.stanford.edu/expts/saycam/frames/17443-S_20140212_1526_08.mp4-5945.jpg,block
 https://langcog.stanford.edu/expts/saycam/frames/17448-S_20140212_1526_08.mp4-11310.jpg,toy
 https://langcog.stanford.edu/expts/saycam/frames/17449-S_20140212_1526_08.mp4-11915.jpg,unknown object
 https://langcog.stanford.edu/expts/saycam/frames/17454-S_20140212_1526_09.mp4-3925.jpg,book
