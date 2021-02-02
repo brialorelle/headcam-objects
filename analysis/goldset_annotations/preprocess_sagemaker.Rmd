@@ -15,24 +15,47 @@ library(ggthemes)
 ```
 
 # Import data
-## Filename to import data from sagemaker
+## For 24K annotations
+###Filename to import data from sagemaker
 ```{r}
 filename = here::here('data/annotations/broad_categories/24k/output.manifest')
 ```
 
-## Use this awk construction to read the nested json
+### Use this awk construction to read the nested json
 ```{r}
 json = fromJSON(paste("[",paste(readLines(filename),collapse=","),"]"))
 ```
 
-## Create readable class list -- double checked via turk interface and data structure
+### Create readable class list -- double checked via turk interface and data structure
 ```{r}
 class_list = c('Animal-toy','Animal-real', 'Vehicle-toy','Vehicle-real','Toy','Utensil-Dish','Food','Furniture','Book','Person','Clothing','Plant', 'SmallObj','BigObj','Other','Nothing')
 
 d <- tibble() 
 ```
 
-## Go through each row and extract data we want; ignoring conf
+## Now for reliability smaller annotatinos
+### Filename for reliability 
+```{r}
+# filename_reliability = here::here('data/annotations/broad_categories/1000_images/output.manifest')
+filename_reliability = here::here('data/annotations/broad_categories/24K_reliability_sample/output.manifest')
+
+```
+
+### Use this awk construction to read the nested json for reliability file
+```{r}
+json_reliability = fromJSON(paste("[",paste(readLines(filename_reliability),collapse=","),"]"))
+```
+
+## Create readable class list -- double checked via turk interface and data structure
+```{r}
+# class_list_smaller = c('Animal-toy','Animal-real', 'Vehicle-toy','Vehicle-real','Toy','Utensil-Dish','Food','Furniture','Book','Person','Clothing','Plant','SmallObj')
+
+d_reliability = tibble()
+```
+
+
+
+## Go through each row and extract data we want
 ```{r}
 for (i in 1:24000){
   this_image = json[[i]]
@@ -50,6 +73,35 @@ for (i in 1:24000){
 
 ```
 
+
+```{r}
+for (i in 1:1200){
+  this_image_r = json_reliability[[i]]
+  source_url = this_image_r$`source-ref`
+  classes_in_image = this_image_r$`SAYCAM-classification-goldset-24k-reliability-take3`
+  classes_in_image = classes_in_image + 1
+  these_confs =unlist(this_image_r$`SAYCAM-classification-goldset-24k-reliability-take3-metadata`$`confidence-map`)
+  categories_in_image = class_list[classes_in_image]
+  new_rows = tibble(img = source_url, class = classes_in_image, category = categories_in_image, conf = these_confs)
+  
+  d_reliability <- d_reliability %>% 
+    bind_rows(new_rows)
+    
+}
+```
+
+# Calculate reliability
+```{r}
+d_reliability_temp<- d_reliability %>%
+  mutate(annotator = 'second') 
+
+```
+
+```{r}
+d_reliability <- d %>%
+  mutate(annotator = 'primary') %>%
+  full_join(d_reliability_temp)
+```
 
 # Add age data
 ## Birthdays
@@ -82,6 +134,18 @@ d <- d %>%
   left_join(age_info) %>%
   mutate(age_days = as.numeric(difftime(date_filmed,bday)) ) %>%
   select(-bday, -date_filmed)
+
+d_reliability <- d_reliability %>%
+  mutate(img_name = str_split_fixed(img,'/',5)[,5]) %>%
+  mutate(public_url = paste0(prefix,img_name)) %>%
+  mutate(vid_name_temp = str_split_fixed(img_name,'-',2)[,2]) %>%
+  mutate(vid_name = str_split_fixed(vid_name_temp, '.mp4',2)[,1])  %>%
+  mutate(child_id = str_split_fixed(vid_name, '_',2)[,1]) %>%
+  mutate(date_filmed =  lubridate::ymd(str_split_fixed(vid_name, '_',4)[,2])) %>%
+  left_join(age_info) %>%
+  mutate(age_days = as.numeric(difftime(date_filmed,bday)) ) %>%
+  select(-bday, -date_filmed)
+  
 ```
 
 ## construct age bins for every month 
@@ -97,15 +161,15 @@ d <- d %>%
   mutate(age_day_bin = as.numeric(as.character(age_day_bin))) 
 ```
 
-# get rid of low conf annotations
-```{r}
-d <- d %>%
-  filter(conf > quantile(conf,.25))
-```
+
 
 # Get rid of allocentric videos
 ```{r}
 d <- d %>%
+  rowwise() %>%
+  mutate(vid_name = str_split(vid_name_temp,"[.]")[[1]][1])
+
+d_reliability <- d_reliability %>%
   rowwise() %>%
   mutate(vid_name = str_split(vid_name_temp,"[.]")[[1]][1])
 ```
@@ -125,6 +189,14 @@ pre_exclude_vid_count = length(unique(d$vid_name))
 ```
 
 ```{r}
+
+d_reliability <- d_reliability %>%
+  mutate(vid_name = as.factor(vid_name)) %>%
+  filter(!vid_name %in% vids_to_exclude) %>%
+  mutate(frame_num_temp = str_split_fixed(vid_name_temp, '-',2)[,2]) %>%
+  mutate(frame = as.numeric(str_split_fixed(frame_num_temp, '.jpg',2)[,1])) %>%
+  select(-vid_name_temp, -frame_num_temp)
+
 d <- d %>%
   mutate(vid_name = as.factor(vid_name)) %>%
   filter(!vid_name %in% vids_to_exclude) %>%
@@ -138,6 +210,123 @@ assertthat::assert_that(pre_exclude_vid_count>post_exclude_vid_count)
 
 ```
 
+# Calculate reliabilty for these annotations
+```{r}
+
+img_list_double_coded <- d_reliability %>%
+  filter(annotator=='second') %>%
+  select(img_name) %>%
+  distinct(img_name)
+
+double_coded <- d_reliability %>%
+  group_by(img_name) %>%
+  filter(img_name %in% img_list_double_coded$img_name) %>%
+  select(img_name, category, annotator, conf) %>%
+  arrange(desc(img_name)) %>%
+  filter(conf>quantile(conf,.25)) #filter low conf annotatinos
+
+# keep images with both annotators
+retain_imgs <- double_coded %>%
+  distinct(img_name, annotator) %>%
+  group_by(img_name) %>%
+  summarize(count_annotations = length(annotator)) %>%
+  filter(count_annotations==2)
+  
+```
+
+
+
+
+```{r}
+
+temp <- double_coded %>%
+  filter(img_name %in% retain_imgs$img_name) %>%
+  group_by(img_name, annotator, category) %>%
+  tally() %>%
+  spread(key = category, value = n) %>%
+  ungroup() %>%
+  replace(is.na(.), 0)
+
+rater1 = temp %>%
+    filter(annotator == 'primary') 
+
+rater2 = temp %>%
+   filter(annotator == 'second') 
+  
+```
+
+```{r}
+all_kappas = tibble() 
+all_imgs_disagree = tibble() 
+num_images =  length(rater1$img_name)
+
+for (class in class_list) {
+  first_col <- rater1 %>%
+    select(starts_with(class))
+  
+  second_col <- rater2 %>%
+    select(starts_with(class))
+  
+  out = irr::kappa2(data.frame(first_col, second_col))
+  both_neg = sum(first_col==0 & second_col==0) 
+  both_pos = sum(first_col==1 & second_col==1) 
+  disagree = sum(first_col!=second_col) / num_images
+  disagree_count = sum(first_col!=second_col)
+  
+  this_class_kappa = tibble(category = class, kappa = out$value, disagree = disagree, agree_pos = both_pos, agree_neg = both_neg,  disagree_count = disagree_count)
+  
+  all_kappas <- all_kappas %>%
+    bind_rows(this_class_kappa)
+  
+  first_col_imgs <- rater1 %>%
+    select(starts_with(class), img_name) 
+    
+  second_col_imgs <- rater2 %>%
+    select(starts_with(class), img_name)
+  
+  imgs_disgaree = first_col_imgs$img_name[first_col_imgs[1]!=second_col_imgs[1]]
+  sample_images <- imgs_disgaree %>%
+    as_tibble() %>%
+    sample_n(10) %>%
+    mutate(disagree_category = class) %>%
+    rename(img_name = value)
+  
+  all_imgs_disagree <- all_imgs_disagree %>%
+    bind_rows(sample_images)
+  
+}
+
+mean(all_kappas$kappa)
+
+```
+
+
+```{r}
+
+all_imgs_disagree <- all_imgs_disagree %>%
+  mutate(public_url = paste0(prefix,img_name))
+
+  public_urls = all_imgs_disagree$public_url
+  img_names_short = all_imgs_disagree$img_name
+  categories = all_imgs_disagree$disagree_category
+
+  dir.create(here::here("data/images/annotation_examples/disagreements_second_sample"),recursive = TRUE)
+
+  for (i in 1:length(public_urls)){
+    this_image = image_read(public_urls[i])
+    image_write(this_image,here::here("data/images/annotation_examples/disagreements_second_sample/",paste0(categories[i],'-',img_names_short[i])))
+}
+```
+
+```{r}
+# # count number of positive examples of category
+# animal-real - 1 real example, 3 photographs of animals
+# animal-toy: 8 I would count, admittedly all drawings
+# book: 4 real
+# clothign: are shoes clothing, depicted clothing, clothing on child
+# food: fake food, toy food, food in distance, ingredients
+
+```
 
 
 # Merge hand annotations
@@ -150,35 +339,90 @@ hand_id <- child_adult_hand_annotations %>%
 ### info with d
 ```{r}
 d <- d %>%
-  left_join(hand_id, by=c('frame','vid_name'))
+  left_join(hand_id, by=c('frame','vid_name')) 
 ```
 
 # Read in basic-level annotations
 ```{r}
 set_1 <- read.csv(file=here::here('data/annotations/basic_level_manual/naitiHandsObjLabeled.csv')) %>%
-  as_tibble()
-
-set_2 <- read.csv (file=here::here('data/annotations/basic_level_manual/georgeHandsObjLabeled.csv')) %>%
-  as_tibble()
-                           
-d_basic <- read.csv(file=here::here('data/annotations/basic_level_manual/briaHandsObjLabeled.csv')) %>%
   as_tibble() %>%
-  full_join(set_1) %>%
-  full_join(set_2) %>%
   rename(public_url = url, basic_level = label)
+
+set_2 <- read.csv(file=here::here('data/annotations/basic_level_manual/reproducibleHandsObjLabeled.csv')) %>%
+  as_tibble() %>%
+  rename(public_url = url, basic_level = label) 
+
+set_3 <- read.csv(file=here::here('data/annotations/basic_level_manual/nbHandsObjLabeled.csv')) %>%
+  as_tibble() %>%
+  rename(public_url = url, basic_level = label) 
+  
+
+# set_2 <- read.csv (file=here::here('data/annotations/basic_level_manual/georgeHandsObjLabeled.csv')) %>%
+#   as_tibble()
+                           
+d_basic <- set_1 %>%
+  full_join(set_2)  %>%
+  full_join(set_3)
+
+```
+```{r}
+# used this code to figure otu that multiple annotators wasn't a great idea for a first pass
+# compare <- double_coded_basic  %>%
+#   mutate(basic_level_second = recode(basic_level_second, "sofa / couch" = "couch", "picture" = "photograph")) %>%
+#   left_join(d_basic) %>%
+#   mutate(basic_level = str_to_lower(basic_level)) %>%
+#   mutate(same_label = (basic_level_second == basic_level)) %>%
+#   filter(same_label == FALSE) %>%
+#   filter(!basic_level_second %in% c('unknown object','no child hands'))
 ```
 
-# Add to data structure
 ```{r}
-d <- d %>%
+d_basic <- d_basic %>%
+  mutate(basic_level = recode(basic_level, 
+                           "no chid hands" = "no child hands",
+                           "no child hand" = "no child hands",
+                           "no objectr" = "no object",
+                           "shape shorter" = "shape sorter",
+                           "sofa or couch" = "couch",
+                           "tupperwarde" = "tuppperware",
+                          "etchasketch" = "etch-a-sketch",
+                          "unknown objet" = "unknown objects",
+                          "stairs" = "stair",
+                          "sofa / couch" = "couch",
+                          "sippycup" = "sippy cup",
+                          "magazine" = "book",
+                          "remote control" = "remote",
+                          "plastic bag" = "bag")) %>%
+  mutate(basic_level = str_replace(basic_level, '-book','-drawing')) %>%
+  mutate(basic_level = as.factor(basic_level))
+```
+
+
+# Add to data structure
+
+```{r}
+remove(json)
+remove(json_reliability)
+remove(d_reliability)
+```
+
+```{r}
+cutoff = quantile(d$conf,.25)
+d_out <- d %>%
+  filter(conf > cutoff) %>%
   left_join(d_basic, by=c('public_url'))
 ```
 
 
 # save out datafile
 ```{r}
+
+d <- d_out
+
 # dir.create(here::here('data/preprocessed_data/'))
 save(file = here::here('data/preprocessed_data/merged_annotations.RData'), d)
+
+save(file = here::here('data/preprocessed_data/basic_level_annotations.RData'), d_basic)
 ```
 
 
