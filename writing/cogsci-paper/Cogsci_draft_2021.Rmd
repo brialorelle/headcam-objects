@@ -471,7 +471,7 @@ d_basic <- d_basic %>%
   mutate(basic_level_all_formats = str_replace(basic_level_all_formats, '-toy','')) 
 
 
-length_annotations = length(unique(d_basic$basic_level))
+length_annotations = length(d_basic$basic_level)
 basic_level_categories = (unique(d_basic$basic_level))
 basic_level_all_formats = (unique(d_basic$basic_level_all_formats))
 ```
@@ -509,7 +509,7 @@ For example, there may be far fewer objects that are only interacted with a limi
 In the `r length_annotations` frames with objects that children were interacting with, we found `r length(basic_level_all_formats)` unique categories when collapsing across formats (i.e. drawings, toys, real-life), and `r length(basic_level_categories)` unique categories when exemplars were considered separately across formats.
 When we examined which categories were most frequent, we found that books were overwhelmingly the most present object in the views of these two children, comprising over 20\% of the objects that these children were seen to be interacting with.
 Generic baby toys (that were unidentifiable to the authors as specific toys) were the next most prevalent object category, and children were often seen to be touching or holding on to their caregivers (see top 20 most frequent categories in Figure \ref{fig:freq_interact}).
-Further, these three categories -- *book*, *toy*, and *person* -- were consistently the top three most frequent when we examined data separately for each child and by age groups (6-12 months, 12-18months, 18-24 months).
+Further, these three categories -- *book*, *toy*, and *person* -- were consistently the top three most frequent when we examined data separately for each child and by age groups (6-12 months, 12-18 months, 18-24 months).
 
 Importantly, we found that the distribution of the objects children were interacting with roughly followed a power law distribution, when we included separate categories for different formats  ($\alpha =$ `r round(pl_fit$alpha,2)`), when we collapsed across them ($\alpha =$ `r round(pl_fit_formats$alpha,2)`), or when we excluded *book*, *toy*, and *person* ($\alpha =$ `r round(pl_fit_limited$alpha,2)`). Thus, overall these results confirm that the distribution of the objects that children interact with is highly skewed, generalizing the findings of Clerkin et al., 2017.
 
