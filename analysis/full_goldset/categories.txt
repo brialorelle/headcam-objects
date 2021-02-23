@@ -31,3 +31,6 @@ can
 photograph
 remote
 toilet
+chair
+phone
+sofa / couch
