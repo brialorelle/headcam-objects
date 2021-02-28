@@ -50,15 +50,23 @@ write.csv(people_few, here::here('analysis/full_goldset/person_sample_annotate.c
 # read in category names
 dat = read.table(here::here("categories.txt"), sep="\n")
 
-# read in all hands annotations
+# read in just hands annotations
 load(file = here::here('data/annotations/faces_hands/child_adult_hand_annotations_by_frame.RData'))
 
 df = read.csv(here::here('data/annotations/faces_hands/turk_segmentations_hands_only_processed.csv'))
 
 d_hands <- df  %>% 
   select(label, full_image_path) %>% 
-  filter(grepl('hand', label)) %>% 
-  transmute(image_url = full_image_path)
+  filter(grepl('hand', label))
 
+# export annotated hands images
+hands_image_urls <- d_hands  %>% 
+  transmute(image_url = full_image_path)
+write.csv(hands_image_urls, here::here('analysis/full_goldset/hands_to_annotate.csv'), row.names = FALSE)
+
+# choose 500 random hand images
+hands_few <- hands_image_urls %>% 
+  sample_n(500)
+write.csv(hands_few, here::here('analysis/full_goldset/hands_sample_annotate.csv'), row.names = FALSE)
 
 
