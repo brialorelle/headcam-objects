@@ -1,38 +1,36 @@
-book
-other toy
-other food
-ipad
-computer
-plant
-ball
-bottle
-paper
-sippy cup
-drum
-guitar
-xylophone
-piano
-shoe
-play gym
-box
-table
-fruit
-spoon
-basket
-cat
 bag
-lego
-puzzle
 ball
-crayon
-marker
-door
-play dough
-stuffed animal
+basket
 block
+book
+bottle
+box
 can
-photograph
-remote
-toilet
+cat
+computer
+crayon
+door
+drum
+food (other)
+fruit
+guitar
+ipad
+lego
+marker
+paper
 phone
+photograph
+piano
+plant
+play dough
+play gym
+puzzle
+remote
 shoe
+sippy cup
+spoon
+stuffed animal
+table
+toilet
+toy (other)
+xylophone
