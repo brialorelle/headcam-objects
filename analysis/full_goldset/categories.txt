@@ -2,6 +2,7 @@ book
 other toy
 other food
 ipad
+computer
 plant
 ball
 bottle
@@ -11,7 +12,6 @@ drum
 guitar
 xylophone
 piano
-marker
 shoe
 play gym
 box
@@ -22,7 +22,10 @@ basket
 cat
 bag
 lego
+puzzle
+ball
 crayon
+marker
 door
 play dough
 stuffed animal
@@ -32,3 +35,4 @@ photograph
 remote
 toilet
 phone
+shoe
