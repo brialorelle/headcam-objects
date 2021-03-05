@@ -9,19 +9,20 @@ can
 cat
 computer
 crayon
+cup
 door
 drum
 food (other)
 fruit
 guitar
 ipad
-lego
 marker
 paper
 phone
 photograph
 piano
 plant
+plate
 play dough
 play gym
 puzzle
