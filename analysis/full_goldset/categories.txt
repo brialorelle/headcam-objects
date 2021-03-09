@@ -12,7 +12,6 @@ crayon
 cup
 door
 drum
-food (other)
 fruit
 guitar
 ipad
@@ -33,5 +32,6 @@ spoon
 stuffed animal
 table
 toilet
-toy (other)
 xylophone
+other food
+other toy
