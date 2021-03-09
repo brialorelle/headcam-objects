@@ -46,6 +46,6 @@ d_top <- d_basic %>%
   filter(basic_level %in% list_cats)
 
 d_top %>% 
-  transmute(image_irl = public_url) %>% 
+  transmute(image_url = public_url) %>% 
   write.csv(here::here('analysis/panoptic-segmentation/top_category_frames.csv'), row.names=FALSE)
 
