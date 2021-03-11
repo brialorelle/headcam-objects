@@ -36,7 +36,7 @@ count_by_category <- d_basic %>%
   arrange(desc(count))
 
 top_cats <- count_by_category %>% 
-  filter(count>5, !basic_level=='person')
+  filter(count>6, !basic_level=='person')
 
 list_cats <- top_cats %>% 
   pull(basic_level)
