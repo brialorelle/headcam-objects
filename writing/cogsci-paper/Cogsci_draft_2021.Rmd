@@ -135,7 +135,7 @@ freq_by_categories_by_age_child_hands <- d_hands %>%
 ```
 
 
-```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h",num.cols.cap=2, fig.width=7, fig.height=3, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months); each child's age was calculated in days relative to the date that the videos were filmed and converted to months. Each color represents data from a different child."}
+```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h",num.cols.cap=2, fig.width=7, fig.height=4, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months); each child's age was calculated in days relative to the date that the videos were filmed and converted to months. Each color represents data from a different child."}
 ## Figure 2
 
 ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=(freq), size=count_frames, col=child_id)) +
@@ -603,13 +603,14 @@ If this result is generalizable, and children’s visual experience is as skewed
 Indeed, the skewed distributions found here and in @clerkin2017 are dramatically different than the uniform distributions of categories fed to modern models of visual category learning -- which nonetheless appear to mimic many aspects of the visual system [@jacob2021qualitative].  
 Future work that equates the visual learning environments experienced by children and computational models of category learning may elucidate the set of learning mechanisms needed to form robust representations from realistic visual inputs.
 
-This work thus takes a first step in characterizing the categories in the visual environment over early development, calling for future work to understand the generalizability of these findings.
+This work thus takes a first step in characterizing the categories in the visual environment over early development, calling for future work to understand the generalizability of these findings and their implications for models of early category.
 While we found consistent results across both age and the two children analyzed here, both children are from similar households, socioeconomic groups, and cultural contexts.
-For example, picture books and toys are unlikely to be present in the views of many children in subsistence farming communities [@casillas2020early].
 Furthermore, these recordings were only taken when children were home with their parents (vs. at daycare), and these parents may have changed how they interacted with their children during these recording sessions.
+Variation across different households and communities will certainly change the objects that are frequently in the infant view: for example, picture books and toys are unlikely to be present in the views of many children in subsistence farming communities [@casillas2020early].
 Nonetheless, we predict that the distribution of objects that children interact will continue to follow a Zipfian distribution -- regardless of when or where recordings are taken or which specific objects are most frequently experienced.
 
-Of course, these results do not preclude the possibility that there are finer grained changes in how children experience object categories that change the information that they encode. For example, the current analysis supports the intuition that toys and books are prevalent in the views of some infants, it does not document how children are interacting with these toys or what categories in the books their caregivers may be pointing out. 
+Of course, these results do not preclude the possibility that there are finer grained changes in how children experience object categories that change the information that they encode. 
+For example, the current analysis supports the intuition that toys and books are prevalent in the views of some infants, it does not document how children are interacting with these toys or what categories in the books their caregivers may be pointing out. 
 More detailed coding schemes of the categories in the infant view could also yield divergent results.
 We propose that moving towards finer-grained analysis of the activities in naturalistic videos may uncover more subtle developmental trends.  
 
