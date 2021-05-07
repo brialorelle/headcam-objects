@@ -4,8 +4,11 @@ bibliography: references.bib
 csl: apa6.csl
 document-params: "10pt, letterpaper"
 
-author-information: >
-    \author{}
+author-information: > 
+    \author{{\large \bf Bria Long} \\ bria@stanford.edu \\ Department of Psychology \\ Stanford University 
+    \AND {\large \bf George Kachergis} \\ kachergis@stanford.edu \\ Department of Psychology \\ Stanford University 
+    \AND {\large \bf Naiti Bhatt} \\ bhatt@g.hmc.edu \\  Scripps College
+    \AND {\large \bf Michael C. Frank} \\ mcfrank@stanford.edu) \\ Department of Psychology \\ Stanford University}
 
 abstract: >
     What do infants and young children tend to see in their everyday lives?  Relatively little work has examined the categories and objects that tend to be in the infant view during everyday experience, despite the fact that this knowledge is central to theories of category learning. Here, we analyzed the prevalence of the  categories (e.g., people, animals, food) in the infant view in a longitudinal dataset of egocentric infant visual experience. Overall, we found a surprising amount of consistency in the broad characteristics of children's visual environment across individuals and across developmental time, in contrast to prior work examining the changing nature of the social signals in the infant view. In addition, we analyzed the distribution and identity of the categories that children tended touch and interact with in this dataset, generalizing previous findings that these objects tended to be distributed in a Zipfian manner. Taken together, these findings take a first step towards characterizing infants' changing visual environment, and call for future work to examine the generalizability of these results and to link them to learning outcomes.
@@ -15,13 +18,13 @@ keywords: >
     Object categorization; infant visual experience; head-mounted cameras; longitudinal data.
 
 output: cogsci2016::cogsci_paper
-#final-submission: \cogscifinalcopy
+final-submission: \cogscifinalcopy
 ---
 
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(fig.width=3, fig.height=3, fig.crop = F,
                       fig.pos = "tb", fig.path='figs/',
-                      echo=F, warning=F, cache=F,
+                      echo=F, warning=F, cache=T,
                       message=F, sanitize = T)
 
 ```
@@ -32,18 +35,17 @@ While an understanding of children's visual environment is central to both theor
 For example, how often do infants tend to see animals in real-life vs. in storybooks or as toys?
 How consistent are children's visual environments across individuals and across developmental time?
 
-
 Over the past decade, researchers have begun to answer these questions by documenting the infant egocentric perspective using head-mounted cameras [@yoshida2008; @franchak2011] and quantifying the degree to which there are substantial shifts in infants' viewpoints that may have downstream developmental consequences. As adults, it is hard to intuit how strange this viewpoint can be, and how much it varies across development, transitioning over the first two years of life from close-up views of faces to restricted views of hands manipulating objects [@fausey2016; @long2020], with children's postural developments to a large extent shaping what they see [@sanchez2018postural].
 Most work, however, has focused on documenting the social information that infants and children have access to across early development [@yoshida2008; @sanchez2018postural; @fausey2016]. 
 
-```{r examples, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', fig.width=7, set.cap.width=T, num.cols.cap=2, fig.align = "center", fig.cap = "Example frames with annotations of four different categories."}
+```{r examples, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', fig.width=8, set.cap.width=T, num.cols.cap=2, fig.align = "center", fig.cap = "Example frames with annotations of four different categories."}
 examples <- png::readPNG("figs/montage.001.png")
 grid::grid.raster(examples)
 ```
 
 More recent research has made progress towards understanding what objects tend to be the infant view, starting with analyzing the basic-level categories (e.g., spoons, cups) in the view of 8-month-olds during mealtime. This work suggests that a small number of objects are both pervasively present during mealtime and among infants' first-learned words [@clerkin2017], pointing towards a link between visual experience and early word learning and category learning. 
 
-Thus, a more complete understanding of the visual environment of infants and young children could yield insights about the inputs to both category learning and word learning. Indeed, different distributions of these visual referents lead to constraints on the kinds of learning mechanisms that must operate to form robust category representations -- and to learn words for these categories. However, at present, no datasets are sufficiently annotated to constrain these theoretical accounts. 
+Thus, a more complete understanding of the visual environment of infants and young children could yield insights about the inputs to both category learning and word learning. Indeed, different distributions of these visual referents lead to constraints on the kinds of learning mechanisms that must operate to form robust category representations -- and to learn words for these categories. However, at present, no datasets are sufficiently annotated to constrain these theoretical accounts.  
 
 For example, if the categories in the infant view shift dramatically over the first few years of life, then we might expect infants to learn about certain categories earlier vs. later during development. Prior work documenting the proportion of social information in view has suggested that children see more hands relative to faces in this same age range [@fausey2016; @long2020]. Thus, one possibility is that as children learn to crawl and walk [@sanchez2018postural; @long2020; @franchak2011], categories that children are likely to interact with (i.e., toys, small objects) may also become more prevalent in the child's view. If this was the case, this finding would support a view where the inputs to early category learning are shaped by children's own ability to actively explore their environment.
 
@@ -200,14 +202,13 @@ animacy_size <- animacy_size %>%
 ```
 
 
-
 # Method
 ## Dataset
-The dataset is described in detail in @SAYcam. Children wore Veho Muvi miniature cameras mounted on a custom camping headlamp harness ("headcams") at least twice weekly, for approximately one hour per recording session. One weekly session was on the same day each week at a roughly constant time of day, while the other(s) were chosen arbitrarily at the participating family’s discretion. At the time of the recording, all three children were in single-child households.  Videos captured by the headcam were 640x480 pixels, and a fisheye lens was attached to the camera to increase the field of view to approximately 109 degrees horizontal x 70 degrees vertical. We randomly sampled 24,000 frames from videos of two of the children in the dataset (S, A) over the entire age range.
+The dataset is described in detail in @SAYcam. Children wore Veho Muvi miniature cameras mounted on a custom camping headlamp harness ("headcams") at least twice weekly, for approximately one hour per recording session. One weekly session was on the same day each week at a roughly constant time of day, while the other(s) were chosen arbitrarily at the participating family’s discretion.  Videos captured by the headcam were 640x480 pixels, and a fisheye lens was attached to the camera to increase the field of view to approximately 109 degrees horizontal x 70 degrees vertical. We randomly sampled 24,000 frames from videos of two of the children in the dataset (S, A) over the entire age range (6-32 months of age) At the time of the recording, both children were in single-child households.
 
 ## Annotation procedures
 ### Categories in the infant view
-Annotations of the categories in the dataset were obtained using AWS Sagemaker. Participants selected whether the following categories were present in the shown image: *Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, None of the above*, or *Nothing visible*.  We included *Other Small Object* and *Other Big Object* as categories that participants could use to indicate the presence of objects that fell outside of these categories but were still salient; additional instructions were provided to specify that *Other Big Object* refers to  objects bigger than a chair, and that *Other Small Object* refers to objects small enough to be held with one or two hands [@konkle2013tripartite]. Two participants annotated each image, and were required to select at least one category before proceeding. Each category annotation in each image was assigned a confidence score (possible range: 0-1, range in dataset: 0.5-1) and individual annotations that had confidence scores below the 25th percentile were excluded from analyses (although all conclusions hold with and without these low-confidence annotations).
+Annotations of the categories in the dataset were obtained using AWS Sagemaker; adult participants were recruited via Amazon Mechanical Turk. Participants viewed one image at a time and selected whether the following categories were present in the shown image: *Animal (real), Animal (toy/drawing), Vehicle (real), Vehicle (toy/drawing), Plant, Clothing, Person, Furniture, Food, Utensil/Dish, Other Small Object, Other Big Object, Book, None of the above*, or *Nothing visible*.  We included *Other Small Object* and *Other Big Object* as categories that participants could use to indicate the presence of objects that fell outside of these categories but were still salient; additional instructions were provided to specify that *Other Big Object* refers to  objects bigger than a chair, and that *Other Small Object* refers to objects small enough to be held with one or two hands [@konkle2013tripartite]. We chose this coding scheme after iterative piloting options and  examining frames ourselves. Two participants annotated each image, and were required to select at least one category before proceeding. Each category annotation in each image was assigned a confidence score (possible range: 0-1, range in dataset: 0.5-1) and individual annotations that had confidence scores below the 25th percentile were excluded from analyses (although all conclusions hold with and without these low-confidence annotations).
 
 ```{r disagreement-check}
 total_images = 160
@@ -237,8 +238,7 @@ ggplot(data=animacy_size, aes(x=age_day_bin, y=freq, size=count_frames, col=anim
 
 ```
 
-We assessed the reliability of these annotations by comparing them to annotations made on the same task for a random subsample of 1200 frames on AWS Sagemaker, again using two participants per image ($N$=950 frames after excluding low-confidence annotations). We found agreement was moderate (average Cohen's Kappa = `r round(mean(all_kappas$kappa),2)`, but varied substantially between different categories  (range = `r round(range(all_kappas$kappa),2)`), as Cohen's Kappa is known to be  harsh for sparse annotations. On average, there was disagreement rate of `r round(mean(all_kappas$disagree*100),2)`% across categories. Annotators disagreed most on whether *Clothing* was present in an image and whether *Other Big Object* was present (i.e. a big object that was not *Furniture* or a *Vehicle*).  To assess the nature of these disagreements, we manually examined a random sample of 160 images with disagreements with 10 images from each category.  There were relatively equal proportions of images where annotations failed to identify a clear example of a category (M=`r round(missed,2)*100`%) or where annotations select an erroneous category label (M=`r round(false_alarms,2)*100`%). However, we found that most (M=`r round(ambiguous*100,2)`%) of the disagreements resulted from ambiguous exemplars, for example where the category was present but very distant, occluded, or blurry. Annotators also showed some disagreement about whether glossy photos of different categories in books should be counted as "real" or "toy/drawing," and whether partial views of people (i.e. child's own hands) should count as a *Person*.  Going forward, we analyze the larger set of annotations with the caveat that there is inevitably some ambiguity in what counts as an exemplar of these categories and that these data include both misses and false alarms. All annotations and analysis code are openly available at the anonymized repository associated with this project (https://osf.io/ft4ka/?view_only=b7387c0ceff845b0923b5871dee60d05).
-
+We assessed the reliability of these annotations by comparing them to annotations made on the same task for a random subsample of 1200 frames on AWS Sagemaker, again using two participants per image ($N$=950 frames after excluding low-confidence annotations). We found agreement was moderate (average Cohen's Kappa = `r round(mean(all_kappas$kappa),2)`, but varied substantially between different categories  (range = `r round(range(all_kappas$kappa),2)`), as Cohen's Kappa is known to be  harsh for sparse annotations. On average, there was disagreement rate of `r round(mean(all_kappas$disagree*100),2)`% across categories between these two samples. Annotators disagreed most on whether *Clothing* was present in an image and whether *Other Big Object* was present (i.e. a big object that was not *Furniture* or a *Vehicle*).  To assess the nature of these disagreements, we manually examined a random sample of 160 images with disagreements with 10 images from each category.  There were relatively equal proportions of images where annotations failed to identify a clear example of a category (M=`r round(missed,2)*100`%) or where annotations select an erroneous category label (M=`r round(false_alarms,2)*100`%). However, we found that most (M=`r round(ambiguous*100,2)`%) of the disagreements resulted from ambiguous exemplars, for example where the category was present but very distant, occluded, or blurry. Annotators also showed some disagreement about whether glossy photos of different categories in books should be counted as "real" or "toy/drawing," and whether partial views of people (i.e. child's own hands) should count as a *Person*.  Going forward, we analyze the larger set of annotations with the caveat that there is inevitably some ambiguity in what counts as an exemplar of these categories (and that these data include both misses and false alarms). All annotations are openly available at the repository associated with this project (https://osf.io/ft4ka/).
 
 ```{r basic-level-frames}
 frame_basics <- d %>%
@@ -251,7 +251,7 @@ frames_with_objs <- frame_basics %>%
 ```
 ### Objects children interacted with
 We also annotated the objects that children were interacting with in a subset of these frames.
-To do so, we first selected the frames in which participants (recruited via Amazon Mechanical Turk) indicated that a child's hand or hands were visible in the image [see @long2020] and one author annotated `r  length(frame_basics$public_url)` of these frames, spanning `r min(frame_basics$age_day_bin)` to `r max(frame_basics$age_day_bin)` months of age with roughly equal proportions from the two children. The annotator noted what object the child was touching or pointing to with in frames containing children’s hands, using basic-level object categories such as "block" and "cracker." 
+To do so, we first selected the frames in which participants (recruited via Amazon Mechanical Turk) indicated that a child's hand or hands were visible in the image [see @long2020] and one author annotated `r  length(frame_basics$public_url)` of these frames, spanning `r min(frame_basics$age_day_bin)` to `r max(frame_basics$age_day_bin)` months of age with roughly equal proportions from the two children. The annotator noted what object the child was touching or pointing to within frames containing children’s hands, using basic-level object categories such as "block" and "cracker." 
 If a child was holding a book and pointing to a depicted object in the book, the depicted object was noted as the category they were interacting with; otherwise, it was  noted as *Book*.
 Food that was unidentifiable as a specific item (e.g., as crackers) was marked as "food," and baby toys that were unidentifiable as specific toys were marked "toy."
 When children were interacting with drawing or toy versions of different categories (e.g., a toy car), these annotations were marked with a ‘-drawing’ and ‘-toy’ modifier and counted as separate entries. 
@@ -267,9 +267,9 @@ This stands in contrast to prior work on the prevalence of faces/hands in the in
 We next examined the details of these environments.
 We found that people were by far the most prevalent of these categories: over 20%\ of the annotated frames contained people, far more than any other category (including all kinds of toys combined).
 In contrast, there were relatively few instances of animals in the infant view -- either as toys or their real-life counterparts.
-Less than 5%\ of the frames contained any kind of depicted or real animal, and those few frames that did contained depicted vs. real animals in equal proportion.
+Less than 5%\ of the frames contained any kind of depicted or real animal, and those frames contained depicted vs. real animals in equal proportion.
 Manual inspection of these frames containing animals revealed that the "real" animals had relatively little variety -- they were overwhelmingly frames containing images of household pets (i.e., cats, dogs, and chickens, in the case of A), whereas the animals that were "toys/drawings" depicted a much larger variety of animals, as one might expect.
-Overall, these results suggest that -- at least for these children -- people are much more frequent that depictions or real-life versions of animals, indicating that toys and drawings may provide frequent input to their representations of these categories -- despite the fact that animal names are often among children's first words [@frank2021] and often referenced in storybooks.
+Overall, these results suggest that -- at least for these children -- people are much more frequent than depictions or real-life versions of animals, indicating that toys and drawings may provide frequent input to their representations of these categories -- despite the fact that animal names are often among children's first words [@frank2021] and often referenced in storybooks.
 
 Far more prevalent than animals, instead, were objects. 
 Views of furniture were the next most common category after people. However, in older age ranges, "big objects" -- including *Furniture*, *Vehicles*, and *Other Big Objects* -- tended to be less frequently in the view of infants than "small" objects -- including *Toys* (of all kinds), *Food*, *Utensils*, *Books*, and *Other Small Objects* (see Figure \ref{fig:anim_size}). 
@@ -424,7 +424,7 @@ ggplot(ordered_prob, aes(x=Category1, y=Category2, fill=prob)) +
 
 
 ## Which categories co-occur in children's visual environment?
-Next, we next examined the degree to which these categories appeared together in different frames.
+Next, we examined the degree to which these categories appeared together in different frames.
 Figure \ref{fig:coocc_stats} shows the co-occurrence of these categories, and reveals some relatively intuitive patterns that may reflect activity contexts.
 For example, *Dishes* and *Food* co-occurred quite frequently together, as did *People* and *Clothing*, and most *Animals* that were toys or drawings appeared when *Books* were also present.
 To determine which cells significantly deviate from chance we used a permutation analysis in which we shuffled the annotated category labels within each frame and examined the distribution of co-occurrences across 100 randomized co-occurrence matrices.
@@ -446,7 +446,6 @@ d_age_check <- d %>%
   distinct(public_url, basic_level, child_id, age_days) 
 ```
 
-
 ```{r basic-level-filtered}
 # colllapse across 
 d_basic <- d_basic %>%
@@ -466,7 +465,6 @@ count_by_category <- d_basic %>%
   ungroup() %>%
   mutate(basic_level = fct_reorder(basic_level, Freq, .desc=TRUE))
 ```
-
 
 ```{r basic-level-stats}
 length_annotations = length(d_basic$basic_level)
@@ -587,29 +585,42 @@ count_by_category_oldest <- count_by_category_by_age %>%
 
 # General Discussion
 What determines the categories that infants tend to see and interact with across early development? To examine the categories in the infant view, we analyzed a sample of random frames taken from a longitudinal dataset of two children [@SAYcam].
-Overall, we found relative consistency in children's visual environment over development, in contrast to prior work on the prevalence of social signals over this same developmental time period [@fausey2016; @long2020].
-The relative proportions of categories of objects (i.e., *furniture*, *toys*, *animals*, *people*) was relatively consistent among the two individuals here, and across developmental time. 
+Overall, we found relative stability in these two children's visual environment over development, in contrast to prior work on the prevalence of social signals over this same developmental time period [@fausey2016; @long2020].
+The relative proportions of categories of objects (i.e., *furniture*, *toys*, *animals*, *people*) were consistent among the two individuals here, and across developmental time. 
 People were most frequent, and a non-trivial proportion of frames didn't contain any discernible objects at all.
 However, these categories co-occured together in reliable patterns, revealing stereotypical combinations (i.e. *utensil/dish* and *food*, *person* and *clothing*) and suggesting that activity contexts, such as mealtime or storytime [@bruner1985role] may structure the broad characteristics of young children's visual environment.
 
-Yet while people were incredibly frequent in the child's view, animals -- either as toys or their real-life versions -- were relatively infrequent and occurred in equal proportions. This finding stands in contrast to a long literature documenting that even newborns prefer to attend to animate agents [@farroni2005newborns], that visual cortex dedicates a remarkable amount of space to processing animals [@konkle2013tripartite], and that animal names tend to be among children's first-learned words [@frank2021].  Therefore,  children's heightened attention to animals [@farroni2005newborns] likely interacts with frequency of occurrence in the visual field to drive early category learning.
+Yet while people were incredibly frequent in the child's view, animals -- either as toys or their real-life versions -- were relatively infrequent and occurred in equal proportions. 
+This finding stands in contrast to a long literature documenting that even newborns prefer to attend to animate agents [@farroni2005newborns], that visual cortex dedicates a remarkable amount of space to processing animals [@konkle2013tripartite], and that animal names tend to be among children's first-learned words [@frank2021].  
+Therefore,  children's heightened attention to animals [@farroni2005newborns] likely interacts with frequency of occurrence in the visual field to drive early category learning.
 
-Instead, we found the child's view was likely to be dominated by small objects -- such as food, books, or toys -- especially when their own hands were present in the frame, suggesting that the statistics of children's visual environment shift substantially when they are acting on the world themselves. We also found that the distribution of these objects seem to follow a Zipfian distribution, as does word usage in natural language.
-Indeed, as mealtime has previously been used to characterize the objects in the infant view [@clerkin2017] and frames with food or utensil and dishes accounted for less than 5%\ of views in the SAYcam dataset, we were unsure whether this also would be the case.
+Instead, we found that these children's viewpoints were likely to be dominated by small objects -- such as food, books, or toys -- especially when their own hands were present in the frame, suggesting that the statistics of children's visual environment shift substantially when they are acting on the world themselves. 
+We also found that the distribution of these objects seem to follow a Zipfian distribution, as does word usage in natural language.
+While mealtime has previously been used to characterize the objects in the infant view [@clerkin2017] and frames with food or utensil and dishes accounted for less than 5%\ of views in the SAYcam dataset, we were unsure whether this also would be the case.
 However, the present analysis suggests that infants' interactions with different object categories may be Zipf-distributed, with most categories seen quite rarely, and a few categories dominating their experience.
 
-This work thus takes a first step in characterizing the categories in the visual environment over early development, calling for future work to understand the generalizability of these findings.
-While we found consistent results across both age and the two children, both children are from relatively similar households and cultural contexts.
-Nonetheless, we predict that most children in urban or surburban environment are unlikely to see real animals more frequently than depicted animals, and that the distribution of objects that children interact will continue to follow a Zipfian distribution -- regardless of which specific objects these are.
+If this result is generalizable, and children’s visual experience is as skewed as their language experience -- with the majority of referents appearing rarely and a minority of referents appearing frequently -- this distributional regularity provides strong constraints on the category and word learning mechanisms that can succeed in this environment [@lavi2021visual; @hidaka2017quantifying].  
+Indeed, the skewed distributions found here and in @clerkin2017 are dramatically different than the uniform distributions of categories fed to modern models of visual category learning -- which nonetheless appear to mimic many aspects of the visual system [@jacob2021qualitative].  
+Future work that equates the visual learning environments experienced by children and computational models of category learning may elucidate the set of learning mechanisms needed to form robust representations from realistic visual inputs.
 
-Of course, these results do not preclude the possibility that there are finer grained changes in how children experience object categories that change the information that they encode. For example, the current analysis supports the intuition that toys and books are prevalent in the views of some infants, it does not document how children are interacting with these toys or what categories in the books their caregivers may be pointing out. We propose that moving towards finer-grained analysis of the activities in naturalistic videos may uncover more subtle developmental trends.  
+This work thus takes a first step in characterizing the categories in the visual environment over early development, calling for future work to understand the generalizability of these findings.
+While we found consistent results across both age and the two children analyzed here, both children are from similar households, socioeconomic groups, and cultural contexts.
+For example, picture books and toys are unlikely to be present in the views of many children in subsistence farming communities [@casillas2020early].
+Furthermore, these recordings were only taken when children were home with their parents (vs. at daycare), and these parents may have changed how they interacted with their children during these recording sessions.
+Nonetheless, we predict that the distribution of objects that children interact will continue to follow a Zipfian distribution -- regardless of when or where recordings are taken or which specific objects are most frequently experienced.
+
+Of course, these results do not preclude the possibility that there are finer grained changes in how children experience object categories that change the information that they encode. For example, the current analysis supports the intuition that toys and books are prevalent in the views of some infants, it does not document how children are interacting with these toys or what categories in the books their caregivers may be pointing out. 
+More detailed coding schemes of the categories in the infant view could also yield divergent results.
+We propose that moving towards finer-grained analysis of the activities in naturalistic videos may uncover more subtle developmental trends.  
 
 Overall, this work highlights the need for systematic investigations of how the frequency of the categories in the child's view interacts with different attentional biases, learning mechanisms, and social cues to produce robust representations that support early category and language learning.
 An understanding of what is -- and what is not -- learnable solely from frequent exposures will provide constraints on our accounts of the learning mechanisms that allow children to learn so much so quickly.
 
+\vspace{1em} \fbox{\parbox[b][][c]{7.3cm}{\centering All data and code for these analyses are available at\ \url{https://osf.io/ft4ka/}}} \vspace{1em}
 
 # Acknowledgements
-(Blinded)
+We gratefully acknowledge the creators of the SAYCam dataset who made this work possible. This work was funded by a HAI Cloud Credit Grant to BL and MCF, a Jacobs Foundation Fellowship to MCF, a John Mereck Scholars award to MCF, and NSF #1714726 to BLL. 
+
 
 # References
 ```{r echo=F}
