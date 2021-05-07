@@ -136,7 +136,7 @@ freq_by_categories_by_age_child_hands <- d_hands %>%
 ```
 
 
-```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h",num.cols.cap=2, fig.width=7, fig.height=4, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months); each child's age was calculated in days relative to the date that the videos were filmed and converted to months. Each color represents data from a different child."}
+```{r freq_by_category, echo=F, include = T, fig.env = "figure*", fig.pos = "h",num.cols.cap=2, out.width = '\\textwidth', fig.width=8, fig.align = "center", fig.cap = "Frequency of categories annotated across the 24K random frames plotted as a function of each child's age (in months); each child's age was calculated in days relative to the date that the videos were filmed and converted to months. Each color represents data from a different child."}
 ## Figure 2
 
 ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=(freq), size=count_frames, col=child_id)) +
@@ -144,8 +144,8 @@ ggplot(data=freq_by_categories_by_age, aes(x=age_day_bin, y=(freq), size=count_f
   geom_point(alpha=.3) +
   geom_smooth(span=20, aes(weight=count_frames), alpha=.1) +
   facet_wrap(~category, nrow=2) +
-  xlab('Age (months)') +
-  ylab('Proportion frames detected') +
+  xlab('Age (in months)') +
+  ylab('Proportion detected') +
   theme(aspect.ratio = 1, legend.position='none') +
   scale_size_area(max_size=2)
 
@@ -225,7 +225,7 @@ missed = sanity_check$count[sanity_check$reason=="present"] / total_images
 ## Animacy/size frequency across age
 ggplot(data=animacy_size, aes(x=age_day_bin, y=freq, size=count_frames, col=anim_size, group=anim_size)) +
   geom_point(alpha=.5, aes(group=anim_size)) +
-  theme_few(base_size=14) +
+  theme_few(base_size=12) +
   geom_smooth(span=10) +
   xlab('Age (in months)') +
   ylab('Proportion detected') +
@@ -483,7 +483,7 @@ pl_fit_limited <- power.law.fit(obj_freq_all_formats)
 
 ```
 
-```{r basic_levelexamples, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Example frames with annotations of books and toys."}
+```{r basic_levelexamples, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=4, out.width="80%", set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Example frames where we annotated the basic-level categories of objects children interacted with; many of these frames contained books and generic toys."}
 basic_examples <- png::readPNG("figs/basic_level_examples.png")
 grid::grid.raster(basic_examples)
 ```
@@ -496,7 +496,7 @@ For example, there may be far fewer objects that are only interacted with a limi
 
 In the `r length_annotations` frames with objects that children were interacting with, we found `r length(basic_level_all_formats)` unique categories when collapsing across formats (i.e. drawings, toys, real-life), and `r length(basic_level_categories)` unique categories when exemplars were considered separately across formats.
 When we examined which categories were most frequent, we found that books were overwhelmingly the most present object in the views of these two children, comprising over 20\% of the objects that these children were seen to be interacting with.
-Generic baby toys (that were unidentifiable to the authors as specific toys) were the next most prevalent object category, and children were often seen to be touching or holding on to their caregivers (see top 20 most frequent categories in Figure \ref{fig:freq_interact}).
+Generic baby toys (that were unidentifiable to the authors as specific toys) were the next most prevalent object category, and children were often seen to be touching or holding on to their caregivers (see top 20 most frequent categories in Figure \ref{fig:freq_interact} and example frames in Figure \ref{fig:basic_levelexamples}).
 Further, these three categories -- *book*, *toy*, and *person* -- were consistently the top three most frequent when we examined data separately for each child and by age groups (6-12 months, 12-18 months, 18-24 months).
 
 Importantly, we found that the distribution of the objects children were interacting with roughly followed a power law distribution, when we included separate categories for different formats  ($\alpha =$ `r round(pl_fit$alpha,2)`), when we collapsed across them ($\alpha =$ `r round(pl_fit_formats$alpha,2)`), or when we excluded *book*, *toy*, and *person* ($\alpha =$ `r round(pl_fit_limited$alpha,2)`). Thus, overall these results confirm that the distribution of the objects that children interact with is highly skewed, generalizing the findings of Clerkin et al., 2017.
