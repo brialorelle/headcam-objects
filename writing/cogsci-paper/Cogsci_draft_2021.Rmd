@@ -1,14 +1,12 @@
 ---
-title: "Characterizing the object categories two children see and interact with in a dense dataset of naturalistic visual experience"
+title: "Characterizing the object categories two children see and interact within a dense dataset of naturalistic visual experience"
 bibliography: references.bib
 csl: apa6.csl
 document-params: "10pt, letterpaper"
 
 author-information: > 
-    \author{{\bf Bria Long}$^{1}$, {\bf George Kachergis}$^{1}$, {\bf Naiti Bhatt}$^{2}$, {\bf Michael C. Frank}$^{1}$ 
-         \AND 
-         bria@stanford.edu, kachergis@stanford.edu, bhatt@g.hmc.edu, mcfrank@stanford.edu 
-         \AND 
+    \author{{\bf Bria Long}$^{1}$, {\bf George Kachergis}$^{1}$, {\bf Naiti Bhatt}$^{2}$, {\bf Michael C. Frank}$^{1}$ \\ 
+         bria@stanford.edu, kachergis@stanford.edu, bhatt@g.hmc.edu, mcfrank@stanford.edu \\
          $^{1}$ Department of Psychology, Stanford University \\
          $^{2}$ Scripps College
          }
