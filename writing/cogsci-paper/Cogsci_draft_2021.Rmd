@@ -485,6 +485,11 @@ pl_fit_limited <- power.law.fit(obj_freq_all_formats)
 
 ```
 
+```{r basic_levelexamples, include = T, fig.env = "figure", fig.pos = "h", fig.align='center', fig.width=3, set.cap.width=T, num.cols.cap=1, fig.align = "center", fig.cap = "Example frames with annotations of books and toys."}
+basic_examples <- png::readPNG("figs/basic_level_examples.png")
+grid::grid.raster(basic_examples)
+```
+
 While many different categories may be in the child's view, not all of these objects may be experienced in the same way.
 In particular, it may be that children are more likely to form robust representations of objects that they physically interact with more often, and by extension they may also learn the labels of these objects earlier.
 In this analysis, we sought to analyze the basic-level identities of the objects that children tended to be interacting with in their home environments, and the distributions of those identities.
