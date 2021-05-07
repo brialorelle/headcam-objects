@@ -5,10 +5,13 @@ csl: apa6.csl
 document-params: "10pt, letterpaper"
 
 author-information: > 
-    \author{{\large \bf Bria Long} \\ bria@stanford.edu \\ Department of Psychology \\ Stanford University 
-    \AND {\large \bf George Kachergis} \\ kachergis@stanford.edu \\ Department of Psychology \\ Stanford University 
-    \AND {\large \bf Naiti Bhatt} \\ bhatt@g.hmc.edu \\  Scripps College
-    \AND {\large \bf Michael C. Frank} \\ mcfrank@stanford.edu) \\ Department of Psychology \\ Stanford University}
+    \author{{\bf Bria Long}$^{1}$, {\bf George Kachergis}$^{1}$, {\bf Naiti Bhatt}$^{2}$, {\bf Michael C. Frank}$^{1}$ 
+         \AND 
+         bria@stanford.edu, kachergis@stanford.edu, bhatt@g.hmc.edu, mcfrank@stanford.edu 
+         \AND 
+         $^{1}$ Department of Psychology, Stanford University \\
+         $^{2}$ Scripps College
+         }
 
 abstract: >
     What do infants and young children tend to see in their everyday lives?  Relatively little work has examined the categories and objects that tend to be in the infant view during everyday experience, despite the fact that this knowledge is central to theories of category learning. Here, we analyzed the prevalence of the  categories (e.g., people, animals, food) in the infant view in a longitudinal dataset of egocentric infant visual experience. Overall, we found a surprising amount of consistency in the broad characteristics of children's visual environment across individuals and across developmental time, in contrast to prior work examining the changing nature of the social signals in the infant view. In addition, we analyzed the distribution and identity of the categories that children tended touch and interact with in this dataset, generalizing previous findings that these objects tended to be distributed in a Zipfian manner. Taken together, these findings take a first step towards characterizing infants' changing visual environment, and call for future work to examine the generalizability of these results and to link them to learning outcomes.
