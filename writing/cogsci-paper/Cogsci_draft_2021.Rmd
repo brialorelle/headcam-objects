@@ -41,7 +41,7 @@ How consistent are children's visual environments across individuals and across 
 Over the past decade, researchers have begun to answer these questions by documenting the infant egocentric perspective using head-mounted cameras [@yoshida2008; @franchak2011] and quantifying the degree to which there are substantial shifts in infants' viewpoints that may have downstream developmental consequences. As adults, it is hard to intuit how strange this viewpoint can be, and how much it varies across development, transitioning over the first two years of life from close-up views of faces to restricted views of hands manipulating objects [@fausey2016; @long2020], with children's postural developments to a large extent shaping what they see [@sanchez2018postural].
 Most work, however, has focused on documenting the social information that infants and children have access to across early development [@yoshida2008; @sanchez2018postural; @fausey2016]. 
 
-```{r examples, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', fig.width=8, set.cap.width=T, num.cols.cap=2, fig.align = "center", fig.cap = "Example frames with annotations of four different categories."}
+```{r examples, include = T, fig.env = "figure*", fig.pos = "h", fig.align='center', out.width = '\\textwidth', set.cap.width=T, num.cols.cap=2, fig.align = "center", fig.cap = "Example frames with annotations of four different categories."}
 examples <- png::readPNG("figs/montage.001.png")
 grid::grid.raster(examples)
 ```
