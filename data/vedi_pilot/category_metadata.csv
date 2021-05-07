@@ -1,0 +1,51 @@
+﻿category,type,category_short
+a bear,animal,bear
+a bird,animal,bird
+a butterfly,animal,butterfly
+a cat,animal,cat
+a cow,animal,cow
+a deer,animal,deer
+a duck,animal,duck
+an elephant,animal,elephant
+a giraffe,animal,giraffe
+a monkey,animal,monkey
+a penguin,animal,penguin
+a squirrel,animal,squirrel
+a tiger,animal,tiger
+an airplane,vehicle,airplane
+a bicycle,vehicle,bicycle
+a bus,vehicle,bus
+a car,vehicle,car
+a firetruck,vehicle,firetruck
+a motorcycle,vehicle,motorcycle
+a stroller,vehicle,stroller
+a train,vehicle,train
+a truck,vehicle,truck
+a ball,object,ball
+a balloon,object,balloon
+a block,object,block
+a book,object,book
+a doll,object,doll
+a pen,object,penguin
+a bottle,object,bottle
+a bowl,object,bowl
+a clock,object,clock
+a cup,object,cup
+a fork,object,fork
+keys,object,keys
+a lamp,object,lamp
+a penny,object,penny
+a pillow,object,pillow
+a purse,object,purse
+a radio,object,radio
+a pair of scissors,object,scissors
+a toothbrush,object,toothbrush
+a vacuum,object,vacuum
+a watch (object),object,watch
+a beach,place,beach
+a park,place,park
+a pool,place,pool
+a shovel,object,shovel
+a slide (object),object,slide
+a tree,object,tree
+a lion,animal,lion

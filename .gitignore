@@ -23,3 +23,6 @@ data/saycam_images/annotation_examples/frames_child_hands.zip
 data/.DS_Store
 writing/cogsci-paper/submitted/characterizingthe_0203.pdf
 .Rproj.user
+experiments/.DS_Store
+data/preprocessed_data/.Rapp.history
+data/images/for_additional_panoptic.zip
