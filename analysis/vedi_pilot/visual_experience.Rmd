@@ -10,6 +10,7 @@ library(tidyverse)
 library(here)
 library(ggthemes)
 library(knitr)
+library(egg)
 library(assertthat)
 ```
 # Load and preprocess data
@@ -180,7 +181,7 @@ ggplot(experience_summary, aes(x=avg_num_formats, y=how_often_avg, color=type, l
   theme(legend.position = c(.9, .2))
   coord_cartesian(clip = "off")
 
-  ggsave('vedi_pilot_plot.png')
+ggsave('vedi_pilot_plot.png')
 
 ```
 
@@ -236,44 +237,48 @@ cor.test(experience_by_aoa$how_often_avg, experience_by_aoa$aoa)
 cor.test(experience_by_aoa$how_many_avg, experience_by_aoa$aoa)
 ```
 
+# GK look here: aggregated plot for NSF
 ```{r}
 library(grid)
-empty <- textGrob("", gp=gpar(fontsize=11))
-text_low <- textGrob("Never", gp=gpar(fontsize=11))
-text_high <- textGrob("Everyday", gp=gpar(fontsize=11))
+base_size_print=10
+label_size=3
+
+empty <- textGrob("", gp=gpar(fontsize=base_size_print))
+text_low <- textGrob("Never", gp=gpar(fontsize=base_size_print))
+text_high <- textGrob("Everyday", gp=gpar(fontsize=base_size_print))
 
 p1 = ggplot(experience_by_aoa, aes(x=how_often_avg, y=aoa, label=category)) +
   geom_jitter(height=.03, width=.03, alpha=.8, size=2) +
-  theme_few(base_size=14) +
+  theme_few(base_size=base_size_print) +
   geom_smooth(span=10, alpha=.2, color='dark grey') +
-    ggrepel::geom_label_repel(data = experience_by_aoa %>% filter( (aoa>25 & how_often_avg<4) | (aoa<22 & how_often_avg>5.5)),segment.colour="grey", segment.alpha =.2, aes(color=type)) +
+    ggrepel::geom_label_repel(data = experience_by_aoa %>% filter( (aoa>25 & how_often_avg<4) | (aoa<22 & how_often_avg>5.5)),segment.colour="grey", segment.alpha =.2, aes(color=type), size = label_size) +
   ylim(14,30)+
   xlim(1,8) +
   annotation_custom(text_low,xmin=1,xmax=1,ymin=11,ymax=11) +
-  annotation_custom(text_high,xmin=8,xmax=8,ymin=11,ymax=11) +
+  annotation_custom(text_high,xmin=7.5,xmax=7.5,ymin=11,ymax=11) +
   xlab('How often seen') +
   ylab('Avg. age-of-acquisition') +
-  theme(legend.position='none', aspect.ratio=.75) +
+  theme(legend.position='none', aspect.ratio=1) +
   coord_cartesian(clip='off')
 
 p2 = ggplot(experience_by_aoa, aes(x=avg_num_formats, y=aoa, label=category)) +
   geom_jitter(height=.03, width=.03, alpha=.8, size=2) +
-  theme_few(base_size=14) +
+  theme_few(base_size=base_size_print) +
     geom_smooth(span=10, alpha=.2, color='dark grey') +
-  ggrepel::geom_label_repel(data = experience_by_aoa %>% filter( (aoa>25 & avg_num_formats<3) | (aoa<22 & avg_num_formats>3.5)),segment.colour="grey", segment.alpha =.2, aes(color=type)) +
+  ggrepel::geom_label_repel(data = experience_by_aoa %>% filter( (aoa>25 & avg_num_formats<3) | (aoa<22 & avg_num_formats>3.5)),segment.colour="grey", segment.alpha =.2, aes(color=type), size = label_size) +
   ylim(14,30)+
   xlim(1,5) +
   xlab('Number of formats seen') +
   ylab('Avg. age-of-acquisition') +      annotation_custom(empty,xmin=8,xmax=8,ymin=11,ymax=11) +
-  theme(legend.position ='right', aspect.ratio=.75) +
+  theme(legend.position ='none', aspect.ratio=1) +
   scale_color_discrete(name="Category type")  +
   coord_cartesian(clip='off')
 
 p3 = ggplot(experience_by_aoa, aes(x=how_many_avg, y=aoa, label=category)) +
   geom_jitter(height=.03, width=.03, alpha=.8, size=2) +
-  theme_few(base_size=14) +
+  theme_few(base_size=base_size_print) +
   geom_smooth(span=10, alpha=.2, color='dark grey') +
-  ggrepel::geom_label_repel(data = experience_by_aoa %>% filter( (aoa>24 & how_many_avg<15) | (aoa<22 & how_many_avg>20)),segment.colour="grey", segment.alpha =.2, aes(color=type)) +
+  ggrepel::geom_label_repel(data = experience_by_aoa %>% filter( (aoa>24 & how_many_avg<15) | (aoa<22 & how_many_avg>20)),segment.colour="grey", segment.alpha =.2, aes(color=type), size = label_size) +
   ylim(14,30) +
   xlab('Number of exemplars seen') +
   ylab('Avg. age of acquisition') +
@@ -281,8 +286,14 @@ p3 = ggplot(experience_by_aoa, aes(x=how_many_avg, y=aoa, label=category)) +
   annotation_custom(empty,xmin=8,xmax=8,ymin=11,ymax=11) +
   theme(legend.position='none', aspect.ratio=1)  +
   coord_cartesian(clip='off')
+```
 
-ggarrange(p1,p3,p2, nrow=1)
+
+```{r}
+
+arranged <- ggarrange(p1,p3,p2, nrow=1) 
+ggsave(file='vedi_pilot_nsf_figure.pdf', arranged, width=8.5, height=3)
+
 
 
 ```
