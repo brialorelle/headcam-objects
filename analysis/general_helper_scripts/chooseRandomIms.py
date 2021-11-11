@@ -1,6 +1,6 @@
 
 """Choose 150 random images from the list of interesting images."""
-
+"""Used in MTurk Pilot run to generate image list for pilot runs."""
 import random
 import csv
 import pandas as pd
