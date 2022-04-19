@@ -4,6 +4,15 @@
 Folder Structure:
 <ul>
   <li><b>analysis</b>: contains scripts for various analysis pipelines
+    <ul>
+      <li>basic_level_manual_labels</li>
+      <li>full_goldset</li>
+      <li>general_helper_scripts</li>
+      <li>goldset_annotations</li>
+      <li>mturk_pilot</li>
+      <li>panoptic_segmentation_training</li>
+      <li>vedi_pilot</li>
+    </ul>
   </li>
   <li><b>data</b>: contains various data files from points in the processing pipeline(annotated image information, segmented images in COCO-JSON format, .manifest files with annotations)
     <ul>
@@ -32,8 +41,8 @@ Folder Structure:
       </li>
       <li>category_lists: lists of categories we used to label images
         <ul>
-          <li>categories.txt: initial full category list used as dictionary in MTurk pilot</li>
-          <li>object_list.txt: basic level category list used for basic level manual annotations</li>
+          <li>categories.txt: basic level category list used as dictionary in annotation tasks</li>
+          <li>object_list.txt: initial full category list used for basic level pilot MTurk and manual annotations</li>
         </ul> 
       </li>
       <li>image_lists: various lists of video/image filenames and urls
