@@ -22,13 +22,24 @@ Folder Structure:
               <li>combined_good_segmentations.json: subset of final image set with confidence thresholded, 2215 images with segmentations</li>
               <li>rest of folders store the above data, but split into 80/20 training and testing sets
                 <ul>
-                  <li>training and testing data is split using <a href="https://colab.research.google.com/drive/1D0P9Zka_bMwsZQsvupot7JyGHfFHnlQa"> this Colab Notebook</a> and analysis using <a href="https://colab.research.google.com/drive/1TxJzjCNijwTJzMLsaKdOkfQ9VUou91kT"> this Colab Notebook</a>
+                  <li>training and testing data is split using <a href="https://colab.research.google.com/drive/1D0P9Zka_bMwsZQsvupot7JyGHfFHnlQa"> this Colab Notebook</a> and analysis using <a href="https://colab.research.google.com/drive/1TxJzjCNijwTJzMLsaKdOkfQ9VUou91kT"> this Colab Notebook</a></li>
                 </ul> 
               </li>
             </ul>
           </li>
         </ul>
       </li>
+      <li>category_lists: lists of categories we used to label images
+        <ul>
+          <li>categories.txt: initial full category list used as dictionary in MTurk pilot</li>
+          <li>object_list.txt: basic level category list used for basic level manual annotations</li>
+        </ul> 
+      </li>
+      <li>image_lists: various lists of image urls
+      </li>
+      <li>preprocessed_data: output from processing data using R</li>
+      <li>saycam_images: includes a zip file of interesting images from SAYCam</li>
+      <li>vedi_pilot: TODO</li>
     </ul>
   </li>
   <li> <b>writing</b>: workspace for papers associated with this project </li>
